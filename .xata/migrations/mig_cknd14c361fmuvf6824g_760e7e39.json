@@ -1,0 +1,13 @@
+{
+  "id": "mig_cknd14c361fmuvf6824g",
+  "parentID": "mig_ckncthc361fmuvf6823g",
+  "checksum": "1:760e7e39c7c1f6d216ed058a7703c2c77b218fa1f8ef9a742c02ce1711f0069b",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "country",
+        "table": "beers"
+      }
+    }
+  ]
+}

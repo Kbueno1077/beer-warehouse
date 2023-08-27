@@ -1,0 +1,13 @@
+{
+  "id": "mig_cko0930n36pa68vvbf4g",
+  "parentID": "mig_cko08ign36pa68vvbf3g",
+  "checksum": "1:4825a88c34f30561d6373caf27589b937d1f22217e47fae0218572823da28013",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "password",
+        "table": "nextauth_accounts"
+      }
+    }
+  ]
+}

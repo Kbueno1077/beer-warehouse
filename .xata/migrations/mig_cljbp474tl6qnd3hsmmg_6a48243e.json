@@ -1,0 +1,16 @@
+{
+  "id": "mig_cljbp474tl6qnd3hsmmg",
+  "parentID": "mig_cljborn4tl6qnd3hsmkg",
+  "checksum": "1:6a48243e67d0d910fa1ef17e3b65fa06b802359c3ad0a6420cce0b012b3a1362",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "friend",
+          "type": "string"
+        },
+        "table": "friends-beer"
+      }
+    }
+  ]
+}

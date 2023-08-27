@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckgpss9ufph1r2rlopo0",
+  "parentID": "mig_ckgpslhufph1r2rlopn0",
+  "checksum": "1:16d7690e5ccb3f95599e216e2f4d088568291152830c647580bc35d1c3fb5130",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "country",
+          "type": "string"
+        },
+        "table": "beers"
+      }
+    }
+  ]
+}

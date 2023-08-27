@@ -1,0 +1,279 @@
+import React, {useState} from "react";
+import {
+    Avatar,
+    Button,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    Tab,
+    Tabs,
+    Textarea,
+    useDisclosure,
+} from "@nextui-org/react";
+
+import {PlusIcon} from "@/modules/UI/TableUI/DataTable/TableIcons";
+import {Input} from "@nextui-org/input";
+import DropZone from "./DropZone";
+import {CustomSelect, StateOption} from "@/components/CustomSelect/Select";
+import countriesJson from "@/util/countries.json";
+import {OnChangeValue} from "react-select";
+import axios from "axios";
+import {useBeerStore} from "@/store/zustand";
+import {enqueueSnackbar} from "notistack";
+import Spinner from "@/components/Loaders/Spinner";
+import {checkSession} from "@/util/javascript";
+import {CARD_MODE} from "@/util/types";
+import {useTranslations} from "next-intl";
+
+export default function AddBeer() {
+    const {isOpen, onOpen, onOpenChange} = useDisclosure();
+    const [isLoading, setIsLoading] = useState<boolean>(false)
+    const {theme, addBeerUI, mode} = useBeerStore();
+    const t = useTranslations('beerCrud');
+    const tcountries = useTranslations('countries');
+
+
+    const [name, setName] = React.useState<string>("")
+    const [alcohol_percentage, setAlcohol] = React.useState<string>("")
+    const [ml, setMl] = React.useState<string>("")
+    const [country, setCountry] = React.useState<any>(null)
+    const [bought_in, setBought] = React.useState<string>("")
+    const [initial_impression, setImpression] = React.useState<string>("")
+    const [additional_comments, setComments] = React.useState<string>("")
+    const [evidenceFiles, setEvidenceFiles] = useState<Array<File>>([]);
+    const [previewFiles, setPreviewFiles] = useState<Array<File>>([]);
+
+
+    const handleOpening = () => {
+        setDefaultFormState()
+        onOpen()
+    }
+
+    const setDefaultFormState = () => {
+        setName("")
+        setAlcohol("")
+        setMl("")
+        setCountry(null)
+        setBought("")
+        setImpression("")
+        setComments("")
+        setEvidenceFiles([])
+        setPreviewFiles([])
+        setIsLoading(false)
+    }
+
+    const handleFiles = (zone: string, files: Array<File>) => {
+        if (zone === 'evidence_img') {
+            setEvidenceFiles(files)
+        } else {
+            setPreviewFiles(files)
+        }
+    }
+
+    const handleActions = (selectedOption: OnChangeValue<StateOption, false>) => {
+        setCountry(selectedOption);
+    }
+
+    const InsertBeer = async () => {
+        setIsLoading(true)
+        let cloudinaryResponse: any = {data: {secure_url: ""}}
+
+        try {
+            await checkSession()
+
+            if (evidenceFiles.length > 0) {
+                cloudinaryResponse = await uploadImage()
+            }
+
+            if (name) {
+                await insertBeerXata(cloudinaryResponse?.data?.secure_url || "")
+            }
+
+            setDefaultFormState()
+            enqueueSnackbar(t('add-good-message'), {variant: 'success'})
+
+
+        } catch (error: any) {
+            console.error(error)
+            enqueueSnackbar(`Error: ${error?.response?.data.errorMessage}`, {variant: 'error'})
+            setIsLoading(false)
+        }
+
+    }
+
+    const uploadImage = async () => {
+        const {data: {signature, timestamp, error}} = await axios.post('/api/cloudinary', {
+            folder: process.env.CLOUDINARY_BEER_FOLDER,
+            upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
+            filename_override: name,
+            public_id: name
+        });
+
+        if (error) {
+            throw new Error(error)
+        }
+
+        const url = process.env.CLOUDINARTY_URL ?? "";
+        const formData = new FormData();
+        formData.append('file', evidenceFiles[0]);
+        formData.append('upload_preset', 'ul1f0lm9');
+        formData.append('folder', 'beers-cloudStore');
+        formData.append('filename_override', name);
+        formData.append('public_id', name);
+        formData.append('timestamp', timestamp);
+        // formData.append('signature', signature);
+        formData.append('api_key', "763641954252769");
+        return await axios.post(url, formData);
+    }
+
+    const insertBeerXata = async (evidence_url: string) => {
+        const alcoholNumber = parseFloat(alcohol_percentage)
+        const mlNumber = parseFloat(ml)
+
+
+        const {data: {record, error}} = await axios.post('/api/beer', {
+            name,
+            alcohol_percentage: alcohol_percentage ? alcoholNumber : 0,
+            ml: ml ? mlNumber : 0,
+            country: country?.value ?? "TBD",
+            initial_impression,
+            bought_in,
+            evidence_img: evidence_url ?? "",
+            preview_img: "",
+            additional_comments
+        })
+
+
+        if (error) {
+            throw new Error(error)
+        }
+
+        if (record) {
+            addBeerUI(record)
+        }
+    }
+
+    return (
+        <>
+            <Button
+                className="bg-foreground text-background"
+                onPress={handleOpening}
+                isIconOnly={mode === CARD_MODE}
+                endContent={<PlusIcon/>}
+                size="sm"
+                aria-label={t('add-addBtn-aria')}
+            >
+                {mode !== CARD_MODE && t('addBtn')}
+            </Button>
+
+            <Modal scrollBehavior='inside' size='5xl' isOpen={isOpen} onOpenChange={onOpenChange}>
+                <ModalContent className='pt-10 pb-2'>
+                    {(onClose) => (
+                        <>
+                            <ModalHeader className="flex flex-col gap-1">
+                                <Input
+                                    fullWidth={true}
+                                    label={t('name')}
+                                    value={name}
+                                    onValueChange={setName}
+                                /></ModalHeader>
+
+                            <ModalBody>
+                                <div className='sm:flex gap-5'>
+                                    <div>
+                                        <Tabs fullWidth={true} aria-label="Dynamic tabs">
+                                            <Tab key='evidence' title={t('evidence-img')}>
+                                                <DropZone zone='evidence_img' files={evidenceFiles}
+                                                          handleFiles={handleFiles}/>
+                                            </Tab>
+
+                                            <Tab key='preview' title={t('preview-img')}>
+                                                <DropZone zone='preview_img' files={previewFiles}
+                                                          handleFiles={handleFiles}/>
+                                            </Tab>
+                                        </Tabs>
+                                    </div>
+
+                                    <div className='w-full flex flex-col gap-3'>
+                                        <Input
+                                            fullWidth={true}
+                                            label={t('alcohol')}
+                                            type='number'
+                                            value={alcohol_percentage}
+                                            onValueChange={setAlcohol}
+                                        />
+
+                                        <Input
+                                            fullWidth={true}
+                                            type='number'
+                                            label={t('ml')}
+                                            value={ml}
+                                            onValueChange={setMl}
+                                        />
+
+                                        <CustomSelect
+                                            theme={theme}
+                                            placeholder={t('country')}
+                                            decorationPlacement='start'
+                                            decoration={
+                                                <Avatar alt='country flag' className="w-6 h-6"
+                                                        classNames={{
+                                                            img: 'center'
+                                                        }}
+                                                />
+                                            }
+                                            value={country}
+                                            onChange={handleActions}
+                                            closeMenuOnSelect={false}
+                                            options={Object.entries(countriesJson).map((entry) => {
+                                                return {
+                                                    value: entry[0], label: tcountries(entry[1])
+                                                }
+                                            })}
+                                        />
+
+
+                                        <Input
+                                            fullWidth={true}
+                                            label={t('bought in')}
+                                            value={bought_in}
+                                            onValueChange={setBought}
+                                        />
+
+                                        <Input
+                                            fullWidth={true}
+                                            label={t('impression')}
+                                            value={initial_impression}
+                                            onValueChange={setImpression}
+                                        />
+
+                                    </div>
+                                </div>
+
+                                <div className="w-full mb-5">
+                                    <Textarea
+                                        label={t('comments')}
+                                        value={additional_comments}
+                                        onValueChange={setComments}
+                                    />
+                                </div>
+
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="danger" onPress={onClose} variant="light">
+                                    {t('cancel')}
+                                </Button>
+                                <Button onPress={InsertBeer} color="primary">
+                                    {!isLoading ? t('add') :
+                                        <div><Spinner/></div>}
+                                </Button>
+                            </ModalFooter>
+                        </>
+                    )}
+                </ModalContent>
+            </Modal>
+        </>
+    );
+}

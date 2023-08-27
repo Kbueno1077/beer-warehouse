@@ -1,0 +1,9 @@
+
+.sidebar {
+    width: 80px;
+    height: calc(100vh);
+
+    background: #e0e0e0;
+    box-shadow: 40px 40px 80px #c5c5c5,
+    -40px -40px 80px #fbfbfb;
+}

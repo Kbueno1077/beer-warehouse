@@ -1,0 +1,154 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+@layer base {
+
+  :root {
+    --color-primary: 0 119 182;
+    --color-secondary: 254 224 92;
+
+    --color-success: 0 200 81;
+    --color-info: 51 181 229;
+    --color-warn: 255 187 51;
+    --color-error: 230 57 70;
+
+    /*--color-text: 33 33 33;*/
+    /*--color-default: 33 33 33;*/
+  }
+
+  :root[class~="dark"] {
+    --color-primary: 230 137 17;
+    --color-secondary: 254 224 92;
+
+    --color-success: 0 200 81;
+    --color-info: 51 181 229;
+    --color-warn: 255 187 51;
+    --color-error: 254 78 78;
+
+    /*--color-text: 33 33 33;*/
+    /*--color-default: 33 33 33*/
+  }
+}
+
+/*:root {*/
+/*  --foreground-rgb: 0, 0, 0;*/
+/*  --background-start-rgb: 214, 219, 220;*/
+/*  --background-end-rgb: 255, 255, 255;*/
+/*}*/
+
+/*@media (prefers-color-scheme: dark) {*/
+/*  :root {*/
+/*    --foreground-rgb: 255, 255, 255;*/
+/*    --background-start-rgb: 0, 0, 0;*/
+/*    --background-end-rgb: 0, 0, 0;*/
+/*  }*/
+/*}*/
+
+body {
+
+  /*color: rgb(var(--foreground-rgb));*/
+  /*background: linear-gradient(*/
+  /*    to bottom,*/
+  /*    transparent,*/
+  /*    rgb(var(--background-end-rgb))*/
+  /*  )*/
+  /*  rgb(var(--background-start-rgb));*/
+}
+
+
+.bgWallpaper {
+  margin-top: -150px;
+  display: flex;
+  justify-content: center;
+}
+
+
+.dataTableWrapper {
+  border-radius: 18px;
+  background: #f0f0f0;
+  box-shadow: 14px 14px 28px #d6d6d6,
+  -14px -14px 28px #ffffff;
+  position: relative;
+
+  /*border-radius: 18px;*/
+  /*background: linear-gradient(145deg, #e6e6e6, #ffffff);*/
+  /*box-shadow:  14px 14px 43px #ededed,*/
+  /*-14px -14px 43px #ffffff;*/
+  /*border: 1px solid silver;*/
+
+  padding: 20px;
+  margin: -35vh 100px 40px;
+  overflow: auto;
+}
+
+.dataTableWrapper__dark {
+  background: #212121;
+  box-shadow: 14px 14px 28px #201f1f,
+  -14px -14px 28px #1c1c1c;
+}
+
+
+.dataCardWrapper {
+  border-radius: 18px;
+  background: #f0f0f0;
+  box-shadow: 14px 14px 28px #d6d6d6,
+  -14px -14px 28px #ffffff;
+  position: relative;
+
+  padding: 20px;
+  margin: -35vh 100px 60px;
+  overflow: auto;
+}
+
+.dataCardWrapper__dark {
+  background: #212121;
+  box-shadow: 14px 14px 28px #201f1f,
+  -14px -14px 28px #1c1c1c;
+}
+
+
+@media screen and (max-width: 1440px) {
+  .dataTableWrapper {
+    margin: -35vh 20px 40px;
+  }
+
+  .dataCardWrapper {
+    margin: -35vh 20px 60px;
+  }
+}
+
+
+@media screen and (max-width: 1024px) {
+  .dataTableWrapper {
+    margin: -20vh 20px 40px;
+    padding: 20px 10px 40px;
+  }
+
+  .dataCardWrapper {
+    margin: -20vh 20px 60px;
+    padding: 15px 10px 20px;
+  }
+
+  .bgWallpaper {
+    margin-top: -75px;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .dataTableWrapper {
+    margin: -8vh 10px 40px;
+  }
+
+  .dataCardWrapper {
+    margin: -8vh 10px 60px;
+  }
+
+  .bgWallpaper {
+    margin-top: -40px;
+  }
+}
+
+
+

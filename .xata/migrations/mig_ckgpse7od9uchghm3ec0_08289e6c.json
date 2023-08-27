@@ -1,0 +1,18 @@
+{
+  "id": "mig_ckgpse7od9uchghm3ec0",
+  "parentID": "mig_ckgprmnod9uchghm3eb0",
+  "checksum": "1:08289e6cd441df9237e65d34cb30dc0be6d6b95c284f02e674bf7e1d2d6f723a",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "alcohol_percentage",
+          "type": "float",
+          "notNull": true,
+          "defaultValue": "0.0"
+        },
+        "table": "beers"
+      }
+    }
+  ]
+}

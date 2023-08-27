@@ -1,0 +1,16 @@
+{
+  "id": "mig_ckgptshg214i80ju8gj0",
+  "parentID": "mig_ckgptinod9uchghm3ee0",
+  "checksum": "1:e3ccf7641163346a4b3c5e2e0be6b2a7d2db411f7332c07eb0947a1d977f172c",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "evidence_img",
+          "type": "string"
+        },
+        "table": "beers"
+      }
+    }
+  ]
+}

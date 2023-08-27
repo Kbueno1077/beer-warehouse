@@ -1,0 +1,50 @@
+
+.chipName {
+    width: 100%;
+    overflow: auto;
+    word-break: break-all;
+    background-color: rgba(0, 0, 0, 0.42);
+}
+
+
+.countryImg {
+    object-fit: cover;
+    object-position: left;
+}
+
+.wrapper {
+    padding: 0;
+}
+
+button.wrapper > :first-child {
+    width: 100%;
+    padding: 0;
+}
+
+
+.accordionWrapper {
+    height: 5px;
+    width: 100%;
+    padding: 0;
+}
+
+
+button.accordionWrapper > :first-child {
+    width: 100%;
+    padding: 0;
+}
+
+
+.startContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: black;
+    transition: 0.3s;
+}
+
+.arrowOpenSearch {
+    height: 22px;
+    width: 22px;
+}

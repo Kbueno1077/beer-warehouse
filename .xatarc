@@ -1,0 +1,6 @@
+{
+  "databaseURL": "https://Kevin-Bueno-s-workspace-8l3c94.us-east-1.xata.sh/db/beer-warehouse",
+  "codegen": {
+    "output": "xata/xata.ts"
+  }
+}

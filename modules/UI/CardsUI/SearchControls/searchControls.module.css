@@ -1,0 +1,93 @@
+.controlsWrapper {
+    position: fixed;
+    bottom: 0;
+    margin-left: auto;
+    margin-right: auto;
+    z-index: 10;
+    width: 100%;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+    border: none;
+    padding: 0;
+}
+
+.controlsWrapper__light {
+    background: white;
+    box-shadow: 29px 29px 58px #d9d9d9,
+    -12px -12px 58px #ffffff;
+    padding: 0 10px 0;
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+}
+
+.controlsWrapper__dark {
+    border-top-right-radius: 16px;
+    border-top-left-radius: 16px;
+    background: #18181B;
+    box-shadow: 14px 14px 28px #191919,
+    -14px -14px 28px #151515;
+    padding: 0 10px 0;
+}
+
+.wrapper {
+    padding: 10px 0 10px;
+}
+
+button.wrapper > :first-child {
+    width: 100%;
+}
+
+.accordionWrapper {
+    height: 32px;
+    width: 100%;
+}
+
+button.accordionWrapper > :first-child {
+    width: 100%;
+}
+
+.startContent {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    color: #747474;
+    transition: 0.3s;
+}
+
+.arrowOpenSearch {
+    height: 24px;
+    width: 24px;
+}
+
+
+.inputWrapper {
+    display: flex;
+    margin-bottom: 5px;
+    gap: 10px;
+    align-items: stretch;
+}
+
+.searchButton {
+    height: 100%;
+    width: 60px;
+    transition: 0.3s linear;
+}
+
+.searchButton:hover {
+    color: darkgoldenrod;
+    border-color: darkgoldenrod;
+}
+
+.search {
+    flex-grow: 1;
+}
+
+
+.beerImage {
+    font-size: 22px
+}
+
+.iconImage {
+    font-size: 18px
+}

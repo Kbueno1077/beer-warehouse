@@ -1,0 +1,18 @@
+{
+  "id": "mig_ckgpslhufph1r2rlopn0",
+  "parentID": "mig_ckgpse7od9uchghm3ec0",
+  "checksum": "1:9ffc54b5db6c771f1db5c78f754f116f60d0f51b2b9eaf70e25e80de041df403",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "ml",
+          "type": "float",
+          "notNull": true,
+          "defaultValue": "330"
+        },
+        "table": "beers"
+      }
+    }
+  ]
+}

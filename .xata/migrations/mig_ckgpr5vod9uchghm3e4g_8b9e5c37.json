@@ -1,0 +1,11 @@
+{
+  "id": "mig_ckgpr5vod9uchghm3e4g",
+  "checksum": "1:8b9e5c37c0d4b5e7f6f89aed150110e3cadf4840c6498a5c95c05c15a4119dd3",
+  "operations": [
+    {
+      "addTable": {
+        "table": "beers"
+      }
+    }
+  ]
+}

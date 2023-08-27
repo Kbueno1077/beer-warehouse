@@ -1,0 +1,16 @@
+{
+  "id": "mig_cko085gn36pa68vvbf2g",
+  "parentID": "mig_cko02i0n36pa68vvbdb0",
+  "checksum": "1:55a14d85b9c7bea2cb55b6c22ad5f6c63acf2922ff74c67a472b52811e03830f",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "password",
+          "type": "string"
+        },
+        "table": "nextauth_accounts"
+      }
+    }
+  ]
+}

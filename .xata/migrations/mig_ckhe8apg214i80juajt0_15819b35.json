@@ -1,0 +1,14 @@
+{
+  "id": "mig_ckhe8apg214i80juajt0",
+  "parentID": "mig_ckgpuahg214i80ju8gl0",
+  "checksum": "1:15819b35a256d46c3099b40dbe5f90c3fdd9b775674d466aaefddf54e4508417",
+  "operations": [
+    {
+      "renameColumn": {
+        "newName": "additional_comments",
+        "oldName": "additiona_comments",
+        "table": "beers"
+      }
+    }
+  ]
+}
