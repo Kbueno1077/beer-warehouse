@@ -59,27 +59,18 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
 
 
     const currentEvidenceImage = selectedBeer.evidence_img || ""
-    const currentPreviewImage = selectedBeer.preview_img || ""
-
 
     const [evidenceFiles, setEvidenceFiles] = useState<Array<File>>([]);
-    const [previewFiles, setPreviewFiles] = useState<Array<File>>([]);
-
     const {theme, updateBeerUI} = useBeerStore();
 
-
     const handleOpening = () => {
-
         setEvidenceFiles([])
-        setPreviewFiles([])
         onOpen()
     }
 
     const handleFiles = (zone: string, files: Array<File>) => {
         if (zone === 'evidence_img') {
             setEvidenceFiles(files)
-        } else {
-            setPreviewFiles(files)
         }
     }
 
@@ -154,7 +145,6 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
             initial_impression,
             bought_in,
             evidence_img: evidence_url ?? "",
-            preview_img: "",
             additional_comments,
             evidence_public_id
         })
@@ -197,12 +187,6 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
                                             <Tab key='evidence' title={t('evidence-img')}>
                                                 <DropZone zone='evidence_img' files={evidenceFiles}
                                                           currentImg={currentEvidenceImage}
-                                                          handleFiles={handleFiles}/>
-                                            </Tab>
-
-                                            <Tab key='preview' title={t('preview-img')}>
-                                                <DropZone zone='preview_img' files={previewFiles}
-                                                          currentImg={currentPreviewImage}
                                                           handleFiles={handleFiles}/>
                                             </Tab>
                                         </Tabs>

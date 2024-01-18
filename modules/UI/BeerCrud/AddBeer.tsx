@@ -43,7 +43,6 @@ export default function AddBeer() {
     const [initial_impression, setImpression] = React.useState<string>("")
     const [additional_comments, setComments] = React.useState<string>("")
     const [evidenceFiles, setEvidenceFiles] = useState<Array<File>>([]);
-    const [previewFiles, setPreviewFiles] = useState<Array<File>>([]);
 
 
     const handleOpening = () => {
@@ -60,15 +59,12 @@ export default function AddBeer() {
         setImpression("")
         setComments("")
         setEvidenceFiles([])
-        setPreviewFiles([])
         setIsLoading(false)
     }
 
     const handleFiles = (zone: string, files: Array<File>) => {
         if (zone === 'evidence_img') {
             setEvidenceFiles(files)
-        } else {
-            setPreviewFiles(files)
         }
     }
 
@@ -141,7 +137,6 @@ export default function AddBeer() {
             initial_impression,
             bought_in,
             evidence_img: evidence_url ?? "",
-            preview_img: "",
             additional_comments
         })
 
@@ -186,11 +181,6 @@ export default function AddBeer() {
                                         <Tabs fullWidth={true} aria-label="Dynamic tabs">
                                             <Tab key='evidence' title={t('evidence-img')}>
                                                 <DropZone zone='evidence_img' files={evidenceFiles}
-                                                          handleFiles={handleFiles}/>
-                                            </Tab>
-
-                                            <Tab key='preview' title={t('preview-img')}>
-                                                <DropZone zone='preview_img' files={previewFiles}
                                                           handleFiles={handleFiles}/>
                                             </Tab>
                                         </Tabs>
