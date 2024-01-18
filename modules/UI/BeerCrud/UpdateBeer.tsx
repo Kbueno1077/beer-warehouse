@@ -57,8 +57,10 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
     const [initial_impression, setImpression] = React.useState<string>(selectedBeer.initial_impression || "")
     const [additional_comments, setComments] = React.useState<string>(selectedBeer.additional_comments || "")
 
-    const [currentEvidenceImage, setCurrentEvidenceImg] = useState<string>(selectedBeer.evidence_img || "");
-    const [currentPreviewImage, setCurrentPreviewImg] = useState<string>(selectedBeer.preview_img || "");
+
+    const currentEvidenceImage = selectedBeer.evidence_img || ""
+    const currentPreviewImage = selectedBeer.preview_img || ""
+
 
     const [evidenceFiles, setEvidenceFiles] = useState<Array<File>>([]);
     const [previewFiles, setPreviewFiles] = useState<Array<File>>([]);
@@ -95,7 +97,7 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
             }
 
             if (name) {
-                await editBeerXata(cloudinaryResponse?.data?.secure_url || "")
+                await editBeerXata(cloudinaryResponse?.data?.secure_url || currentEvidenceImage)
             }
 
             setIsLoading(false)
