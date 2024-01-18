@@ -254,11 +254,10 @@ export default function BeersTable() {
                     <Input
                         isClearable
                         classNames={{
-                            base: "w-full sm:max-w-[44%]",
-                            inputWrapper: "border-1",
+                            base: "w-full sm:max-w-[44%] ",
+                            inputWrapper: "border-1 h-[40px]",
                         }}
                         placeholder={t('search.placeholder')}
-                        size="sm"
                         startContent={<SearchIcon className="text-default-300"/>}
                         value={filters.search}
                         variant="bordered"
