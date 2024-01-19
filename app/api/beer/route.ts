@@ -74,7 +74,7 @@ export async function PUT(req: NextRequest, res: NextResponse) {
             initial_impression,
             bought_in,
             evidence_img,
-            preview_img : "",
+            preview_img: "",
             additional_comments,
         });
 
@@ -96,13 +96,12 @@ export async function DELETE(req: NextRequest, res: NextResponse) {
     const evidence_public_id: string = req.nextUrl.searchParams.get('evidence_public_id') ?? ""
 
     try {
-        // const record = await xata.db.beers.delete(id);
+        const record = await xata.db.beers.delete(id);
 
         if (evidence_public_id) {
-            //      const cloudinaryResponse = await cloudinary.api.delete_resources([evidence_public_id])
+            const cloudinaryResponse = await cloudinary.api.delete_resources([evidence_public_id])
         }
 
-        const record = {id: 'lol'}
 
         return NextResponse.json({record})
 
