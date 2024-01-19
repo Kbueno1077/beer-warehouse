@@ -59,10 +59,8 @@ export default function SettingsDropDown() {
         <Dropdown
             backdrop="blur"
             isOpen={isOpen}
-            shouldCloseOnBlur={true}
-            shouldCloseOnInteractOutside={() => {
-                setOpen(false)
-            }}
+            shouldCloseOnBlur={false}
+
             onClose={() => {
                 setOpen(false)
             }}
@@ -73,7 +71,7 @@ export default function SettingsDropDown() {
 
             }}
         >
-            <DropdownTrigger  onClick={toggleOpen}>
+            <DropdownTrigger onClick={toggleOpen}>
                 <Avatar
                     size={'md'}
                     isBordered
@@ -100,7 +98,7 @@ export default function SettingsDropDown() {
                                 selectedIcon: styles.hiddenSvg
                             }}
                             key="login">
-                            <AuthModal mode="login"/>
+                            <AuthModal mode="login" />
                         </DropdownItem>
                     </DropdownSection>
                 }

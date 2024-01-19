@@ -17,6 +17,7 @@ import {
     Tabs,
     useDisclosure,
 } from "@nextui-org/react";
+
 import Spinner from "@/components/Loaders/Spinner";
 import {useTranslations} from "next-intl";
 
