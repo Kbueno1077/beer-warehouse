@@ -3,6 +3,19 @@
     "switch-lang-btn": "Change Language",
     "switch-lang-dropdown": "Drop down for change language"
   },
+  "settingsDropdown": {
+    "en": "English",
+    "es": "Spanish",
+    "languages": "Languages",
+    "navigation": "Navegation",
+    "logout": "Log out",
+    "logout-desc": "Quit the session",
+    "dashboard": "Dashboard",
+    "dashboard-desc": "Go to dashboard",
+    "charts": "Charts",
+    "charts-desc": "Go to charts",
+    "Session": "Session"
+  },
   "impression": {
     "Amazing": "Amazing",
     "Excellent": "Excellent",
@@ -28,7 +41,7 @@
     "beer-warehouse": "BEER WAREHOUSE",
     "card-switch": "Switch to Card view",
     "table-switch": "Switch to Table view",
-    "dashboard" : "Dashboard",
+    "dashboard": "Dashboard",
     "friendsLink": "Friends' Beer",
     "chartsLink": "Charts"
   },

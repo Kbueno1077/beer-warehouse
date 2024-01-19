@@ -3,6 +3,19 @@
     "switch-lang-btn": "Cambiar Idioma",
     "switch-lang-dropdown": "Menu desplegable para cambiar el idioma"
   },
+  "settingsDropdown": {
+    "en": "Inglés",
+    "es": "Español",
+    "languages": "Idiomas",
+    "navigation": "Navegación",
+    "logout": "Cerrar Sesion",
+    "logout-desc": "Cerrar Sesion",
+    "dashboard": "Menú Principal",
+    "dashboard-desc": "Ir a menú Principal",
+    "charts": "Gráficas",
+    "charts-desc": "Ir a Gráficas",
+    "Session": "Sesion"
+  },
   "impression": {
     "Amazing": "Asambrosa",
     "Excellent": "Excelente",
@@ -28,7 +41,7 @@
     "beer-warehouse": "ALMACEN DE CERVEZAS",
     "card-switch": "Cambie a la vista en tarjetas",
     "table-switch": "Cambie a la vista en tabla",
-    "dashboard" : "Menú principal",
+    "dashboard": "Menú principal",
     "friendsLink": "Cervezas de Amigos",
     "chartsLink": "Gráficas"
   },

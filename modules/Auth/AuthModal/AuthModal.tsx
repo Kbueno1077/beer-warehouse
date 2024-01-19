@@ -55,10 +55,8 @@ export default function AuthModal({mode = 'login'}: AuthModalProps) {
 
     return (
         <>
-
-
             {mode === 'login' &&
-                <Button fullWidth={true} onPress={onOpen} color="primary" variant="ghost"
+                <Button fullWidth={true} onPress={onOpen} color="primary" variant="flat"
                         aria-label={t('login')}>
                     {t('login')}
                 </Button>
@@ -116,12 +114,14 @@ export default function AuthModal({mode = 'login'}: AuthModalProps) {
                                                     onValueChange={setLoginPassword}
                                                     value={loginPassword}
                                                 />
-                                                <p className="text-center text-small">
-                                                    {t('no-account')}{" "}
-                                                    <Link size="sm" onPress={() => setSelected("sign-up")}>
-                                                        {t('signup')}
-                                                    </Link>
-                                                </p>
+
+                                                {/*<p className="text-center text-small">*/}
+                                                {/*    {t('no-account')}{" "}*/}
+                                                {/*    <Link size="sm" onPress={() => setSelected("sign-up")}>*/}
+                                                {/*        {t('signup')}*/}
+                                                {/*    </Link>*/}
+                                                {/*</p>*/}
+
                                                 <div className="flex gap-2 justify-end">
                                                     <Button onPress={handleLogin} fullWidth color="primary">
                                                         {isLoading ?

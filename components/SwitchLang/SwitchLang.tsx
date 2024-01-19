@@ -47,7 +47,6 @@ export default function SwitchLang() {
                             <div className='flex gap-3  items-center'>
                                 <FlagAvatar value={lang}/>
                                 <p className='font-bold text-md'>{lang.toUpperCase()}</p>
-
                             </div>}
                     >
                     </DropdownItem>)
