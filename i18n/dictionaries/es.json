@@ -14,7 +14,8 @@
     "dashboard-desc": "Ir a menú Principal",
     "charts": "Gráficas",
     "charts-desc": "Ir a Gráficas",
-    "Session": "Sesion"
+    "Session": "Sesion",
+    "loading": "Cargando..."
   },
   "impression": {
     "Amazing": "Asambrosa",

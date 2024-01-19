@@ -14,7 +14,9 @@
     "dashboard-desc": "Go to dashboard",
     "charts": "Charts",
     "charts-desc": "Go to charts",
-    "Session": "Session"
+    "Session": "Session",
+    "loading": "Loading..."
+
   },
   "impression": {
     "Amazing": "Amazing",

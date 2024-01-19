@@ -1,7 +1,16 @@
 //@ts-nocheck
 
 import React from "react";
-import {Avatar, cn, Dropdown, DropdownItem, DropdownMenu, DropdownSection, DropdownTrigger} from "@nextui-org/react";
+import {
+    Avatar,
+    Button,
+    cn,
+    Dropdown,
+    DropdownItem,
+    DropdownMenu,
+    DropdownSection,
+    DropdownTrigger
+} from "@nextui-org/react";
 import {locales, useRouter} from "@/i18n/navigation";
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import {useLocale, useTranslations} from "next-intl";
@@ -12,6 +21,7 @@ import styles from './settings.module.css'
 import {IoIosLogOut} from "react-icons/io";
 import {GiBeerBottle} from "react-icons/gi";
 import {IoBarChartSharp} from "react-icons/io5";
+import Spinner from "@/components/Loaders/Spinner";
 
 
 export default function SettingsDropDown() {
@@ -60,7 +70,6 @@ export default function SettingsDropDown() {
             backdrop="blur"
             isOpen={isOpen}
             shouldCloseOnBlur={false}
-
             onClose={() => {
                 setOpen(false)
             }}
@@ -98,8 +107,19 @@ export default function SettingsDropDown() {
                                 selectedIcon: styles.hiddenSvg
                             }}
                             key="login">
-                            <AuthModal mode="login" />
+                            <AuthModal mode="login"/>
                         </DropdownItem>
+
+                        {(!session?.user && status === 'loading') && <DropdownItem
+                            classNames={{
+                                selectedIcon: styles.hiddenSvg
+                            }}
+                            key="login">
+                            <Button fullWidth={true} disabled={true} color="primary" variant="flat"
+                                    aria-label={t('loading')}>
+                                <Spinner/>
+                            </Button>
+                        </DropdownItem>}
                     </DropdownSection>
                 }
 
