@@ -17,7 +17,6 @@ const Page: NextPage = async () => {
         "initial_impression",
         "bought_in",
         "evidence_img",
-        "preview_img",
         "additional_comments",
     ]).sort('name', 'asc').getAll();
 

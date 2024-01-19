@@ -20,7 +20,6 @@ const tables = [
       { name: "initial_impression", type: "string" },
       { name: "bought_in", type: "string" },
       { name: "evidence_img", type: "string" },
-      { name: "preview_img", type: "string" },
       { name: "additional_comments", type: "text" },
       { name: "country", type: "string", notNull: true, defaultValue: "TBD" },
       { name: "name", type: "string", unique: true },
@@ -97,6 +96,7 @@ const tables = [
       { name: "name", type: "string" },
       { name: "evidence_img", type: "string" },
       { name: "friend", type: "string" },
+      { name: "promoted", type: "bool", defaultValue: "false" },
     ],
   },
 ] as const;

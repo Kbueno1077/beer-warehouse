@@ -34,7 +34,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
             initial_impression,
             bought_in,
             evidence_img,
-            preview_img: "",
             additional_comments,
         });
 
@@ -74,7 +73,6 @@ export async function PUT(req: NextRequest, res: NextResponse) {
             initial_impression,
             bought_in,
             evidence_img,
-            preview_img: "",
             additional_comments,
         });
 

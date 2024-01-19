@@ -27,12 +27,14 @@ export default async function RootLayout({children, params: {lang},}: {
 }) {
     if (!locales.includes(lang as any)) notFound();
 
+
     let messages;
     try {
         messages = (await import(`../../i18n/dictionaries/${lang}.json`)).default;
     } catch (error) {
         notFound();
     }
+
 
     return (
         <html className={"light"} lang={lang}>

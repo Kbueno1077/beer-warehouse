@@ -159,7 +159,7 @@ export default function SettingsDropDown() {
                     }
                 </DropdownSection>
 
-
+                <DropdownSection title={t('Session')}>
                 {(session?.user && status === 'authenticated') &&
                     <DropdownItem
                         key="logout"
@@ -171,6 +171,7 @@ export default function SettingsDropDown() {
                     >
                         {t('logout')}
                     </DropdownItem>}
+            </DropdownSection>
             </DropdownMenu>
         </Dropdown>
     );

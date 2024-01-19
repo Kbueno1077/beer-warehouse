@@ -1,0 +1,13 @@
+{
+  "id": "mig_cmlba0i4iq0pp375n4r0",
+  "parentID": "mig_cm2f0ee19grg1uka8u3g",
+  "checksum": "1:1124cccacc841226a68bfe927f5f9a069ed46a49ea2a15fdf1559861080b8944",
+  "operations": [
+    {
+      "removeColumn": {
+        "column": "preview_img",
+        "table": "beers"
+      }
+    }
+  ]
+}

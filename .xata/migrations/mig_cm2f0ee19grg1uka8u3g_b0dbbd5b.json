@@ -1,0 +1,17 @@
+{
+  "id": "mig_cm2f0ee19grg1uka8u3g",
+  "parentID": "mig_cljbp474tl6qnd3hsmmg",
+  "checksum": "1:b0dbbd5be63f754226c03587093f176a0006055e66b3ebd06666254d26d82567",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "promoted",
+          "type": "bool",
+          "defaultValue": "false"
+        },
+        "table": "friends-beer"
+      }
+    }
+  ]
+}
