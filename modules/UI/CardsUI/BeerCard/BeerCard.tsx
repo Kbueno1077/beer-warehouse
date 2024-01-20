@@ -2,7 +2,7 @@
 
 import NextImage from 'next/image';
 
-import {Accordion, AccordionItem, Card, CardFooter, CardHeader, Chip, Skeleton,} from "@nextui-org/react";
+import {Accordion, AccordionItem, Button, Card, CardFooter, CardHeader, Chip, Skeleton,} from "@nextui-org/react";
 import {ADMIN_ROLE, BeerType} from "@/util/types";
 import styles from './beerCard.module.css'
 import React, {useState} from "react";
@@ -12,6 +12,7 @@ import {MdKeyboardArrowUp} from "react-icons/md";
 import {useSession} from "next-auth/react";
 import {useTranslations} from "next-intl";
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
+import {TbScanEye} from "react-icons/tb";
 
 
 interface BeerCardProps {
@@ -70,9 +71,11 @@ const BeerCard = ({beer}: BeerCardProps) => {
                         <p className="text-black text-tiny">ML: {beer.ml} </p>
                     </div>
 
+
                     {beer.country !== 'TBD' && beer.country !== '' &&
                         <FlagAvatar value={beer.country}/>
                     }
+
                 </div>
 
                 {user && user.role === ADMIN_ROLE &&
@@ -99,6 +102,9 @@ const BeerCard = ({beer}: BeerCardProps) => {
                                        }>
 
                             <div className='flex gap-1 '>
+                                <Button size={"sm"} variant="faded" isIconOnly color="danger">
+                                    <TbScanEye className='h-[17px] w-[17px] text-gray-500'/>
+                                </Button>
                                 <UpdateBeer selectedBeer={beer}/>
                                 <DeleteBeer selectedBeer={beer}/>
                             </div>

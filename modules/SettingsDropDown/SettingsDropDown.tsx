@@ -35,7 +35,6 @@ export default function SettingsDropDown() {
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([locale]));
 
     const handleSelection = async (e) => {
-        console.log("GLOBAL", e.anchorKey)
 
         if (e.anchorKey === 'en' || e.anchorKey === 'es') {
             setSelectedKeys(e)
@@ -159,19 +158,21 @@ export default function SettingsDropDown() {
                     }
                 </DropdownSection>
 
-                <DropdownSection title={t('Session')}>
+
                 {(session?.user && status === 'authenticated') &&
-                    <DropdownItem
-                        key="logout"
-                        className="text-danger"
-                        color="danger"
-                        // shortcut="⌘⇧D"
-                        description={t('logout-desc')}
-                        startContent={<IoIosLogOut className={cn(iconClasses, "text-danger")}/>}
-                    >
-                        {t('logout')}
-                    </DropdownItem>}
-            </DropdownSection>
+                    <DropdownSection title={t('Session')}>
+                        <DropdownItem
+                            key="logout"
+                            className="text-danger"
+                            color="danger"
+                            // shortcut="⌘⇧D"
+                            description={t('logout-desc')}
+                            startContent={<IoIosLogOut className={cn(iconClasses, "text-danger")}/>}
+                        >
+                            {t('logout')}
+                        </DropdownItem>
+                    </DropdownSection>
+                }
             </DropdownMenu>
         </Dropdown>
     );
