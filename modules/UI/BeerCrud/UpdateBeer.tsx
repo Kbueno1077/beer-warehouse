@@ -6,7 +6,7 @@ import {
     ModalBody,
     ModalContent,
     ModalFooter,
-    ModalHeader,
+    ModalHeader, Select, SelectItem,
     Tab,
     Tabs,
     Textarea,
@@ -27,6 +27,7 @@ import {enqueueSnackbar} from "notistack";
 import Spinner from "@/components/Loaders/Spinner";
 import {useSession} from "next-auth/react";
 import {useTranslations} from "next-intl";
+import impressionJson from "@/util/impression.json";
 
 
 interface UpdateBeerProps {
@@ -38,6 +39,7 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
     const user = session?.user
     const t = useTranslations('beerCrud');
     const tcountries = useTranslations('countries');
+    const timpression = useTranslations('impression');
 
 
     const {isOpen, onOpen, onOpenChange} = useDisclosure();
@@ -54,7 +56,7 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
 
 
     const [bought_in, setBought] = React.useState<string>(selectedBeer.bought_in || "")
-    const [initial_impression, setImpression] = React.useState<string>(selectedBeer.initial_impression || "")
+    const [initial_impression, setImpression] = React.useState<any>(new Set([]));
     const [additional_comments, setComments] = React.useState<string>(selectedBeer.additional_comments || "")
 
 
@@ -136,13 +138,14 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
             evidence_public_id = selectedBeer.evidence_img.split('/').slice(-2).join('/').split('.')[0];
         }
 
+
         const {data: {record, error}} = await axios.put('/api/beer', {
             id: selectedBeer.id,
             name,
             alcohol_percentage: alcoholNumber !== Number.NaN ? alcoholNumber : 0,
             ml: mlNumber !== Number.NaN ? mlNumber : 0,
             country: country?.value || "",
-            initial_impression,
+            initial_impression: initial_impression.currentKey ?? selectedBeer.initial_impression,
             bought_in,
             evidence_img: evidence_url ?? "",
             additional_comments,
@@ -236,12 +239,20 @@ export default function UpdateBeer({selectedBeer}: UpdateBeerProps) {
                                             onValueChange={setBought}
                                         />
 
-                                        <Input
-                                            fullWidth={true}
+                                        <Select
                                             label={t('impression')}
                                             value={initial_impression}
-                                            onValueChange={setImpression}
-                                        />
+                                            onSelectionChange={setImpression}
+                                            size={'md'}
+                                            defaultSelectedKeys={[selectedBeer.initial_impression ?? ""]}
+                                            disallowEmptySelection
+                                        >
+                                            {Object.entries(impressionJson).map((entry) => (
+                                                <SelectItem key={entry[1]} value={entry[1]}>
+                                                    {timpression(entry[1])}
+                                                </SelectItem>
+                                            ))}
+                                        </Select>
 
                                     </div>
                                 </div>

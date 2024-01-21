@@ -24,7 +24,7 @@ const customStyles: StylesConfig<OptionsType, true> = {
     control: (styles, state) => ({
         ...styles,
         backgroundColor: state.selectProps.theme === DARK_MODE ? '#27272A' : '#F4F4F5',
-        minHeight: "60px",
+        minHeight: "56px",
         cursor: 'pointer',
         height: "max-content",
         borderRadius: "10px",

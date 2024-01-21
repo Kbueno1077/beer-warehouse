@@ -6,7 +6,7 @@ import {
     ModalBody,
     ModalContent,
     ModalFooter,
-    ModalHeader,
+    ModalHeader, Select, SelectItem,
     Tab,
     Tabs,
     Textarea,
@@ -18,6 +18,8 @@ import {Input} from "@nextui-org/input";
 import DropZone from "./DropZone";
 import {CustomSelect, StateOption} from "@/components/CustomSelect/Select";
 import countriesJson from "@/util/countries.json";
+import impressionJson from "@/util/impression.json";
+
 import {OnChangeValue} from "react-select";
 import axios from "axios";
 import {useBeerStore} from "@/store/zustand";
@@ -33,14 +35,14 @@ export default function AddBeer() {
     const {theme, addBeerUI, mode} = useBeerStore();
     const t = useTranslations('beerCrud');
     const tcountries = useTranslations('countries');
-
+    const timpression = useTranslations('impression');
 
     const [name, setName] = React.useState<string>("")
     const [alcohol_percentage, setAlcohol] = React.useState<string>("")
     const [ml, setMl] = React.useState<string>("")
     const [country, setCountry] = React.useState<any>(null)
+    const [initial_impression, setImpression] = React.useState<any>(new Set([]));
     const [bought_in, setBought] = React.useState<string>("")
-    const [initial_impression, setImpression] = React.useState<string>("")
     const [additional_comments, setComments] = React.useState<string>("")
     const [evidenceFiles, setEvidenceFiles] = useState<Array<File>>([]);
 
@@ -56,7 +58,7 @@ export default function AddBeer() {
         setMl("")
         setCountry(null)
         setBought("")
-        setImpression("")
+        setImpression(new Set([]))
         setComments("")
         setEvidenceFiles([])
         setIsLoading(false)
@@ -68,7 +70,7 @@ export default function AddBeer() {
         }
     }
 
-    const handleActions = (selectedOption: OnChangeValue<StateOption, false>) => {
+    const handleCountryActions = (selectedOption: OnChangeValue<StateOption, false>) => {
         setCountry(selectedOption);
     }
 
@@ -134,12 +136,11 @@ export default function AddBeer() {
             alcohol_percentage: alcohol_percentage ? alcoholNumber : 0,
             ml: ml ? mlNumber : 0,
             country: country?.value ?? "TBD",
-            initial_impression,
+            initial_impression: initial_impression.currentKey ?? "Average",
             bought_in,
             evidence_img: evidence_url ?? "",
             additional_comments
         })
-
 
         if (error) {
             throw new Error(error)
@@ -215,7 +216,7 @@ export default function AddBeer() {
                                                 />
                                             }
                                             value={country}
-                                            onChange={handleActions}
+                                            onChange={handleCountryActions}
                                             closeMenuOnSelect={false}
                                             options={Object.entries(countriesJson).map((entry) => {
                                                 return {
@@ -224,7 +225,6 @@ export default function AddBeer() {
                                             })}
                                         />
 
-
                                         <Input
                                             fullWidth={true}
                                             label={t('bought in')}
@@ -232,12 +232,21 @@ export default function AddBeer() {
                                             onValueChange={setBought}
                                         />
 
-                                        <Input
-                                            fullWidth={true}
+                                        <Select
                                             label={t('impression')}
                                             value={initial_impression}
-                                            onValueChange={setImpression}
-                                        />
+                                            onSelectionChange={setImpression}
+                                            defaultSelectedKeys={["Average"]}
+                                            size={'md'}
+                                            disallowEmptySelection
+                                        >
+                                            {Object.entries(impressionJson).map((entry) => (
+                                                <SelectItem key={entry[1]} value={entry[1]}>
+                                                    {timpression(entry[1])}
+                                                </SelectItem>
+                                            ))}
+                                        </Select>
+
 
                                     </div>
                                 </div>
