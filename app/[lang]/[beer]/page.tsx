@@ -10,6 +10,7 @@ export default async function Page({params}: { params: { beer: string } }) {
 
     return (
         <>
+            {/*@ts-ignore*/}
             <BeerDetails beer={record}/>
         </>
     );
