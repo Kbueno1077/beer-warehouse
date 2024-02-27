@@ -16,7 +16,16 @@
     "charts-desc": "Go to charts",
     "Session": "Session",
     "loading": "Loading..."
-
+  },
+  "beerDetails": {
+    "beer": "beer",
+    "alcohol": "Alcohol %:",
+    "ml": "ML:",
+    "abv": "ABV",
+    "impression": "Impression:",
+    "country": "Country:",
+    "bought": "Bought in:",
+    "image": "image"
   },
   "impression": {
     "Amazing": "Amazing",
@@ -145,7 +154,7 @@
     "country": "Country",
     "bought in": "Bought In",
     "impression": "Impression",
-    "comments": "Aditional Comments",
+    "comments": "Additional Comments",
     "cancel": "Cancel",
     "add": "Add",
     "edit": "Edit",
