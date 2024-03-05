@@ -1,17 +1,13 @@
-
 .chartsWrapper__light {
     border-radius: 20px;
     background: white;
-    box-shadow: 29px 29px 58px #d9d9d9,
-    -12px -12px 58px #ffffff;
+    box-shadow: 29px 29px 58px #d9d9d9, -12px -12px 58px #ffffff;
     padding: 10px;
 }
 
 .chartsWrapper__dark {
     border-radius: 20px;
-    background: #18181B;
-    box-shadow: 14px 14px 28px #191919,
-    -14px -14px 28px #151515;
+    background: #18181b;
+    box-shadow: 14px 14px 28px #191919, -14px -14px 28px #151515;
     padding: 10px;
 }
-

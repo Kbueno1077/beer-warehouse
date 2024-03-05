@@ -1,6 +1,6 @@
 import React from "react";
 
-export const PlusIcon = ({size = 24, width, height, ...props}: any) => (
+export const PlusIcon = ({ size = 24, width, height, ...props }: any) => (
     <svg
         aria-hidden="true"
         fill="none"
@@ -18,14 +18,18 @@ export const PlusIcon = ({size = 24, width, height, ...props}: any) => (
             strokeLinejoin="round"
             strokeWidth={1.5}
         >
-            <path d="M6 12h12"/>
-            <path d="M12 18V6"/>
+            <path d="M6 12h12" />
+            <path d="M12 18V6" />
         </g>
     </svg>
 );
 
-
-export const VerticalDotsIcon = ({size = 24, width, height, ...props}: any) => (
+export const VerticalDotsIcon = ({
+    size = 24,
+    width,
+    height,
+    ...props
+}: any) => (
     <svg
         aria-hidden="true"
         fill="none"
@@ -42,7 +46,6 @@ export const VerticalDotsIcon = ({size = 24, width, height, ...props}: any) => (
         />
     </svg>
 );
-
 
 export const SearchIcon = (props: any) => (
     <svg
@@ -72,7 +75,7 @@ export const SearchIcon = (props: any) => (
     </svg>
 );
 
-export const ChevronDownIcon = ({strokeWidth = 1.5, ...otherProps}: any) => (
+export const ChevronDownIcon = ({ strokeWidth = 1.5, ...otherProps }: any) => (
     <svg
         aria-hidden="true"
         fill="none"
@@ -93,4 +96,3 @@ export const ChevronDownIcon = ({strokeWidth = 1.5, ...otherProps}: any) => (
         />
     </svg>
 );
-

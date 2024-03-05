@@ -1,27 +1,28 @@
 import React from "react";
-import {NextPage} from "next";
+import { NextPage } from "next";
 import Charts from "@/modules/Charts/Charts";
-import {getXataClient} from "@/xata/xata";
+import { getXataClient } from "@/xata/xata";
 
 const Page: NextPage = async () => {
-
     const xata = getXataClient();
-    const serverFetchedBeers = await xata.db.beers.select([
-        "id",
-        "name",
-        "alcohol_percentage",
-        "ml",
-        "country",
-        "initial_impression",
-        "bought_in",
-        "evidence_img",
-        "additional_comments",
-    ]).sort('name', 'asc').getAll();
-
+    const serverFetchedBeers = await xata.db.beers
+        .select([
+            "id",
+            "name",
+            "alcohol_percentage",
+            "ml",
+            "country",
+            "initial_impression",
+            "bought_in",
+            "evidence_img",
+            "additional_comments",
+        ])
+        .sort("name", "asc")
+        .getAll();
 
     return (
         <>
-            <Charts serverFetchedBeers={serverFetchedBeers}/>
+            <Charts serverFetchedBeers={serverFetchedBeers} />
         </>
     );
 };

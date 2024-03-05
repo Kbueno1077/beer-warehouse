@@ -1,17 +1,16 @@
 import React from "react";
-import {useBeerStore} from "@/store/zustand";
-import {Switch} from "@nextui-org/react";
-import {DARK_MODE, LIGHT_MODE} from "@/util/types";
-import {track} from "@vercel/analytics";
-
+import { useBeerStore } from "@/store/zustand";
+import { Switch } from "@nextui-org/react";
+import { DARK_MODE, LIGHT_MODE } from "@/util/types";
+import { track } from "@vercel/analytics";
 
 export default function SwitchTheme() {
-    const {theme, setTheme} = useBeerStore();
+    const { theme, setTheme } = useBeerStore();
 
     const handleThemeChange = (value: boolean) => {
         setTheme(value ? LIGHT_MODE : DARK_MODE);
-        track('Theme', {mode: value ? LIGHT_MODE : DARK_MODE});
-    }
+        track("Theme", { mode: value ? LIGHT_MODE : DARK_MODE });
+    };
 
     return (
         <>
@@ -20,16 +19,13 @@ export default function SwitchTheme() {
                 isSelected={theme !== DARK_MODE}
                 onValueChange={handleThemeChange}
                 size="lg"
-                color='primary'
-                startContent={<SunIcon/>}
-                endContent={<MoonIcon/>}
-            >
-
-            </Switch>
+                color="primary"
+                startContent={<SunIcon />}
+                endContent={<MoonIcon />}
+            ></Switch>
         </>
     );
 }
-
 
 export const MoonIcon = (props: any) => (
     <svg
@@ -59,9 +55,8 @@ export const SunIcon = (props: any) => (
         {...props}
     >
         <g fill="currentColor">
-            <path d="M19 12a7 7 0 11-7-7 7 7 0 017 7z"/>
-            <path
-                d="M12 22.96a.969.969 0 01-1-.96v-.08a1 1 0 012 0 1.038 1.038 0 01-1 1.04zm7.14-2.82a1.024 1.024 0 01-.71-.29l-.13-.13a1 1 0 011.41-1.41l.13.13a1 1 0 010 1.41.984.984 0 01-.7.29zm-14.28 0a1.024 1.024 0 01-.71-.29 1 1 0 010-1.41l.13-.13a1 1 0 011.41 1.41l-.13.13a1 1 0 01-.7.29zM22 13h-.08a1 1 0 010-2 1.038 1.038 0 011.04 1 .969.969 0 01-.96 1zM2.08 13H2a1 1 0 010-2 1.038 1.038 0 011.04 1 .969.969 0 01-.96 1zm16.93-7.01a1.024 1.024 0 01-.71-.29 1 1 0 010-1.41l.13-.13a1 1 0 011.41 1.41l-.13.13a.984.984 0 01-.7.29zm-14.02 0a1.024 1.024 0 01-.71-.29l-.13-.14a1 1 0 011.41-1.41l.13.13a1 1 0 010 1.41.97.97 0 01-.7.3zM12 3.04a.969.969 0 01-1-.96V2a1 1 0 012 0 1.038 1.038 0 01-1 1.04z"/>
+            <path d="M19 12a7 7 0 11-7-7 7 7 0 017 7z" />
+            <path d="M12 22.96a.969.969 0 01-1-.96v-.08a1 1 0 012 0 1.038 1.038 0 01-1 1.04zm7.14-2.82a1.024 1.024 0 01-.71-.29l-.13-.13a1 1 0 011.41-1.41l.13.13a1 1 0 010 1.41.984.984 0 01-.7.29zm-14.28 0a1.024 1.024 0 01-.71-.29 1 1 0 010-1.41l.13-.13a1 1 0 011.41 1.41l-.13.13a1 1 0 01-.7.29zM22 13h-.08a1 1 0 010-2 1.038 1.038 0 011.04 1 .969.969 0 01-.96 1zM2.08 13H2a1 1 0 010-2 1.038 1.038 0 011.04 1 .969.969 0 01-.96 1zm16.93-7.01a1.024 1.024 0 01-.71-.29 1 1 0 010-1.41l.13-.13a1 1 0 011.41 1.41l-.13.13a.984.984 0 01-.7.29zm-14.02 0a1.024 1.024 0 01-.71-.29l-.13-.14a1 1 0 011.41-1.41l.13.13a1 1 0 010 1.41.97.97 0 01-.7.3zM12 3.04a.969.969 0 01-1-.96V2a1 1 0 012 0 1.038 1.038 0 01-1 1.04z" />
         </g>
     </svg>
 );

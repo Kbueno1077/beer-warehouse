@@ -1,28 +1,25 @@
-'use client'
+"use client";
 import React from "react";
 
 import UsersGrid from "@/modules/Settings/AllUsers/UsersGrid";
 import UsersControl from "@/modules/Settings/AllUsers/UsersControl";
-import {UserType} from "@/util/types";
-
+import { UserType } from "@/util/types";
 
 export interface SettingsProps {
-    serverFetchedUsers: Array<UserType>
+    serverFetchedUsers: Array<UserType>;
 }
 
-function Settings({serverFetchedUsers}: SettingsProps) {
-    const [users, setUsers] = React.useState(serverFetchedUsers)
-    const [selectedUser, setSelectedUser] = React.useState({})
-    const handleSearch = () => {
-
-    }
+function Settings({ serverFetchedUsers }: SettingsProps) {
+    const [users, setUsers] = React.useState(serverFetchedUsers);
+    const [selectedUser, setSelectedUser] = React.useState({});
+    const handleSearch = () => {};
 
     const handleSelectUser = (user: UserType) => {
-        setSelectedUser(user)
-    }
+        setSelectedUser(user);
+    };
 
     return (
-        <div className='flex gap-2'>
+        <div className="flex gap-2">
             {/*<DesktopSidebar/>*/}
 
             {/*<div className='w-full h-screen flex flex-col justify-between'>*/}
@@ -34,7 +31,7 @@ function Settings({serverFetchedUsers}: SettingsProps) {
             {/*    </div>*/}
             {/*</div>*/}
         </div>
-    )
+    );
 }
 
-export default Settings
+export default Settings;

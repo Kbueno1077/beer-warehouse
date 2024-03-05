@@ -1,11 +1,9 @@
-
 .chipName {
     width: 100%;
     overflow: auto;
     word-break: break-all;
     background-color: rgba(0, 0, 0, 0.42);
 }
-
 
 .countryImg {
     object-fit: cover;
@@ -21,19 +19,16 @@ button.wrapper > :first-child {
     padding: 0;
 }
 
-
 .accordionWrapper {
     height: 5px;
     width: 100%;
     padding: 0;
 }
 
-
 button.accordionWrapper > :first-child {
     width: 100%;
     padding: 0;
 }
-
 
 .startContent {
     display: flex;

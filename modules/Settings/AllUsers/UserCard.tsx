@@ -1,43 +1,58 @@
-'use client'
+"use client";
 
 import React from "react";
-import {Avatar, Card, CardBody, CardFooter, CardHeader} from "@nextui-org/react";
-import {UserType} from "@/util/types";
-
+import {
+    Avatar,
+    Card,
+    CardBody,
+    CardFooter,
+    CardHeader,
+} from "@nextui-org/react";
+import { UserType } from "@/util/types";
 
 interface UserCardProps {
     user: UserType;
     selectedId: string;
-    handleSelectUser: Function
+    handleSelectUser: Function;
 }
 
-export default function UserCard({user, selectedId, handleSelectUser}: UserCardProps) {
+export default function UserCard({
+    user,
+    selectedId,
+    handleSelectUser,
+}: UserCardProps) {
     const [isFollowed, setIsFollowed] = React.useState(false);
 
     return (
-        <Card className={`min-w-[250px] ${selectedId === user.id && ''}`} isPressable
-              onPress={() => handleSelectUser(user)} radius='md'>
+        <Card
+            className={`min-w-[250px] ${selectedId === user.id && ""}`}
+            isPressable
+            onPress={() => handleSelectUser(user)}
+            radius="md"
+        >
             <CardHeader className="justify-between">
                 <div className="flex gap-5">
-
-                    <Avatar isBordered radius="full" size="lg" src="https://i.pravatar.cc/150?u=a04258114e29026708c"/>
+                    <Avatar
+                        isBordered
+                        radius="full"
+                        size="lg"
+                        src="https://i.pravatar.cc/150?u=a04258114e29026708c"
+                    />
                     <div className="flex flex-col gap-1 items-start justify-center">
-                        <h4 className="text-small font-semibold leading-none text-default-600">{user.name}</h4>
+                        <h4 className="text-small font-semibold leading-none text-default-600">
+                            {user.name}
+                        </h4>
                         {/*<h5 className="text-small tracking-tight text-default-400">@zoeylang</h5>*/}
                     </div>
                 </div>
-
             </CardHeader>
-
 
             <CardBody className="">
                 <b>Email: </b>
                 <p className="text-default-500">{user.email}</p>
             </CardBody>
 
-
             <CardFooter className="text-small justify-end">
-
                 <p className="text-default-500">{user.role}</p>
             </CardFooter>
         </Card>

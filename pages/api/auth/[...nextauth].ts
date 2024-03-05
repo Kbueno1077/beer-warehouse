@@ -1,7 +1,7 @@
 import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
-import {XataAdapter} from "@next-auth/xata-adapter";
-import {XataClient} from "@/xata/xata";
+import { XataAdapter } from "@next-auth/xata-adapter";
+import { XataClient } from "@/xata/xata";
 
 const xata = new XataClient();
 
@@ -16,25 +16,35 @@ export default NextAuth({
             // e.g. domain, username, password, 2FA token, etc.
             // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
-                username: {label: "Username", type: "text", placeholder: "jsmith"},
-                password: {label: "Password", type: "password"}
+                username: {
+                    label: "Username",
+                    type: "text",
+                    placeholder: "jsmith",
+                },
+                password: { label: "Password", type: "password" },
             },
 
             async authorize(credentials: any, req: any) {
                 const user: any = await xata.db.nextauth_users
-                    .filter({$any: [{name: credentials?.username}, {email: credentials?.username}]}).getFirst()
+                    .filter({
+                        $any: [
+                            { name: credentials?.username },
+                            { email: credentials?.username },
+                        ],
+                    })
+                    .getFirst();
 
                 if (credentials?.password === user?.password) {
                     return user;
                 }
 
                 return null;
-            }
-        })
+            },
+        }),
     ],
 
     callbacks: {
-        async jwt({token, user}: any) {
+        async jwt({ token, user }: any) {
             if (user) {
                 token._id = user.id;
                 token.username = user.name;
@@ -44,8 +54,7 @@ export default NextAuth({
             return token;
         },
 
-        async session({session, user, token}: any) {
-
+        async session({ session, user, token }: any) {
             if (token) {
                 // session.user.id = user.id;
                 // session.user.username = user.name;
@@ -54,17 +63,17 @@ export default NextAuth({
             }
 
             return session;
-        }
+        },
     },
 
     secret: process.env.NEXTAUTH_SECRET,
     session: {
         strategy: "jwt",
         maxAge: 30 * 24 * 60 * 60, // 30 days,
-        updateAge: 24 * 60 * 60 // 24 hours
+        updateAge: 24 * 60 * 60, // 24 hours
     },
 
     jwt: {
-        secret: process.env.NEXTAUTH_SECRET
-    }
+        secret: process.env.NEXTAUTH_SECRET,
+    },
 });

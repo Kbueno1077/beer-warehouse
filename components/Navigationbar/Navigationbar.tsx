@@ -1,33 +1,38 @@
 "use client";
 
 import React from "react";
-import {Navbar, NavbarBrand, NavbarContent, NavbarMenu, NavbarMenuItem,} from "@nextui-org/react";
-import {CiBeerMugFull} from "react-icons/ci";
+import {
+    Navbar,
+    NavbarBrand,
+    NavbarContent,
+    NavbarMenu,
+    NavbarMenuItem,
+} from "@nextui-org/react";
+import { CiBeerMugFull } from "react-icons/ci";
 import AuthModal from "@/modules/Auth/AuthModal/AuthModal";
-import {useTranslations} from "next-intl";
+import { useTranslations } from "next-intl";
 import SwitchMode from "@/components/SwitchMode/SwitchMode";
 import styles from "./navigationBar.module.css";
 import SwitchTheme from "@/components/SwitchTheme/SwitchTheme";
-import {Link, usePathname} from "@/i18n/navigation";
+import { Link, usePathname } from "@/i18n/navigation";
 import SettingsDropDown from "@/modules/SettingsDropDown/SettingsDropDown";
 
 export default function Navigationbar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const pathname = usePathname()
+    const pathname = usePathname();
     const t = useTranslations("navbar");
 
-
     const playSound = () => {
-        const audio = document?.getElementById("openCanSound")
+        const audio = document?.getElementById("openCanSound");
         if (audio instanceof HTMLAudioElement) {
-            audio.play()
+            audio.play();
         }
     };
 
     const handleOpen = (state: boolean) => {
-        setIsMenuOpen(state)
-    }
+        setIsMenuOpen(state);
+    };
 
     return (
         <Navbar
@@ -72,24 +77,26 @@ export default function Navigationbar() {
             </NavbarContent>
 
             <NavbarContent justify="end">
-                <SwitchTheme/>
+                <SwitchTheme />
 
-                {pathname === '/' &&
-                    <SwitchMode/>
-                }
+                {pathname === "/" && <SwitchMode />}
 
-                <div className='ml-[5px]'>
-                    <SettingsDropDown/>
+                <div className="ml-[5px]">
+                    <SettingsDropDown />
                 </div>
             </NavbarContent>
 
             <NavbarMenu>
-                <AuthModal mode="mobile-login"/>
+                <AuthModal mode="mobile-login" />
                 {/*<AuthModal mode="mobile-register"/>*/}
 
                 <NavbarMenuItem>
-                    <Link onClick={() => handleOpen(false)} className="w-full" href="/">
-                        {t('dashboard')}
+                    <Link
+                        onClick={() => handleOpen(false)}
+                        className="w-full"
+                        href="/"
+                    >
+                        {t("dashboard")}
                     </Link>
                 </NavbarMenuItem>
 
@@ -100,9 +107,13 @@ export default function Navigationbar() {
                 {/*</NavbarMenuItem>*/}
 
                 <NavbarMenuItem>
-                    {  /*@ts-ignore*/}
-                    <Link onClick={() => handleOpen(false)} className="w-full" href="/charts">
-                        {t('chartsLink')}
+                    <Link
+                        onClick={() => handleOpen(false)}
+                        className="w-full"
+                        /*@ts-ignore*/
+                        href="/charts"
+                    >
+                        {t("chartsLink")}
                     </Link>
                 </NavbarMenuItem>
             </NavbarMenu>

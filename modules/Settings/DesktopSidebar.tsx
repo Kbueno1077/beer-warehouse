@@ -1,9 +1,7 @@
-import styles from './sidebar.module.css'
+import styles from "./sidebar.module.css";
 
 function DesktopSidebar() {
-
-
-    return (<div className={styles.sidebar}></div>)
+    return <div className={styles.sidebar}></div>;
 }
 
-export default DesktopSidebar
+export default DesktopSidebar;

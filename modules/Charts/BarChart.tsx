@@ -1,30 +1,36 @@
 //@ts-nocheck
 
-'use client'
+"use client";
 
-import React, {useEffect} from "react";
-import {BeerType} from "@/util/types";
+import React, { useEffect } from "react";
+import { BeerType } from "@/util/types";
 import ReactECharts from "echarts-for-react";
 import countryCodes from "@/util/countries.json";
-import {useTranslations} from "next-intl";
-import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
+import { useTranslations } from "next-intl";
 
 interface PieChartsProps {
-    serverFetchedBeers: Array<BeerType>
+    serverFetchedBeers: Array<BeerType>;
 }
 
-function BarChart({serverFetchedBeers}: PieChartsProps) {
-    const [data, setData] = React.useState(null)
-    const tcountries = useTranslations('countries');
+function BarChart({ serverFetchedBeers }: PieChartsProps) {
+    const [data, setData] = React.useState(null);
+    const tcountries = useTranslations("countries");
 
     useEffect(() => {
-        keyBarChart()
-    }, [])
-
+        keyBarChart();
+    }, []);
 
     const keyBarChart = () => {
         let result = {};
-        let impressions = ['Amazing', 'Excellent', 'Good', 'Average', 'Bad', 'Awful', 'Horrible'];
+        let impressions = [
+            "Amazing",
+            "Excellent",
+            "Good",
+            "Average",
+            "Bad",
+            "Awful",
+            "Horrible",
+        ];
 
         serverFetchedBeers.forEach((beer: BeerType) => {
             // Initialize country if not already present
@@ -43,70 +49,88 @@ function BarChart({serverFetchedBeers}: PieChartsProps) {
 
         // Convert the result object to an array of arrays
         let output = [];
-        output.push(['country', 'Amazing', 'Excellent', 'Good', "Average", "Bad", "Awful", "Horrible"],)
+        output.push([
+            "country",
+            "Amazing",
+            "Excellent",
+            "Good",
+            "Average",
+            "Bad",
+            "Awful",
+            "Horrible",
+        ]);
 
         for (let country in result) {
-
-            let row = [country !== "TBD" ? tcountries(countryCodes[country]) : "TBD"];
-            impressions.forEach(impression => {
-
+            let row = [
+                country !== "TBD" ? tcountries(countryCodes[country]) : "TBD",
+            ];
+            impressions.forEach((impression) => {
                 row.push(result[country][impression] || 0.1);
             });
             output.push(row);
         }
 
-        setData(output)
+        setData(output);
         return output;
-    }
-
+    };
 
     const getOption = () => {
         return {
             legend: {},
             tooltip: {
                 formatter: function (params: any) {
-                    let data = params.data[params.componentIndex + 1] === 0.1 ? '0' : params.data[params.componentIndex + 1];
+                    let data =
+                        params.data[params.componentIndex + 1] === 0.1
+                            ? "0"
+                            : params.data[params.componentIndex + 1];
                     return `${params.marker} ${params.name}<br/>${params.seriesName}: ${data}`;
-                }
+                },
             },
             dataZoom: [
                 {
-                    id: 'dataZoomX',
-                    type: 'slider',
+                    id: "dataZoomX",
+                    type: "slider",
                     xAxisIndex: [0],
-                    filterMode: 'filter',
+                    filterMode: "filter",
                     start: 0,
-                    end: 10
+                    end: 10,
                 },
-
             ],
             dataset: {
-                source: data
+                source: data,
             },
-            xAxis: {type: 'category'},
+            xAxis: { type: "category" },
             yAxis: {},
             // Declare several bar series, each will be mapped
             // to a column of dataset.source by default.
-            series: [{type: 'bar',}, {type: 'bar'}, {type: 'bar'}, {type: 'bar'}, {type: 'bar'}, {type: 'bar'}, {type: 'bar'}]
-        }
+            series: [
+                { type: "bar" },
+                { type: "bar" },
+                { type: "bar" },
+                { type: "bar" },
+                { type: "bar" },
+                { type: "bar" },
+                { type: "bar" },
+            ],
+        };
     };
-
 
     return (
         <>
-            {data &&
+            {data && (
                 <ReactECharts
                     option={getOption()}
                     style={{
-                        height: innerWidth > 1024 ? '800px' : '500px',
-                        width: '100%',
+                        height: innerWidth > 1024 ? "800px" : "500px",
+                        width: "100%",
                     }}
                     notMerge={true}
                     lazyUpdate={true}
-                    theme='my_theme'
-                />}
+                    theme="my_theme"
+                />
+            )}
         </>
-    )
+    );
 }
 
-export default BarChart
+export default BarChart;
