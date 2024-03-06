@@ -1,0 +1,16 @@
+{
+  "id": "mig_cnjoj015rt3cu9lde3jg",
+  "parentID": "mig_cnjoish5rt3cu9lde3ig",
+  "checksum": "1:1f9c5042d76798e0d4fe50cb627362fa4477d6e8d2c032263749c0d6a46552c8",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "bought_in",
+          "type": "string"
+        },
+        "table": "users_beers"
+      }
+    }
+  ]
+}

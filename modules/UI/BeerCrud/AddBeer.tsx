@@ -31,8 +31,12 @@ import Spinner from "@/components/Loaders/Spinner";
 import { checkSession } from "@/util/javascript";
 import { CARD_MODE } from "@/util/types";
 import { useTranslations } from "next-intl";
+import { useSession } from "next-auth/react";
 
 export default function AddBeer() {
+    const { data: session } = useSession();
+    const user = session?.user;
+
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { theme, addBeerUI, mode } = useBeerStore();
@@ -118,7 +122,9 @@ export default function AddBeer() {
         const {
             data: { signature, timestamp, error },
         } = await axios.post("/api/cloudinary", {
-            folder: process.env.CLOUDINARY_BEER_FOLDER,
+            folder: `${process.env.CLOUDINARY_BEER_FOLDER}/${
+                user?.name === "Kevin" ? "my-beers" : user?.name
+            }`,
             upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
             filename_override: name,
             public_id: name,
@@ -132,10 +138,16 @@ export default function AddBeer() {
         const formData = new FormData();
         formData.append("file", evidenceFiles[0]);
         formData.append("upload_preset", "ul1f0lm9");
-        formData.append("folder", "beers-cloudStore");
+        formData.append(
+            "folder",
+            `${process.env.CLOUDINARY_BEER_FOLDER}/${
+                user?.name === "Kevin" ? "my-beers" : user?.name
+            }`
+        );
         formData.append("filename_override", name);
         formData.append("public_id", name);
         formData.append("timestamp", timestamp);
+        formData.append("owner", user?.name ?? "");
         // formData.append('signature', signature);
         formData.append("api_key", "763641954252769");
         return await axios.post(url, formData);
@@ -153,9 +165,10 @@ export default function AddBeer() {
             ml: ml ? mlNumber : 0,
             country: country?.value ?? "TBD",
             initial_impression: initial_impression.currentKey ?? "Average",
-            bought_in,
+            bought_in: bought_in.value ?? "",
             evidence_img: evidence_url ?? "",
             additional_comments,
+            owner: user?.name,
         });
 
         if (error) {

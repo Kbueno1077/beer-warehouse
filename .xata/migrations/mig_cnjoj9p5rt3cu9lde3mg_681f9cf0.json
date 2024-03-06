@@ -1,0 +1,16 @@
+{
+  "id": "mig_cnjoj9p5rt3cu9lde3mg",
+  "parentID": "mig_cnjoj715rt3cu9lde3lg",
+  "checksum": "1:681f9cf0dbbbecfdce162c8b0df11e3bd5f2a418b918e45f73d86802edc1ca7e",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "additional_comments",
+          "type": "text"
+        },
+        "table": "users_beers"
+      }
+    }
+  ]
+}

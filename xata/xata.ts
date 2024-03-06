@@ -112,6 +112,35 @@ const tables = [
             { name: "promoted", type: "bool", defaultValue: "false" },
         ],
     },
+    {
+        name: "usersBeers",
+        columns: [
+            {
+                name: "owner",
+                type: "string",
+                notNull: true,
+                defaultValue: "N/A",
+            },
+            { name: "name", type: "string" },
+            { name: "evidence_img", type: "string" },
+            { name: "bought_in", type: "string" },
+            {
+                name: "country",
+                type: "string",
+                notNull: true,
+                defaultValue: "TBD",
+            },
+            { name: "ml", type: "float", notNull: true, defaultValue: "330" },
+            { name: "additional_comments", type: "text" },
+            {
+                name: "alcohol_percentage",
+                type: "float",
+                notNull: true,
+                defaultValue: "0.0",
+            },
+            { name: "initial_impression", type: "string" },
+        ],
+    },
 ] as const;
 
 export type SchemaTables = typeof tables;
@@ -143,6 +172,9 @@ export type NextauthSessionsRecord = NextauthSessions & XataRecord;
 export type FriendsBeer = InferredTypes["friends-beer"];
 export type FriendsBeerRecord = FriendsBeer & XataRecord;
 
+export type UsersBeers = InferredTypes["usersBeers"];
+export type UsersBeersRecord = UsersBeers & XataRecord;
+
 export type DatabaseSchema = {
     beers: BeersRecord;
     nextauth_users: NextauthUsersRecord;
@@ -152,6 +184,7 @@ export type DatabaseSchema = {
     nextauth_users_sessions: NextauthUsersSessionsRecord;
     nextauth_sessions: NextauthSessionsRecord;
     "friends-beer": FriendsBeerRecord;
+    usersBeers: UsersBeersRecord;
 };
 
 const DatabaseClient = buildClient();
@@ -163,7 +196,7 @@ const defaultOptions = {
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {
     constructor(options?: BaseClientOptions) {
-        super({ ...defaultOptions, ...options }, tables);
+        super({ ...defaultOptions, enableBrowser: true, ...options }, tables);
     }
 }
 

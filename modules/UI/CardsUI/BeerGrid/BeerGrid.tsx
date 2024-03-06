@@ -4,7 +4,7 @@ import React, { useState } from "react";
 import BeerCard from "@/modules/UI/CardsUI/BeerCard/BeerCard";
 import { Avatar, Button, Chip } from "@nextui-org/react";
 import { useBeerStore } from "@/store/zustand";
-import { ADMIN_ROLE, BeerType, BeerTypeExtended } from "@/util/types";
+import { BeerType, BeerTypeExtended } from "@/util/types";
 
 import styles from "./beerGrid.module.css";
 import {
@@ -28,7 +28,7 @@ const BeerGrid = () => {
     const user = session?.user;
     const t = useTranslations("cards");
 
-    const { allBeers, filters, sort, groupBy } = useBeerStore();
+    const { allBeers, filters, sort, groupBy, warehouseOwner } = useBeerStore();
     const hasSearchFilter = Boolean(filters.search);
 
     const [page, setPage] = useState<number>(1);
@@ -116,7 +116,7 @@ const BeerGrid = () => {
     return (
         <>
             {/* @ts-ignore*/}
-            {user && user.role === ADMIN_ROLE ? (
+            {user && user.name === warehouseOwner ? (
                 <div className="flex justify-between align-middle items-center px-2 mb-[10px] w-full">
                     <p className="text-gray-500">
                         {" "}
@@ -189,7 +189,13 @@ const BeerGrid = () => {
                                             b.order <= page * pageSize
                                     )
                                     .map((beer: BeerType) => (
-                                        <BeerCard key={beer.id} beer={beer} />
+                                        <BeerCard
+                                            key={beer.id}
+                                            beer={beer}
+                                            isOwner={
+                                                user?.name === warehouseOwner
+                                            }
+                                        />
                                     ))}
                             </div>
                         </div>

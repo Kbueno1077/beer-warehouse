@@ -1,5 +1,7 @@
 import { create } from "zustand";
 import { BeerType, LIGHT_MODE, ModeType, ThemeType } from "@/util/types";
+import { UsersBeersRecord, getXataClient } from "@/xata/xata";
+import { SelectedPick } from "@xata.io/client";
 
 type MlFilterType = {
     operand: string;
@@ -28,17 +30,24 @@ export type GroupByType = String;
 
 type BeerStore = {
     //LOAD
+    warehouseOwner: String | null;
+    loading: boolean;
     allBeers: Array<BeerType>;
     setAllBeers: Function;
 
     //THEME MODE RESET
     theme: ThemeType;
     setTheme: Function;
+    setLoading: Function;
     mode: ModeType | null;
     setMode: Function;
     resetFilters: Function;
     resetSort: Function;
     resetGroupBy: Function;
+
+    //
+    handleWarehouseChange: Function;
+    setWarehouseOwner: Function;
 
     //CHANGE
     filters: Filters;
@@ -57,6 +66,8 @@ type BeerStore = {
 
 export const useBeerStore = create<BeerStore>((set, get) => ({
     //   STATES
+    warehouseOwner: null,
+    loading: true,
     theme: LIGHT_MODE,
     mode: null,
     allBeers: [],
@@ -75,6 +86,10 @@ export const useBeerStore = create<BeerStore>((set, get) => ({
     groupBy: "",
 
     //  ACTIONS
+    setLoading: (loading: boolean) => {
+        set({ loading });
+    },
+
     setTheme: (theme: ThemeType) => {
         set({ theme });
         document.documentElement.className = theme;
@@ -118,6 +133,60 @@ export const useBeerStore = create<BeerStore>((set, get) => ({
             beer.id !== newBeer.id ? beer : newBeer
         );
         set({ allBeers: updatedBeers });
+    },
+
+    //
+    handleWarehouseChange: async (newWarehouseOwner: string) => {
+        const xata = getXataClient();
+        get().setLoading(true);
+
+        get().resetFilters();
+        get().resetGroupBy();
+        get().resetSort();
+
+        let serverFetchedBeers: any = [];
+
+        if (newWarehouseOwner !== "Kevin") {
+            serverFetchedBeers = await xata.db.usersBeers
+                .select([
+                    "id",
+                    "name",
+                    "alcohol_percentage",
+                    "ml",
+                    "country",
+                    "initial_impression",
+                    "bought_in",
+                    "evidence_img",
+                    "additional_comments",
+                    "owner",
+                ])
+                .filter({ owner: newWarehouseOwner })
+                .sort("name", "asc")
+                .getAll();
+        } else {
+            serverFetchedBeers = await xata.db.beers
+                .select([
+                    "id",
+                    "name",
+                    "alcohol_percentage",
+                    "ml",
+                    "country",
+                    "initial_impression",
+                    "bought_in",
+                    "evidence_img",
+                    "additional_comments",
+                ])
+                .sort("name", "asc")
+                .getAll();
+        }
+
+        get().setAllBeers(serverFetchedBeers);
+        get().setWarehouseOwner(newWarehouseOwner);
+        get().setLoading(false);
+    },
+
+    setWarehouseOwner: (warehouseOwner: string) => {
+        set({ warehouseOwner });
     },
 
     //RESET

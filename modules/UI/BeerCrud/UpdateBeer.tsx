@@ -34,9 +34,10 @@ import impressionJson from "@/util/impression.json";
 
 interface UpdateBeerProps {
     selectedBeer: BeerType;
+    isOwner: boolean;
 }
 
-export default function UpdateBeer({ selectedBeer }: UpdateBeerProps) {
+export default function UpdateBeer({ selectedBeer, isOwner }: UpdateBeerProps) {
     const { data: session } = useSession();
     const user = session?.user;
     const t = useTranslations("beerCrud");
@@ -136,7 +137,9 @@ export default function UpdateBeer({ selectedBeer }: UpdateBeerProps) {
         const {
             data: { signature, timestamp, error },
         } = await axios.post("/api/cloudinary", {
-            folder: process.env.CLOUDINARY_BEER_FOLDER,
+            folder: `${process.env.CLOUDINARY_BEER_FOLDER}/${
+                user?.name === "Kevin" ? "my-beers" : user?.name
+            }`,
             upload_preset: process.env.CLOUDINARY_UPLOAD_PRESET,
             filename_override: name,
             public_id: name,
@@ -150,10 +153,17 @@ export default function UpdateBeer({ selectedBeer }: UpdateBeerProps) {
         const formData = new FormData();
         formData.append("file", evidenceFiles[0]);
         formData.append("upload_preset", "ul1f0lm9");
-        formData.append("folder", "beers-cloudStore");
+        formData.append(
+            "folder",
+            `${process.env.CLOUDINARY_BEER_FOLDER}/${
+                user?.name === "Kevin" ? "my-beers" : user?.name
+            }`
+        );
         formData.append("filename_override", name);
         formData.append("public_id", name);
         formData.append("timestamp", timestamp);
+        formData.append("owner", user?.name ?? "");
+
         // formData.append('signature', signature);
         formData.append("api_key", "763641954252769");
         return await axios.post(url, formData);
@@ -185,10 +195,11 @@ export default function UpdateBeer({ selectedBeer }: UpdateBeerProps) {
             initial_impression:
                 initial_impression.currentKey ??
                 selectedBeer.initial_impression,
-            bought_in,
+            bought_in: bought_in.value ?? "",
             evidence_img: evidence_url ?? "",
             additional_comments,
             evidence_public_id,
+            owner: user?.name ?? "",
         });
 
         if (error) {
@@ -203,7 +214,7 @@ export default function UpdateBeer({ selectedBeer }: UpdateBeerProps) {
 
     return (
         <>
-            {user && user.role === ADMIN_ROLE && (
+            {user && isOwner && (
                 <Button
                     size={"sm"}
                     variant="faded"

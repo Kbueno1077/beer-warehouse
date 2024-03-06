@@ -4,23 +4,48 @@ import { NextPage } from "next";
 import { getXataClient } from "@/xata/xata";
 import UiComponent from "@/modules/UI/UiComponent";
 import Image from "next/image";
+import { getSession } from "next-auth/react";
+import { getServerSession } from "next-auth";
 
 const Page: NextPage = async () => {
+    const session = await getServerSession();
+
     const xata = getXataClient();
-    const serverFetchedBeers = await xata.db.beers
-        .select([
-            "id",
-            "name",
-            "alcohol_percentage",
-            "ml",
-            "country",
-            "initial_impression",
-            "bought_in",
-            "evidence_img",
-            "additional_comments",
-        ])
-        .sort("name", "asc")
-        .getAll();
+
+    let serverFetchedBeers: any = [];
+    if (!session || !session.user || session?.user.name === "Kevin") {
+        serverFetchedBeers = await xata.db.beers
+            .select([
+                "id",
+                "name",
+                "alcohol_percentage",
+                "ml",
+                "country",
+                "initial_impression",
+                "bought_in",
+                "evidence_img",
+                "additional_comments",
+            ])
+            .sort("name", "asc")
+            .getAll();
+    } else {
+        serverFetchedBeers = await xata.db.usersBeers
+            .select([
+                "id",
+                "name",
+                "alcohol_percentage",
+                "ml",
+                "country",
+                "initial_impression",
+                "bought_in",
+                "evidence_img",
+                "additional_comments",
+                "owner",
+            ])
+            .filter({ owner: session.user.name })
+            .sort("name", "asc")
+            .getAll();
+    }
 
     return (
         <>
@@ -36,7 +61,10 @@ const Page: NextPage = async () => {
                     />
                 </div>
 
-                <UiComponent serverFetchedBeers={serverFetchedBeers} />
+                <UiComponent
+                    serverFetchedBeers={serverFetchedBeers}
+                    username={session?.user.name}
+                />
             </div>
         </>
     );

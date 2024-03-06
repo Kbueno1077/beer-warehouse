@@ -22,6 +22,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { GiBeerBottle } from "react-icons/gi";
 import { IoBarChartSharp } from "react-icons/io5";
 import Spinner from "@/components/Loaders/Spinner";
+import { useBeerStore } from "@/store/zustand";
 
 export default function SettingsDropDown() {
     const iconClasses =
@@ -32,6 +33,7 @@ export default function SettingsDropDown() {
     const [isOpen, setOpen] = React.useState(false);
 
     const { data: session, status } = useSession();
+    const { handleWarehouseChange } = useBeerStore();
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([locale]));
 
     const handleSelection = async (e) => {
@@ -49,6 +51,7 @@ export default function SettingsDropDown() {
         if (e.anchorKey === "logout") {
             handleClose();
             await signOut({ redirect: false });
+            handleWarehouseChange("Kevin");
         }
     };
 
@@ -91,7 +94,7 @@ export default function SettingsDropDown() {
                 classNames={{ base: "w-[250px]" }}
                 onSelectionChange={handleSelection}
                 variant="faded"
-                aria-label={t("")}
+                aria-label={"Settings"}
             >
                 {!session?.user && status === "unauthenticated" && (
                     <DropdownSection title={t("Session")}>

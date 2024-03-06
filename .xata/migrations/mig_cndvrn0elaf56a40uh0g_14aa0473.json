@@ -1,0 +1,19 @@
+{
+  "id": "mig_cndvrn0elaf56a40uh0g",
+  "parentID": "mig_cmlba0i4iq0pp375n4r0",
+  "checksum": "1:14aa047316444a8cd6000fd25e001d6d572e7f083f009d21cf4d1ad7a15a45f5",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "owner",
+          "type": "link",
+          "link": {
+            "table": "nextauth_users"
+          }
+        },
+        "table": "beers"
+      }
+    }
+  ]
+}

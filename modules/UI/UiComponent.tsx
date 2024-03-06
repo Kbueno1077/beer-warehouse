@@ -7,23 +7,40 @@ import MobileSearchControls from "./CardsUI/SearchControls/MobileSearchControls"
 import BeerGrid from "@/modules/UI/CardsUI/BeerGrid/BeerGrid";
 import { Skeleton } from "@nextui-org/react";
 import BeersTable from "@/modules/UI/TableUI/DataTable/BeersTable";
+import { useSession } from "next-auth/react";
 
 interface UiComponentProps {
     serverFetchedBeers: Array<BeerType>;
+    username?: string;
 }
 
-function UiComponent({ serverFetchedBeers }: UiComponentProps) {
-    const [loadingData, setLoadingData] = useState<boolean>(true);
-    const { theme, mode, setMode, allBeers, setAllBeers } = useBeerStore();
+function UiComponent({ serverFetchedBeers, username }: UiComponentProps) {
+    const {
+        theme,
+        mode,
+        setMode,
+        allBeers,
+        setAllBeers,
+        loading,
+        setLoading,
+        setWarehouseOwner,
+    } = useBeerStore();
 
     useEffect(() => {
         const getMode = window.innerWidth < 1024 ? CARD_MODE : TABLE_MODE;
         setMode(getMode);
         setAllBeers(serverFetchedBeers);
-        setLoadingData(false);
-    }, [setMode, serverFetchedBeers, setAllBeers]);
+        setLoading(false);
+        setWarehouseOwner(username ?? "Kevin");
+    }, [
+        setMode,
+        serverFetchedBeers,
+        setAllBeers,
+        setLoading,
+        setWarehouseOwner,
+    ]);
 
-    if (loadingData && allBeers.length === 0 && !mode) {
+    if (loading && allBeers.length === 0 && !mode) {
         return (
             <div
                 className={`dataTableWrapper ${

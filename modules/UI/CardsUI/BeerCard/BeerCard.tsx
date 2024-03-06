@@ -22,12 +22,14 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import { TbScanEye } from "react-icons/tb";
+import { useBeerStore } from "@/store/zustand";
 
 interface BeerCardProps {
     beer: BeerType;
+    isOwner: boolean;
 }
 
-const BeerCard = ({ beer }: BeerCardProps) => {
+const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
     const { data: session } = useSession();
     const user = session?.user;
 
@@ -89,7 +91,7 @@ const BeerCard = ({ beer }: BeerCardProps) => {
                     )}
                 </div>
 
-                {user && user.role === ADMIN_ROLE && (
+                {user && isOwner && (
                     <Accordion
                         className="w-full px-0 mt-2 mb-[-8px]"
                         selectedKeys={selectedKeys}
@@ -130,8 +132,14 @@ const BeerCard = ({ beer }: BeerCardProps) => {
                                 >
                                     <TbScanEye className="h-[17px] w-[17px] text-gray-500" />
                                 </Button>
-                                <UpdateBeer selectedBeer={beer} />
-                                <DeleteBeer selectedBeer={beer} />
+                                <UpdateBeer
+                                    selectedBeer={beer}
+                                    isOwner={isOwner}
+                                />
+                                <DeleteBeer
+                                    selectedBeer={beer}
+                                    isOwner={isOwner}
+                                />
                             </div>
                         </AccordionItem>
                     </Accordion>

@@ -1,0 +1,16 @@
+{
+  "id": "mig_cnjojl95rt3cu9lde3og",
+  "parentID": "mig_cnjojg15rt3cu9lde3ng",
+  "checksum": "1:8c5d0bbbe84d1a075c6c3a3f0200cf017f1b462eacd383f92205c57a7bb8330d",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "initial_impression",
+          "type": "string"
+        },
+        "table": "users_beers"
+      }
+    }
+  ]
+}

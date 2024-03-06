@@ -1,0 +1,18 @@
+{
+  "id": "mig_cnjoin15rt3cu9lde3hg",
+  "parentID": "mig_cnjoi4h5rt3cu9lde3gg",
+  "checksum": "1:65493d1d108be5cd7e5d985bb9cec8bd86bffd2d961c323e62e7af1e1c8afa87",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "owner",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "N/A"
+        },
+        "table": "users_beers"
+      }
+    }
+  ]
+}

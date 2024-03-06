@@ -1,0 +1,16 @@
+{
+  "id": "mig_cnjoish5rt3cu9lde3ig",
+  "parentID": "mig_cnjoips13m5nfnc1u8rg",
+  "checksum": "1:e086c7af2900b9cb2e7ae642d0c44b3dce4b58628114b53d21b16736a54c3a46",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "evidence_img",
+          "type": "string"
+        },
+        "table": "users_beers"
+      }
+    }
+  ]
+}

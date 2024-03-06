@@ -1,0 +1,13 @@
+{
+  "id": "mig_cnjtbrps9clu2t0j37d0",
+  "parentID": "mig_cnjojl95rt3cu9lde3og",
+  "checksum": "1:d3d75d25fbce3335330b39bd77a3f2e0481e44ab140362ea43d4120c2523f642",
+  "operations": [
+    {
+      "renameTable": {
+        "newName": "usersBeers",
+        "oldName": "users_beers"
+      }
+    }
+  ]
+}

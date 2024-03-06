@@ -53,7 +53,7 @@ export default function BeersTable() {
     const t = useTranslations("table");
     const tcountries = useTranslations("countries");
 
-    const { allBeers, filters, changeFilters } = useBeerStore();
+    const { allBeers, filters, changeFilters, warehouseOwner } = useBeerStore();
 
     const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
         new Set([])
@@ -313,8 +313,14 @@ export default function BeersTable() {
                                 <TbScanEye className="h-[17px] w-[17px] text-gray-500" />
                             </Button>
 
-                            <UpdateBeer selectedBeer={beer} />
-                            <DeleteBeer selectedBeer={beer} />
+                            <UpdateBeer
+                                selectedBeer={beer}
+                                isOwner={user?.name === warehouseOwner}
+                            />
+                            <DeleteBeer
+                                selectedBeer={beer}
+                                isOwner={user?.name === warehouseOwner}
+                            />
                         </div>
                     );
                 default:
@@ -400,7 +406,7 @@ export default function BeersTable() {
                             </DropdownMenu>
                         </Dropdown>
 
-                        {user && user.role === ADMIN_ROLE && <AddBeer />}
+                        {user && user.name === warehouseOwner && <AddBeer />}
                     </div>
                 </div>
                 <div className="flex justify-between items-center">

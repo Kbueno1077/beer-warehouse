@@ -2,7 +2,7 @@
 
 import React from "react";
 
-import { signIn, useSession } from "next-auth/react";
+import { getSession, signIn, useSession } from "next-auth/react";
 
 import {
     Button,
@@ -20,6 +20,7 @@ import {
 
 import Spinner from "@/components/Loaders/Spinner";
 import { useTranslations } from "next-intl";
+import { useBeerStore } from "@/store/zustand";
 
 type AuthModalProps = {
     mode: string;
@@ -27,7 +28,10 @@ type AuthModalProps = {
 
 export default function AuthModal({ mode = "login" }: AuthModalProps) {
     const { data: session } = useSession();
+    const user = session?.user;
+
     const t = useTranslations("auth");
+    const { handleWarehouseChange } = useBeerStore();
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selected, setSelected] = React.useState<any>(mode);
@@ -46,6 +50,9 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
 
         if (response && response.ok) {
             onOpenChange();
+
+            const actualSession = await getSession();
+            handleWarehouseChange(actualSession?.user.name);
         }
 
         setIsLoading(false);

@@ -1,0 +1,18 @@
+{
+  "id": "mig_cnjoj715rt3cu9lde3lg",
+  "parentID": "mig_cnjoj2p5rt3cu9lde3kg",
+  "checksum": "1:1db28a6125f20d699bb36e1990caa71d0595ea4e60fe4f1845f6ec9541a73175",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "ml",
+          "type": "float",
+          "notNull": true,
+          "defaultValue": "330"
+        },
+        "table": "users_beers"
+      }
+    }
+  ]
+}

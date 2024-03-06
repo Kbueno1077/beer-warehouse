@@ -20,9 +20,10 @@ import { useTranslations } from "next-intl";
 
 interface DeleteBeerProps {
     selectedBeer: BeerType;
+    isOwner: boolean;
 }
 
-export default function DeleteBeer({ selectedBeer }: DeleteBeerProps) {
+export default function DeleteBeer({ selectedBeer, isOwner }: DeleteBeerProps) {
     const { data: session } = useSession();
     const user = session?.user;
 
@@ -51,6 +52,7 @@ export default function DeleteBeer({ selectedBeer }: DeleteBeerProps) {
                 params: {
                     id,
                     evidence_public_id,
+                    owner: user?.name ?? "",
                 },
             });
 
@@ -75,7 +77,7 @@ export default function DeleteBeer({ selectedBeer }: DeleteBeerProps) {
 
     return (
         <>
-            {user && (
+            {user && isOwner && (
                 <Button
                     size={"sm"}
                     onPress={onOpen}

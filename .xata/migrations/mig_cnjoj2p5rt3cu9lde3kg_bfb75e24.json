@@ -1,0 +1,18 @@
+{
+  "id": "mig_cnjoj2p5rt3cu9lde3kg",
+  "parentID": "mig_cnjoj015rt3cu9lde3jg",
+  "checksum": "1:bfb75e2402a771bf717ecba14ce4cc74b8ba8a51577a7d4b9717fbd0e7c6b207",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "country",
+          "type": "string",
+          "notNull": true,
+          "defaultValue": "TBD"
+        },
+        "table": "users_beers"
+      }
+    }
+  ]
+}
