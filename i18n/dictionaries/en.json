@@ -74,7 +74,8 @@
         "email": "Email",
         "enter-name": "Enter your name",
         "enter-email": "Enter your email",
-        "enter-password": "Enter your password"
+        "enter-password": "Enter your password",
+        "bad-user": "Wrong user or password, try another"
     },
     "table": {
         "total": "Total: {count} beers",

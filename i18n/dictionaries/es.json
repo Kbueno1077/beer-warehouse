@@ -64,7 +64,8 @@
         "email": "Correo",
         "enter-name": "Introduzca su nombre",
         "enter-email": "Introduzca su correo",
-        "enter-password": "Introduzca su contraseña"
+        "enter-password": "Introduzca su contraseña",
+        "bad-user": "Usuario o contraseña incorrecto, pruebe una diferente"
     },
     "table": {
         "total": "Total: {count} cervezas",

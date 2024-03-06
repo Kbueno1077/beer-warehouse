@@ -21,6 +21,7 @@ import {
 import Spinner from "@/components/Loaders/Spinner";
 import { useTranslations } from "next-intl";
 import { useBeerStore } from "@/store/zustand";
+import { enqueueSnackbar } from "notistack";
 
 type AuthModalProps = {
     mode: string;
@@ -39,6 +40,7 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
     const [loginEmail, setLoginEmail] = React.useState<string>("");
     const [loginPassword, setLoginPassword] = React.useState<string>("");
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
+    const [errorMessage, setErrorMessage] = React.useState<string>("");
 
     const handleLogin = async () => {
         setIsLoading(true);
@@ -53,6 +55,12 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
 
             const actualSession = await getSession();
             handleWarehouseChange(actualSession?.user.name);
+        } else {
+            setErrorMessage(t("bad-user"));
+
+            setTimeout(() => {
+                setErrorMessage("");
+            }, 4000);
         }
 
         setIsLoading(false);
@@ -188,6 +196,12 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
                                                     </Button>
                                                 </div>
                                             </form>
+
+                                            {errorMessage && (
+                                                <div className="mt-4 p-2 bg-error rounded-lg text-white ">
+                                                    <span>{errorMessage}</span>
+                                                </div>
+                                            )}
                                         </Tab>
 
                                         {/*<Tab disabled={true} key="sign-up" title={t('signup')}>*/}
