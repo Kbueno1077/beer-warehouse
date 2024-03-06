@@ -3,12 +3,6 @@ import { getXataClient } from "@/xata/xata";
 import { v2 as cloudinary } from "cloudinary";
 
 export async function POST(req: NextRequest, res: NextResponse) {
-    cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUDNAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
-
     const xata = getXataClient();
     const body = await req.json();
 
@@ -63,12 +57,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
 }
 
 export async function PUT(req: NextRequest, res: NextResponse) {
-    cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUDNAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
-
     const xata = getXataClient();
     const body = await req.json();
 
@@ -85,6 +73,12 @@ export async function PUT(req: NextRequest, res: NextResponse) {
         evidence_public_id,
         owner,
     } = body;
+
+    cloudinary.config({
+        cloud_name: `${process.env.CLOUDINARY_CLOUDNAME}/${owner}`,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
 
     try {
         let record;
@@ -131,17 +125,17 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 }
 
 export async function DELETE(req: NextRequest, res: NextResponse) {
-    cloudinary.config({
-        cloud_name: process.env.CLOUDINARY_CLOUDNAME,
-        api_key: process.env.CLOUDINARY_API_KEY,
-        api_secret: process.env.CLOUDINARY_API_SECRET,
-    });
-
     const xata = getXataClient();
     const id: string = req.nextUrl.searchParams.get("id") ?? "";
     const evidence_public_id: string =
         req.nextUrl.searchParams.get("evidence_public_id") ?? "";
     const owner: string = req.nextUrl.searchParams.get("owner") ?? "";
+
+    cloudinary.config({
+        cloud_name: `${process.env.CLOUDINARY_CLOUDNAME}/${owner}`,
+        api_key: process.env.CLOUDINARY_API_KEY,
+        api_secret: process.env.CLOUDINARY_API_SECRET,
+    });
 
     try {
         let record;
