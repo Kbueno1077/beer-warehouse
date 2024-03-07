@@ -16,7 +16,7 @@ const inter = Inter({ subsets: ["latin"] });
 const locales = ["en", "es"];
 
 export const metadata: Metadata = {
-    icons: { icon: "/favicon.ico" },
+    icons: { icon: "../favicon.ico" },
     title: "Beers Warehouse",
     description: "",
 };

@@ -4,7 +4,6 @@ import { NextPage } from "next";
 import { getXataClient } from "@/xata/xata";
 import UiComponent from "@/modules/UI/UiComponent";
 import Image from "next/image";
-import { getSession } from "next-auth/react";
 import { getServerSession } from "next-auth";
 
 const Page: NextPage = async () => {
