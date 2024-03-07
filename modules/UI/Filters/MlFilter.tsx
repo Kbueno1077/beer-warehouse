@@ -11,7 +11,6 @@ import {
 import { useBeerStore } from "@/store/zustand";
 import { AiOutlineClose } from "react-icons/ai";
 import { useTranslations } from "next-intl";
-import { string } from "zod";
 
 export default function MlFilter({ handleFilters }: any) {
     const { filters } = useBeerStore();
