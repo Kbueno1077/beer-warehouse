@@ -17,7 +17,22 @@ const locales = ["en", "es"];
 
 export const metadata: Metadata = {
     icons: { icon: "../favicon.ico" },
-    title: { default: "Beer Warehouse", template: "%s - Beer Warehouse" },
+    keywords: [
+        "beer",
+        "beers",
+        "brews",
+        "beer warehouse",
+        "beer-warehouse",
+        "Tasting Notes",
+        "New Beers",
+        "collection",
+        "Community",
+    ],
+    title: {
+        default:
+            " Beer Warehouse: A Community Hub for Beer Enthusiasts, In Brewpedia, users can share tasting notes, upload photos of their favorite brews, and explore other collectors’ beer collections. Cheers! 🍻",
+        template: "%s - Beer Warehouse",
+    },
     twitter: { card: "summary_large_image" },
     description:
         "Discover the world of beer with our interactive platform. Save, rate, and review every beer you’ve tasted and explore collections from other beer enthusiasts. Whether you’re a casual drinker or a connoisseur, our site is your passport to the diverse universe of beer. Join us and start your beer journey today. Cheers!",
