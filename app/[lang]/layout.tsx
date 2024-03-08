@@ -30,7 +30,7 @@ export const metadata: Metadata = {
     ],
     title: {
         default:
-            " Beer Warehouse: A Community Hub for Beer Enthusiasts, In Brewpedia, users can share tasting notes, upload photos of their favorite brews, and explore other collectors’ beer collections. Cheers! 🍻",
+            "“Beer Warehouse, Brewer’s Haven: Explore, Share, and Sip!” 🍻",
         template: "%s - Beer Warehouse",
     },
     twitter: { card: "summary_large_image" },
