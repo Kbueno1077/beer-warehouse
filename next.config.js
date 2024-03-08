@@ -11,6 +11,7 @@ const nextConfig = withNextIntl({
         ],
     },
     env: {
+        BASE_URL: "https://beer-warehouse/",
         XATA_BRANCH: "main",
         XATA_API_KEY: "xau_0I1txF4W10ujyhpbjiqpNKazZNqpKymk0",
         XATA_DB_URL:
