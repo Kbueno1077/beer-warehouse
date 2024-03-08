@@ -29,7 +29,7 @@ export const metadata: Metadata = {
         "Community",
     ],
     title: {
-        default: "Beer Warehouse, Brewer’s Haven: Explore, Share, and Sip!",
+        default: "Beer Warehouse",
         template: "%s - Beer Warehouse",
     },
     twitter: { card: "summary_large_image" },
