@@ -17,8 +17,10 @@ const locales = ["en", "es"];
 
 export const metadata: Metadata = {
     icons: { icon: "../favicon.ico" },
-    title: "Beers Warehouse",
-    description: "",
+    title: { default: "Beer Warehouse", template: "%s - Beer Warehouse" },
+    twitter: { card: "summary_large_image" },
+    description:
+        "Discover the world of beer with our interactive platform. Save, rate, and review every beer you’ve tasted and explore collections from other beer enthusiasts. Whether you’re a casual drinker or a connoisseur, our site is your passport to the diverse universe of beer. Join us and start your beer journey today. Cheers!",
 };
 
 export default async function RootLayout({

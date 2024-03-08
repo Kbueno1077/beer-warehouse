@@ -1,7 +1,11 @@
 import React from "react";
-import { NextPage } from "next";
+import { Metadata, NextPage } from "next";
 import Charts from "@/modules/Charts/Charts";
-import { getXataClient } from "@/xata/xata";
+
+export const metadata: Metadata = {
+    icons: { icon: "../favicon.ico" },
+    title: "Charts",
+};
 
 const Page: NextPage = async () => {
     return (

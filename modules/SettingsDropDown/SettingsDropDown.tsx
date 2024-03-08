@@ -56,6 +56,7 @@ export default function SettingsDropDown() {
     };
 
     const toggleOpen = () => {
+        console.log(isOpen);
         setOpen(!isOpen);
     };
 
@@ -83,6 +84,7 @@ export default function SettingsDropDown() {
                     size={"md"}
                     isBordered
                     as="button"
+                    onClick={toggleOpen}
                     className="transition-transform"
                     src={session?.user?.image || "/noUser.png"}
                 />
