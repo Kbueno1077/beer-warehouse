@@ -1,4 +1,4 @@
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
 
 import { notFound } from "next/navigation";
@@ -35,6 +35,12 @@ export const metadata: Metadata = {
     twitter: { card: "summary_large_image" },
     description:
         "Discover the world of beer with our interactive platform. Save, rate, and review every beer you’ve tasted and explore collections from other beer enthusiasts. Whether you’re a casual drinker or a connoisseur, our site is your passport to the diverse universe of beer. Join us and start your beer journey today. Cheers!",
+};
+
+export const viewport: Viewport = {
+    initialScale: 1,
+    maximumScale: 1,
+    width: "device-width",
 };
 
 export default async function RootLayout({
