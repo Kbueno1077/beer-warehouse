@@ -22,10 +22,52 @@ import Spinner from "@/components/Loaders/Spinner";
 import { useTranslations } from "next-intl";
 import { useBeerStore } from "@/store/zustand";
 import { enqueueSnackbar } from "notistack";
+import z from "zod";
+import bcrypt from "bcryptjs";
+import axios from "axios";
 
 type AuthModalProps = {
     mode: string;
 };
+
+export interface FormValues {
+    firstName: string;
+    middleName: string;
+    lastName: string;
+    sex: string;
+
+    ss1: string;
+    ss2: string;
+    ss3: string;
+}
+
+export interface RegisterValues {
+    name: string;
+    email: string;
+    password: string;
+    repPassword: string;
+}
+
+export interface RegisterErrors {
+    name: string;
+    email: string;
+    password: string;
+    repPassword: string;
+}
+
+const b_rounds = 10;
+
+const schema = z
+    .object({
+        name: z.string().min(1),
+        email: z.string().min(1),
+        password: z.string().min(1),
+        repPassword: z.string().min(1),
+    })
+    .refine((data) => data.password === data.repPassword, {
+        message: "match-pass-error",
+        path: ["repPassword"], // set the path of the error
+    });
 
 export default function AuthModal({ mode = "login" }: AuthModalProps) {
     const { data: session } = useSession();
@@ -42,12 +84,93 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [errorMessage, setErrorMessage] = React.useState<string>("");
 
-    const handleLogin = async () => {
+    const [values, setValues] = React.useState<RegisterValues>({
+        name: "",
+        email: "",
+        password: "",
+        repPassword: "",
+    });
+
+    const [errors, setErrors] = React.useState<RegisterErrors>({
+        name: "",
+        email: "",
+        password: "",
+        repPassword: "",
+    });
+
+    const handleRegisterChange = (
+        e: React.ChangeEvent<HTMLInputElement>,
+        optionalName?: string
+    ) => {
+        if (optionalName) {
+            setValues({ ...values, [optionalName]: e.target.value });
+        } else setValues({ ...values, [e.target.name]: e.target.value });
+    };
+
+    const handleRegister = async () => {
         setIsLoading(true);
+
+        const result = schema.safeParse(values);
+        if (!result.success) {
+            if (result.error.formErrors.fieldErrors.repPassword) {
+                setErrorMessage(
+                    t(result.error.formErrors.fieldErrors.repPassword[0])
+                );
+
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 4000);
+            }
+
+            //@ts-ignore
+            setErrors(result.error.formErrors.fieldErrors);
+            setIsLoading(false);
+            return;
+        }
+
+        const b_salt = await bcrypt.genSalt(b_rounds);
+        const hashedPassword = await bcrypt.hash(values.password, b_salt);
+
+        const {
+            data: { record, error, status },
+        } = await axios.post("/api/user", {
+            name: values.name,
+            email: values.email,
+            password: hashedPassword,
+        });
+
+        if (error) {
+            if (status === 409) {
+                setErrorMessage(t("already-exists"));
+            } else {
+                setErrorMessage(t("user-error"));
+
+                setTimeout(() => {
+                    setErrorMessage("");
+                }, 4000);
+            }
+
+            setIsLoading(false);
+            return;
+        }
+
+        if (record) {
+            setLoginEmail(values.email);
+            setLoginPassword(values.password);
+            handleLogin(values.email, values.password);
+            enqueueSnackbar(t("user-created"), { variant: "success" });
+        }
+
+        setIsLoading(false);
+    };
+
+    const handleLogin = async (email = "", password = "") => {
+        setIsLoading(true);
+
         const response = await signIn("credentials", {
             redirect: false,
-            username: loginEmail,
-            password: loginPassword,
+            username: email ? email : loginEmail,
+            password: password ? password : loginPassword,
         });
 
         if (response && response.ok) {
@@ -173,16 +296,26 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
                                                     value={loginPassword}
                                                 />
 
-                                                {/*<p className="text-center text-small">*/}
-                                                {/*    {t('no-account')}{" "}*/}
-                                                {/*    <Link size="sm" onPress={() => setSelected("sign-up")}>*/}
-                                                {/*        {t('signup')}*/}
-                                                {/*    </Link>*/}
-                                                {/*</p>*/}
+                                                <p className="text-center text-small">
+                                                    {t("no-account")}{" "}
+                                                    <Link
+                                                        size="sm"
+                                                        className="cursor-pointer"
+                                                        onPress={() =>
+                                                            setSelected(
+                                                                "sign-up"
+                                                            )
+                                                        }
+                                                    >
+                                                        {t("signup")}
+                                                    </Link>
+                                                </p>
 
                                                 <div className="flex gap-2 justify-end">
                                                     <Button
-                                                        onPress={handleLogin}
+                                                        onPress={() =>
+                                                            handleLogin()
+                                                        }
                                                         fullWidth
                                                         color="primary"
                                                     >
@@ -204,35 +337,137 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
                                             )}
                                         </Tab>
 
-                                        {/*<Tab disabled={true} key="sign-up" title={t('signup')}>*/}
-                                        {/*    <form className="flex flex-col gap-4 h-[300px]">*/}
-                                        {/*        <Input isRequired label={t('name')} placeholder={t('enter-name')}*/}
-                                        {/*               type="password"*/}
-                                        {/*        />*/}
-                                        {/*        <Input isRequired label={t('email')} placeholder={t('enter-email')}*/}
-                                        {/*               type="email"*/}
-                                        {/*        />*/}
-                                        {/*        <Input*/}
-                                        {/*            isRequired*/}
-                                        {/*            label={t('password')}*/}
-                                        {/*            placeholder={t('enter-password')}*/}
-                                        {/*            type="password"*/}
-                                        {/*        />*/}
-                                        {/*        <p className="text-center text-small">*/}
-                                        {/*            {t('with-account')}{" "}*/}
-                                        {/*            <Link size="sm" onPress={() => setSelected("login")}>*/}
-                                        {/*                {t('login')}*/}
-                                        {/*            </Link>*/}
-                                        {/*        </p>*/}
-                                        {/*        <div className="flex gap-2 justify-end">*/}
-                                        {/*            <Button fullWidth color="primary">*/}
-                                        {/*                {isLoading ?*/}
-                                        {/*                    <div><Spinner/>*/}
-                                        {/*                    </div> : t('signup')}*/}
-                                        {/*            </Button>*/}
-                                        {/*        </div>*/}
-                                        {/*    </form>*/}
-                                        {/*</Tab>*/}
+                                        <Tab
+                                            disabled={true}
+                                            key="sign-up"
+                                            title={t("signup")}
+                                        >
+                                            <form className="flex flex-col gap-4 ">
+                                                <Input
+                                                    name="name"
+                                                    label={t("name")}
+                                                    value={values.name}
+                                                    color={
+                                                        errors.name
+                                                            ? "danger"
+                                                            : "default"
+                                                    }
+                                                    errorMessage={
+                                                        errors.name &&
+                                                        "Please enter a valid name"
+                                                    }
+                                                    onChange={
+                                                        handleRegisterChange
+                                                    }
+                                                    isRequired
+                                                    placeholder={t(
+                                                        "enter-name"
+                                                    )}
+                                                />
+
+                                                <Input
+                                                    name="email"
+                                                    value={values.email}
+                                                    color={
+                                                        errors.email
+                                                            ? "danger"
+                                                            : "default"
+                                                    }
+                                                    errorMessage={
+                                                        errors.email &&
+                                                        "Please enter a valid email"
+                                                    }
+                                                    onChange={
+                                                        handleRegisterChange
+                                                    }
+                                                    isRequired
+                                                    label={t("email")}
+                                                    placeholder={t(
+                                                        "enter-email"
+                                                    )}
+                                                    type="email"
+                                                />
+                                                <Input
+                                                    name="password"
+                                                    value={values.password}
+                                                    color={
+                                                        errors.password
+                                                            ? "danger"
+                                                            : "default"
+                                                    }
+                                                    errorMessage={
+                                                        errors.password &&
+                                                        "Please enter a valid password"
+                                                    }
+                                                    onChange={
+                                                        handleRegisterChange
+                                                    }
+                                                    isRequired
+                                                    label={t("password")}
+                                                    placeholder={t(
+                                                        "enter-password"
+                                                    )}
+                                                    type="password"
+                                                />
+
+                                                <Input
+                                                    name="repPassword"
+                                                    value={values.repPassword}
+                                                    color={
+                                                        errors.repPassword
+                                                            ? "danger"
+                                                            : "default"
+                                                    }
+                                                    errorMessage={
+                                                        errors.repPassword &&
+                                                        "Please enter a valid password"
+                                                    }
+                                                    onChange={
+                                                        handleRegisterChange
+                                                    }
+                                                    isRequired
+                                                    label={t("rep-password")}
+                                                    type="password"
+                                                />
+
+                                                <p className="text-center text-small">
+                                                    {t("with-account")}{" "}
+                                                    <Link
+                                                        size="sm"
+                                                        className="cursor-pointer"
+                                                        onPress={() =>
+                                                            setSelected("login")
+                                                        }
+                                                    >
+                                                        {t("login")}
+                                                    </Link>
+                                                </p>
+
+                                                <div className="flex gap-2 justify-end">
+                                                    <Button
+                                                        onPress={handleRegister}
+                                                        fullWidth
+                                                        color="primary"
+                                                    >
+                                                        {isLoading ? (
+                                                            <div>
+                                                                <Spinner />
+                                                            </div>
+                                                        ) : (
+                                                            t("signup")
+                                                        )}
+                                                    </Button>
+                                                </div>
+
+                                                {errorMessage && (
+                                                    <div className="mt-4 p-2 bg-error rounded-lg text-white ">
+                                                        <span>
+                                                            {errorMessage}
+                                                        </span>
+                                                    </div>
+                                                )}
+                                            </form>
+                                        </Tab>
                                     </Tabs>
                                 </div>
                             </ModalBody>

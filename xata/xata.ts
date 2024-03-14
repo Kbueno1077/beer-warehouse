@@ -39,6 +39,7 @@ const tables = [
             { name: "image", type: "string" },
             { name: "password", type: "string" },
             { name: "role", type: "string", defaultValue: "User" },
+            { name: "salt", type: "string" },
         ],
         revLinks: [
             { column: "user", table: "nextauth_accounts" },
@@ -196,7 +197,7 @@ const defaultOptions = {
 
 export class XataClient extends DatabaseClient<DatabaseSchema> {
     constructor(options?: BaseClientOptions) {
-        super({ ...defaultOptions, enableBrowser: true, ...options }, tables);
+        super({ ...defaultOptions, ...options, enableBrowser: true }, tables);
     }
 }
 

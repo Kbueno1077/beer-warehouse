@@ -116,10 +116,10 @@ export async function PUT(req: NextRequest, res: NextResponse) {
 
         return NextResponse.json({ record });
     } catch (error) {
-        console.error("Error Updating into Xata: ", error);
+        console.error("Error Updating in Xata: ", error);
         return NextResponse.json({
             error,
-            errorMessage: "Error Updating into Xata",
+            errorMessage: "Error Updating in Xata",
         });
     }
 }

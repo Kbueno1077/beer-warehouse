@@ -1,0 +1,16 @@
+{
+  "id": "mig_cnp54em7lhrbuo53qbqg",
+  "parentID": "mig_cnjtbrps9clu2t0j37d0",
+  "checksum": "1:b81d6e31eee372ce48cbdff83d70dbd6b71aba81ba6bae229ba6d32a28b0ae84",
+  "operations": [
+    {
+      "addColumn": {
+        "column": {
+          "name": "salt",
+          "type": "string"
+        },
+        "table": "nextauth_users"
+      }
+    }
+  ]
+}

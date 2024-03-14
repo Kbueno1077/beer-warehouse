@@ -75,7 +75,12 @@
         "enter-name": "Enter your name",
         "enter-email": "Enter your email",
         "enter-password": "Enter your password",
-        "bad-user": "Wrong user or password, try another"
+        "bad-user": "Wrong user or password, try another",
+        "user-error": "An error has ocurred, try again later",
+        "rep-password": "Repeat your password",
+        "match-pass-error": "Passwords do not match",
+        "already-exists": "This username and/or email exist already",
+        "user-created": "New user created"
     },
     "table": {
         "total": "Total: {count} beers",

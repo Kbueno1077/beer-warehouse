@@ -65,7 +65,12 @@
         "enter-name": "Introduzca su nombre",
         "enter-email": "Introduzca su correo",
         "enter-password": "Introduzca su contraseña",
-        "bad-user": "Usuario o contraseña incorrecto, pruebe una diferente"
+        "bad-user": "Usuario o contraseña incorrecto, pruebe una diferente",
+        "rep-password": "Repita su contraseña",
+        "match-pass-error": "Las contraseñas no coinciden",
+        "user-error": "Ha ocurrido un error, pruebe más tarde",
+        "already-exists": "Este username y/o email ya exiten",
+        "user-created": "Nuevo usuario creado"
     },
     "table": {
         "total": "Total: {count} cervezas",

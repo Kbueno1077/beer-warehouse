@@ -56,7 +56,6 @@ export default function SettingsDropDown() {
     };
 
     const toggleOpen = () => {
-        console.log(isOpen);
         setOpen(!isOpen);
     };
 

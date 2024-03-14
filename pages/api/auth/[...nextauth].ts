@@ -2,6 +2,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { XataAdapter } from "@next-auth/xata-adapter";
 import { XataClient } from "@/xata/xata";
+import bcrypt from "bcryptjs";
 
 const xata = new XataClient();
 
@@ -34,7 +35,12 @@ export default NextAuth({
                     })
                     .getFirst();
 
-                if (credentials?.password === user?.password) {
+                const isPasswordValid = await bcrypt.compare(
+                    credentials?.password,
+                    user?.password
+                );
+
+                if (isPasswordValid) {
                     return user;
                 }
 
