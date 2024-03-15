@@ -30,18 +30,9 @@ type AuthModalProps = {
     mode: string;
 };
 
-export interface FormValues {
-    firstName: string;
-    middleName: string;
-    lastName: string;
-    sex: string;
-
-    ss1: string;
-    ss2: string;
-    ss3: string;
-}
-
 export interface RegisterValues {
+    loginEmail: string;
+    loginPassword: string;
     name: string;
     email: string;
     password: string;
@@ -49,6 +40,8 @@ export interface RegisterValues {
 }
 
 export interface RegisterErrors {
+    loginEmail: string;
+    loginPassword: string;
     name: string;
     email: string;
     password: string;
@@ -59,8 +52,10 @@ const b_rounds = 10;
 
 const schema = z
     .object({
+        loginEmail: z.string().min(1).email("Must be and email"),
+        loginPassword: z.string().min(1),
         name: z.string().min(1),
-        email: z.string().min(1),
+        email: z.string().min(1).email().email("Must be and email"),
         password: z.string().min(1),
         repPassword: z.string().min(1),
     })
@@ -78,13 +73,12 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selected, setSelected] = React.useState<any>(mode);
-
-    const [loginEmail, setLoginEmail] = React.useState<string>("");
-    const [loginPassword, setLoginPassword] = React.useState<string>("");
     const [isLoading, setIsLoading] = React.useState<boolean>(false);
     const [errorMessage, setErrorMessage] = React.useState<string>("");
 
     const [values, setValues] = React.useState<RegisterValues>({
+        loginEmail: "",
+        loginPassword: "",
         name: "",
         email: "",
         password: "",
@@ -92,6 +86,8 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
     });
 
     const [errors, setErrors] = React.useState<RegisterErrors>({
+        loginEmail: "",
+        loginPassword: "",
         name: "",
         email: "",
         password: "",
@@ -155,8 +151,6 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
         }
 
         if (record) {
-            setLoginEmail(values.email);
-            setLoginPassword(values.password);
             handleLogin(values.email, values.password);
             enqueueSnackbar(t("user-created"), { variant: "success" });
         }
@@ -169,8 +163,8 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
 
         const response = await signIn("credentials", {
             redirect: false,
-            username: email ? email : loginEmail,
-            password: password ? password : loginPassword,
+            username: email ? email : values.loginEmail,
+            password: password ? password : values.loginPassword,
         });
 
         if (response && response.ok) {
@@ -272,9 +266,19 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
                                         <Tab key="login" title={t("login")}>
                                             <form className="flex flex-col gap-4">
                                                 <Input
-                                                    value={loginEmail}
-                                                    onValueChange={
-                                                        setLoginEmail
+                                                    name="loginEmail"
+                                                    value={values.loginEmail}
+                                                    color={
+                                                        errors.name
+                                                            ? "danger"
+                                                            : "default"
+                                                    }
+                                                    errorMessage={
+                                                        errors.name &&
+                                                        "Please enter a valid email"
+                                                    }
+                                                    onChange={
+                                                        handleRegisterChange
                                                     }
                                                     isRequired
                                                     label={t("email")}
@@ -284,16 +288,26 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
                                                     type="email"
                                                 />
                                                 <Input
+                                                    name="loginPassword"
+                                                    value={values.loginPassword}
+                                                    color={
+                                                        errors.name
+                                                            ? "danger"
+                                                            : "default"
+                                                    }
+                                                    errorMessage={
+                                                        errors.name &&
+                                                        "Please enter a valid password"
+                                                    }
+                                                    onChange={
+                                                        handleRegisterChange
+                                                    }
                                                     isRequired
                                                     label={t("password")}
                                                     placeholder={t(
                                                         "enter-password"
                                                     )}
                                                     type="password"
-                                                    onValueChange={
-                                                        setLoginPassword
-                                                    }
-                                                    value={loginPassword}
                                                 />
 
                                                 <p className="text-center text-small">
