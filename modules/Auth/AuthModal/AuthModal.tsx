@@ -269,12 +269,12 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
                                                     name="loginEmail"
                                                     value={values.loginEmail}
                                                     color={
-                                                        errors.name
+                                                        errors.loginEmail
                                                             ? "danger"
                                                             : "default"
                                                     }
                                                     errorMessage={
-                                                        errors.name &&
+                                                        errors.loginEmail &&
                                                         "Please enter a valid email"
                                                     }
                                                     onChange={
@@ -291,12 +291,12 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
                                                     name="loginPassword"
                                                     value={values.loginPassword}
                                                     color={
-                                                        errors.name
+                                                        errors.loginPassword
                                                             ? "danger"
                                                             : "default"
                                                     }
                                                     errorMessage={
-                                                        errors.name &&
+                                                        errors.loginPassword &&
                                                         "Please enter a valid password"
                                                     }
                                                     onChange={
