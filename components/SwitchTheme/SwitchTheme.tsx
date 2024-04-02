@@ -20,6 +20,7 @@ export default function SwitchTheme() {
                 onValueChange={handleThemeChange}
                 size="lg"
                 color="primary"
+                aria-label={"theme switch"}
                 startContent={<SunIcon />}
                 endContent={<MoonIcon />}
             ></Switch>

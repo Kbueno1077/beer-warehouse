@@ -42,7 +42,7 @@ export default function UserCard({
                         <h4 className="text-small font-semibold leading-none text-default-600">
                             {user.name}
                         </h4>
-                        {/*<h5 className="text-small tracking-tight text-default-400">@zoeylang</h5>*/}
+                        {/*<h5 className="text-small tracking-tight text-default-600">@zoeylang</h5>*/}
                     </div>
                 </div>
             </CardHeader>

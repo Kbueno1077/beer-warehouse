@@ -410,13 +410,13 @@ export default function BeersTable() {
                     </div>
                 </div>
                 <div className="flex justify-between items-center">
-                    <span className="text-default-400 text-small">
+                    <span className="text-default-600 text-small">
                         {t("total", { count: filteredItems.length })}
                     </span>
-                    <label className="flex items-center text-default-400 text-small">
+                    <label className="flex items-center text-default-600 text-small">
                         {t("pageRows")}
                         <select
-                            className="bg-transparent outline-none text-default-400 text-small"
+                            className="bg-transparent outline-none text-default-600 text-small"
                             defaultValue={rowsPerPage}
                             onChange={onRowsPerPageChange}
                         >
@@ -455,7 +455,7 @@ export default function BeersTable() {
                     variant="light"
                     onChange={setPage}
                 />
-                <span className="text-small text-default-400">
+                <span className="text-small text-default-600">
                     {/*{selectedKeys === "all"*/}
                     {/*    ? "All items selected"*/}
                     {/*    : `${selectedKeys.size} of ${pageItems.length} selected`}*/}
