@@ -4,10 +4,22 @@ const withNextIntl = require("next-intl/plugin")("./i18n/i18n.ts");
 
 const nextConfig = withNextIntl({
     images: {
-        domains: [
-            "images.hdqwalls.com",
-            "source.unsplash.com",
-            "res.cloudinary.com",
+        remotePatterns: [
+            {
+                protocol: "https",
+                hostname: "res.cloudinary.com",
+                pathname: "**",
+            },
+            {
+                protocol: "https",
+                hostname: "source.unsplash.com",
+                pathname: "**",
+            },
+            {
+                protocol: "https",
+                hostname: "images.hdqwalls.com",
+                pathname: "**",
+            },
         ],
     },
     env: {
