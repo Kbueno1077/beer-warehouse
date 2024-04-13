@@ -14,7 +14,7 @@ interface UiComponentProps {
     username?: string;
 }
 
-function UiComponent({ serverFetchedBeers }: UiComponentProps) {
+function UiComponent({ serverFetchedBeers, username }: UiComponentProps) {
     const { theme, resolvedTheme } = useTheme();
     console.log("🚀 ~ UiComponent ~ theme:", theme);
     console.log("🚀 ~ UiComponent ~ resolvedTheme:", resolvedTheme);
@@ -41,6 +41,7 @@ function UiComponent({ serverFetchedBeers }: UiComponentProps) {
     useEffect(() => {
         setAllBeers(JSON.parse(serverFetchedBeers));
         setLoading(false);
+        setWarehouseOwner(username ?? "Kevin");
     }, [serverFetchedBeers, setAllBeers, setLoading, setWarehouseOwner]);
 
     if (loading && allBeers.length === 0 && !mode) {

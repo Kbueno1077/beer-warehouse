@@ -75,7 +75,7 @@ type InitialProps = {
 
 export const createBeerStore = (initProps: InitialProps) => {
     const DEFAULT_PROPS: DefaultProps = {
-        warehouseOwner: "kevin",
+        warehouseOwner: "Kevin",
     };
 
     return createStore<BeerState>((set, get) => ({
