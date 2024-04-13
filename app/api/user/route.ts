@@ -14,7 +14,6 @@ export async function POST(req: NextRequest, res: NextResponse) {
             })
             .getFirst();
 
-        console.log("🚀 ~ POST ~ user:", user);
         if (user) {
             return NextResponse.json({
                 error: true,

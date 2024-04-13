@@ -1,50 +1,53 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
-import { useBeerStore } from "@/store/zustand";
-import { BeerType, CARD_MODE, DARK_MODE, TABLE_MODE } from "@/util/types";
+import React, { useEffect } from "react";
+import { CARD_MODE, DARK_MODE, TABLE_MODE } from "@/util/types";
 import MobileSearchControls from "./CardsUI/SearchControls/MobileSearchControls";
 import BeerGrid from "@/modules/UI/CardsUI/BeerGrid/BeerGrid";
 import { Skeleton } from "@nextui-org/react";
 import BeersTable from "@/modules/UI/TableUI/DataTable/BeersTable";
-import { useSession } from "next-auth/react";
+import { useBearContext } from "@/store/useBeerContext";
+import { useTheme } from "next-themes";
 
 interface UiComponentProps {
-    serverFetchedBeers: Array<BeerType>;
+    serverFetchedBeers: string;
     username?: string;
 }
 
-function UiComponent({ serverFetchedBeers, username }: UiComponentProps) {
+function UiComponent({ serverFetchedBeers }: UiComponentProps) {
+    const { theme, resolvedTheme } = useTheme();
+    console.log("🚀 ~ UiComponent ~ theme:", theme);
+    console.log("🚀 ~ UiComponent ~ resolvedTheme:", resolvedTheme);
+
     const {
-        theme,
         mode,
-        setMode,
         allBeers,
         setAllBeers,
         loading,
         setLoading,
         setWarehouseOwner,
-    } = useBeerStore();
+    } = useBearContext((s) => {
+        return {
+            mode: s.mode,
+            allBeers: s.allBeers,
+            setAllBeers: s.setAllBeers,
+            loading: s.loading,
+            setMode: s.setMode,
+            setLoading: s.setLoading,
+            setWarehouseOwner: s.setWarehouseOwner,
+        };
+    });
 
     useEffect(() => {
-        const getMode = window.innerWidth < 1024 ? CARD_MODE : TABLE_MODE;
-        setMode(getMode);
-        setAllBeers(serverFetchedBeers);
+        setAllBeers(JSON.parse(serverFetchedBeers));
         setLoading(false);
-        setWarehouseOwner(username ?? "Kevin");
-    }, [
-        setMode,
-        serverFetchedBeers,
-        setAllBeers,
-        setLoading,
-        setWarehouseOwner,
-    ]);
+    }, [serverFetchedBeers, setAllBeers, setLoading, setWarehouseOwner]);
 
     if (loading && allBeers.length === 0 && !mode) {
         return (
             <div
                 className={`dataTableWrapper ${
-                    theme === DARK_MODE && "dataTableWrapper__dark"
+                    resolvedTheme === DARK_MODE && "dataTableWrapper__dark"
                 }`}
             >
                 <Skeleton className="rounded-lg">
@@ -60,7 +63,9 @@ function UiComponent({ serverFetchedBeers, username }: UiComponentProps) {
                 <>
                     <div
                         className={`dataCardWrapper ${
-                            theme === DARK_MODE ? "dataCardWrapper__dark" : ""
+                            resolvedTheme === DARK_MODE
+                                ? "dataCardWrapper__dark"
+                                : ""
                         }`}
                     >
                         <BeerGrid />
@@ -74,7 +79,9 @@ function UiComponent({ serverFetchedBeers, username }: UiComponentProps) {
                 <>
                     <div
                         className={`dataTableWrapper ${
-                            theme === DARK_MODE ? "dataTableWrapper__dark" : ""
+                            resolvedTheme === DARK_MODE
+                                ? "dataTableWrapper__dark"
+                                : ""
                         }`}
                     >
                         <BeersTable />

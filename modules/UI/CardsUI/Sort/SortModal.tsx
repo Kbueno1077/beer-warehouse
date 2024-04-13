@@ -12,13 +12,20 @@ import {
 } from "@nextui-org/react";
 
 import { PiSortAscendingBold } from "react-icons/pi";
-import { SortType, useBeerStore } from "@/store/zustand";
+import { SortType } from "@/store/zustand";
 import SortComponent from "@/modules/UI/CardsUI/Sort/SortComponent";
 import { useTranslations } from "next-intl";
+import { useBearContext } from "@/store/useBeerContext";
 
 export default function SortModal() {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-    const { sort, changeSort } = useBeerStore();
+    const { sort, changeSort } = useBearContext((s) => {
+        return {
+            sort: s.sort,
+            changeSort: s.changeSort,
+        };
+    });
+
     const [selectedSort, setSelectedSort] = React.useState(sort);
     const t = useTranslations("cards.sort");
 

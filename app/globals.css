@@ -16,6 +16,19 @@
         /*--color-default: 33 33 33;*/
     }
 
+    [data-theme="dark"] {
+        --color-primary: 230 137 17;
+        --color-secondary: 254 224 92;
+
+        --color-success: 0 200 81;
+        --color-info: 51 181 229;
+        --color-warn: 255 187 51;
+        --color-error: 254 78 78;
+
+        /*--color-text: 33 33 33;*/
+        /*--color-default: 33 33 33*/
+    }
+
     :root[class~="dark"] {
         --color-primary: 230 137 17;
         --color-secondary: 254 224 92;

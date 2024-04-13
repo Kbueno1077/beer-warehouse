@@ -1,11 +1,11 @@
 import React from "react";
-import { useBeerStore } from "@/store/zustand";
 import { Switch } from "@nextui-org/react";
 import { DARK_MODE, LIGHT_MODE } from "@/util/types";
 import { track } from "@vercel/analytics";
+import { useTheme } from "next-themes";
 
 export default function SwitchTheme() {
-    const { theme, setTheme } = useBeerStore();
+    const { theme, setTheme } = useTheme();
 
     const handleThemeChange = (value: boolean) => {
         setTheme(value ? LIGHT_MODE : DARK_MODE);

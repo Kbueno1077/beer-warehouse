@@ -61,7 +61,7 @@ const Page: NextPage = async () => {
                 </div>
 
                 <UiComponent
-                    serverFetchedBeers={serverFetchedBeers}
+                    serverFetchedBeers={JSON.stringify(serverFetchedBeers)}
                     username={session?.user.name}
                 />
             </div>

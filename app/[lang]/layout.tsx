@@ -9,6 +9,7 @@ import { Inter } from "next/font/google";
 import "../globals.css";
 import Navigationbar from "@/components/Navigationbar/Navigationbar";
 import React from "react";
+import { ThemeProvider } from "next-themes";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -61,16 +62,22 @@ export default async function RootLayout({
     }
 
     return (
-        <html className={"light"} lang={lang}>
+        <html lang={lang}>
             <body>
-                <Providers>
-                    <NextIntlClientProvider messages={messages}>
-                        <Navigationbar />
+                <ThemeProvider
+                    disableTransitionOnChange
+                    enableSystem={true}
+                    attribute="class"
+                >
+                    <Providers>
+                        <NextIntlClientProvider messages={messages}>
+                            <Navigationbar />
 
-                        {children}
-                        <Analytics />
-                    </NextIntlClientProvider>
-                </Providers>
+                            {children}
+                            <Analytics />
+                        </NextIntlClientProvider>
+                    </Providers>
+                </ThemeProvider>
             </body>
         </html>
     );

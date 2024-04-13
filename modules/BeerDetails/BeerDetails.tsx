@@ -2,19 +2,24 @@
 
 import React from "react";
 import { BeerType } from "@/util/types";
-import { useBeerStore } from "@/store/zustand";
 
 import NextImage from "next/image";
 import { Image } from "@nextui-org/react";
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import { useTranslations } from "next-intl";
+import { useBearContext } from "@/store/useBeerContext";
 
 interface BeerDetailsProps {
     beer: BeerType;
 }
 
 function BeerDetails({ beer }: BeerDetailsProps) {
-    const { theme } = useBeerStore();
+    const { theme } = useBearContext((s) => {
+        return {
+            theme: s.theme,
+        };
+    });
+
     const t = useTranslations("beerDetails");
 
     console.log(beer);

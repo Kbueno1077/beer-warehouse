@@ -10,12 +10,16 @@ import {
     VisuallyHidden,
 } from "@nextui-org/react";
 import { alcoholOptions } from "@/modules/UI/TableUI/DataTable/data";
-import { useBeerStore } from "@/store/zustand";
 import { AiOutlineClose } from "react-icons/ai";
 import { useTranslations } from "next-intl";
+import { useBearContext } from "@/store/useBeerContext";
 
 export default function AlcoholFilter({ handleFilters }: any) {
-    const { filters } = useBeerStore();
+    const { filters } = useBearContext((s) => {
+        return {
+            filters: s.filters,
+        };
+    });
     const [groupSelected, setGroupSelected] = React.useState(
         filters.alcoholFilters
     );

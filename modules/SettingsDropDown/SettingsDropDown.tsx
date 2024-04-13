@@ -22,7 +22,7 @@ import { IoIosLogOut } from "react-icons/io";
 import { GiBeerBottle } from "react-icons/gi";
 import { IoBarChartSharp } from "react-icons/io5";
 import Spinner from "@/components/Loaders/Spinner";
-import { useBeerStore } from "@/store/zustand";
+import { useBearContext } from "@/store/useBeerContext";
 
 export default function SettingsDropDown() {
     const iconClasses =
@@ -33,7 +33,12 @@ export default function SettingsDropDown() {
     const [isOpen, setOpen] = React.useState(false);
 
     const { data: session, status } = useSession();
-    const { handleWarehouseChange } = useBeerStore();
+
+    const { handleWarehouseChange } = useBearContext((s) => {
+        return {
+            handleWarehouseChange: s.handleWarehouseChange,
+        };
+    });
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([locale]));
 
     const handleSelection = async (e) => {

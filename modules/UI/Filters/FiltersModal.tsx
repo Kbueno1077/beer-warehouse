@@ -11,18 +11,24 @@ import {
     useDisclosure,
 } from "@nextui-org/react";
 import AlcoholFilter from "@/modules/UI/Filters/AlcoholFilter";
-import { useBeerStore } from "@/store/zustand";
 import MlFilter from "@/modules/UI/Filters/MlFilter";
 import CountryFilter from "@/modules/UI/Filters/CountryFilter";
 import { useTranslations } from "next-intl";
 import { PiSortAscendingBold } from "react-icons/pi";
 import { TABLE_MODE } from "@/util/types";
+import { useBearContext } from "@/store/useBeerContext";
 
 export default function FiltersModal() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const t = useTranslations("filters");
 
-    const { filters, changeFilters, mode } = useBeerStore();
+    const { filters, changeFilters, mode } = useBearContext((s) => {
+        return {
+            filters: s.filters,
+            mode: s.mode,
+            changeFilters: s.changeFilters,
+        };
+    });
     const [tempFilters, setTempFilters] = React.useState(filters);
 
     const handleFilters = (filterName: string, newFilter: any) => {

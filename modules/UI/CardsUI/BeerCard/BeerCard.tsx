@@ -22,7 +22,6 @@ import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import { TbScanEye } from "react-icons/tb";
-import { useBeerStore } from "@/store/zustand";
 
 interface BeerCardProps {
     beer: BeerType;

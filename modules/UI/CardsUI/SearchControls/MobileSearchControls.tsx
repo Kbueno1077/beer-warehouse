@@ -7,17 +7,25 @@ import { MdKeyboardArrowUp } from "react-icons/md";
 import styles from "./searchControls.module.css";
 
 import React, { useState } from "react";
-import { useBeerStore } from "@/store/zustand";
 import SortModal from "@/modules/UI/CardsUI/Sort/SortModal";
 import GroupByModal from "@/modules/UI/CardsUI/GroupBy/GroupByModal";
 import { useTranslations } from "next-intl";
 import { DARK_MODE } from "@/util/types";
+import { useBearContext } from "@/store/useBeerContext";
+import { useTheme } from "next-themes";
 
 const MobileSearchControls = () => {
     const [selectedKeys, setSelectedKeys] = useState<Iterable<any>>(
         new Set([])
     );
-    const { theme, filters, changeFilters } = useBeerStore();
+
+    const { theme, resolvedTheme } = useTheme();
+    const { filters, changeFilters } = useBearContext((s) => {
+        return {
+            filters: s.filters,
+            changeFilters: s.changeFilters,
+        };
+    });
     const t = useTranslations("table");
 
     const onSearchChange = React.useCallback((value?: string) => {
@@ -35,7 +43,7 @@ const MobileSearchControls = () => {
             onSelectionChange={setSelectedKeys}
             itemClasses={{
                 base:
-                    theme === DARK_MODE
+                    resolvedTheme === DARK_MODE
                         ? styles.controlsWrapper__dark
                         : styles.controlsWrapper__light,
                 trigger: styles.accordionWrapper,

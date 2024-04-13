@@ -25,13 +25,14 @@ import impressionJson from "@/util/impression.json";
 
 import { OnChangeValue } from "react-select";
 import axios from "axios";
-import { useBeerStore } from "@/store/zustand";
 import { enqueueSnackbar } from "notistack";
 import Spinner from "@/components/Loaders/Spinner";
 import { checkSession } from "@/util/javascript";
 import { CARD_MODE } from "@/util/types";
 import { useTranslations } from "next-intl";
 import { useSession } from "next-auth/react";
+import { useBearContext } from "@/store/useBeerContext";
+import { useTheme } from "next-themes";
 
 export default function AddBeer() {
     const { data: session } = useSession();
@@ -39,7 +40,14 @@ export default function AddBeer() {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { theme, addBeerUI, mode } = useBeerStore();
+    const { theme, resolvedTheme } = useTheme();
+    const { addBeerUI, mode } = useBearContext((s) => {
+        return {
+            addBeerUI: s.addBeerUI,
+            mode: s.mode,
+        };
+    });
+
     const t = useTranslations("beerCrud");
     const tcountries = useTranslations("countries");
     const timpression = useTranslations("impression");
@@ -249,7 +257,7 @@ export default function AddBeer() {
                                         />
 
                                         <CustomSelect
-                                            theme={theme}
+                                            theme={resolvedTheme}
                                             placeholder={t("country")}
                                             decorationPlacement="start"
                                             decoration={
@@ -275,7 +283,7 @@ export default function AddBeer() {
                                         />
 
                                         <CustomSelect
-                                            theme={theme}
+                                            theme={resolvedTheme}
                                             placeholder={t("bought in")}
                                             decorationPlacement="start"
                                             decoration={

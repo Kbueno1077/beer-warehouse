@@ -3,13 +3,20 @@ import { useTranslations } from "next-intl";
 import { CARD_MODE, DARK_MODE, LIGHT_MODE, TABLE_MODE } from "@/util/types";
 import { TbCards } from "react-icons/tb";
 import { VscTable } from "react-icons/vsc";
-import { useBeerStore } from "@/store/zustand";
 import { Badge, Button } from "@nextui-org/react";
 
 import { track } from "@vercel/analytics";
+import { useBearContext } from "@/store/useBeerContext";
 
 export default function SwitchMode() {
-    const { mode, setMode, resetFilters } = useBeerStore();
+    const { mode, setMode, resetFilters } = useBearContext((s) => {
+        return {
+            mode: s.mode,
+            setMode: s.setMode,
+            resetFilters: s.resetFilters,
+        };
+    });
+
     const t = useTranslations("navbar");
 
     return (

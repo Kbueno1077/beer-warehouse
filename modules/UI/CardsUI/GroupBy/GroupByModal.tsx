@@ -12,13 +12,20 @@ import {
 } from "@nextui-org/react";
 
 import { PiSortAscendingBold } from "react-icons/pi";
-import { GroupByType, useBeerStore } from "@/store/zustand";
+import { GroupByType } from "@/store/zustand";
 import GroupByComponent from "@/modules/UI/CardsUI/GroupBy/GroupByComponent";
 import { useTranslations } from "next-intl";
+import { useBearContext } from "@/store/useBeerContext";
 
 export default function GroupByModal() {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
-    const { groupBy, changeGroupBy } = useBeerStore();
+    const { groupBy, changeGroupBy } = useBearContext((s) => {
+        return {
+            groupBy: s.groupBy,
+            changeGroupBy: s.changeGroupBy,
+        };
+    });
+
     const [selectedGroupBy, setSelectedGroupBy] = React.useState(groupBy);
     const t = useTranslations("cards.groupBy");
 

@@ -41,11 +41,11 @@ import FiltersModal from "@/modules/UI/Filters/FiltersModal";
 import AddBeer from "@/modules/UI/BeerCrud/AddBeer";
 import UpdateBeer from "@/modules/UI/BeerCrud/UpdateBeer";
 import DeleteBeer from "@/modules/UI/BeerCrud/DeleteBeer";
-import { useBeerStore } from "@/store/zustand";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import { CustomChip } from "@/components/CustomChip/CustomChip";
+import { useBearContext } from "@/store/useBeerContext";
 
 export default function BeersTable() {
     const { data: session } = useSession();
@@ -53,7 +53,16 @@ export default function BeersTable() {
     const t = useTranslations("table");
     const tcountries = useTranslations("countries");
 
-    const { allBeers, filters, changeFilters, warehouseOwner } = useBeerStore();
+    const { allBeers, filters, changeFilters, warehouseOwner } = useBearContext(
+        (s) => {
+            return {
+                allBeers: s.allBeers,
+                changeFilters: s.changeFilters,
+                warehouseOwner: s.warehouseOwner,
+                filters: s.filters,
+            };
+        }
+    );
 
     const [selectedKeys, setSelectedKeys] = React.useState<Selection>(
         new Set([])

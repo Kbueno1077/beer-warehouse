@@ -1,7 +1,6 @@
 "use client";
 
 import React from "react";
-import { useBeerStore } from "@/store/zustand";
 import countriesJson from "../../../util/countries.json";
 import { Avatar, Button } from "@nextui-org/react";
 import { AiOutlineClose } from "react-icons/ai";
@@ -9,9 +8,16 @@ import { AiOutlineClose } from "react-icons/ai";
 import { CustomSelect, StateOption } from "@/components/CustomSelect/Select";
 import { OnChangeValue } from "react-select";
 import { useTranslations } from "next-intl";
+import { useBearContext } from "@/store/useBeerContext";
+import { useTheme } from "next-themes";
 
 export default function CountryFilter({ handleFilters }: any) {
-    const { theme, filters } = useBeerStore();
+    const { theme, resolvedTheme } = useTheme();
+    const { filters } = useBearContext((s) => {
+        return {
+            filters: s.filters,
+        };
+    });
     const [selected, setSelected] = React.useState<any>(filters.countryFilters);
     const t = useTranslations("filters");
     const tcountries = useTranslations("countries");
@@ -44,7 +50,7 @@ export default function CountryFilter({ handleFilters }: any) {
             </div>
 
             <CustomSelect
-                theme={theme}
+                theme={resolvedTheme}
                 placeholder={t("countryPlaceholder")}
                 decorationPlacement="start"
                 className="mt-2"

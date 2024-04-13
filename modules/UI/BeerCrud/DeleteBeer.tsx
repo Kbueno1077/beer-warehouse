@@ -12,11 +12,11 @@ import {
 import { MdDeleteOutline } from "react-icons/md";
 import { BeerType } from "@/util/types";
 import axios from "axios";
-import { useBeerStore } from "@/store/zustand";
 import { enqueueSnackbar } from "notistack";
 import Spinner from "@/components/Loaders/Spinner";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { useBearContext } from "@/store/useBeerContext";
 
 interface DeleteBeerProps {
     selectedBeer: BeerType;
@@ -29,7 +29,13 @@ export default function DeleteBeer({ selectedBeer, isOwner }: DeleteBeerProps) {
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState<boolean>(false);
-    const { deleteBeerUI } = useBeerStore();
+
+    const { deleteBeerUI } = useBearContext((s) => {
+        return {
+            deleteBeerUI: s.deleteBeerUI,
+        };
+    });
+
     const t = useTranslations("beerCrud");
 
     const deleteBeer = async () => {

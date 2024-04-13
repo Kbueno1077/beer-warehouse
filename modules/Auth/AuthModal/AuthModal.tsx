@@ -20,11 +20,11 @@ import {
 
 import Spinner from "@/components/Loaders/Spinner";
 import { useTranslations } from "next-intl";
-import { useBeerStore } from "@/store/zustand";
 import { enqueueSnackbar } from "notistack";
 import z from "zod";
 import bcrypt from "bcryptjs";
 import axios from "axios";
+import { useBearContext } from "@/store/useBeerContext";
 
 type AuthModalProps = {
     mode: string;
@@ -69,7 +69,11 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
     const user = session?.user;
 
     const t = useTranslations("auth");
-    const { handleWarehouseChange } = useBeerStore();
+    const { handleWarehouseChange } = useBearContext((s) => {
+        return {
+            handleWarehouseChange: s.handleWarehouseChange,
+        };
+    });
 
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [selected, setSelected] = React.useState<any>(mode);

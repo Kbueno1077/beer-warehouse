@@ -25,12 +25,13 @@ import { MdEdit } from "react-icons/md";
 import { ADMIN_ROLE, BeerType } from "@/util/types";
 
 import axios from "axios";
-import { useBeerStore } from "@/store/zustand";
 import { enqueueSnackbar } from "notistack";
 import Spinner from "@/components/Loaders/Spinner";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import impressionJson from "@/util/impression.json";
+import { useBearContext } from "@/store/useBeerContext";
+import { useTheme } from "next-themes";
 
 interface UpdateBeerProps {
     selectedBeer: BeerType;
@@ -82,7 +83,13 @@ export default function UpdateBeer({ selectedBeer, isOwner }: UpdateBeerProps) {
     const currentEvidenceImage = selectedBeer.evidence_img || "";
 
     const [evidenceFiles, setEvidenceFiles] = useState<Array<File>>([]);
-    const { theme, updateBeerUI } = useBeerStore();
+
+    const { theme, resolvedTheme } = useTheme();
+    const { updateBeerUI } = useBearContext((s) => {
+        return {
+            updateBeerUI: s.updateBeerUI,
+        };
+    });
 
     const handleOpening = () => {
         setEvidenceFiles([]);
@@ -286,7 +293,7 @@ export default function UpdateBeer({ selectedBeer, isOwner }: UpdateBeerProps) {
                                         />
 
                                         <CustomSelect
-                                            theme={theme}
+                                            theme={resolvedTheme}
                                             placeholder={t("country")}
                                             decorationPlacement="start"
                                             decoration={
@@ -312,7 +319,7 @@ export default function UpdateBeer({ selectedBeer, isOwner }: UpdateBeerProps) {
                                         />
 
                                         <CustomSelect
-                                            theme={theme}
+                                            theme={resolvedTheme}
                                             placeholder={t("bought in")}
                                             decorationPlacement="start"
                                             decoration={

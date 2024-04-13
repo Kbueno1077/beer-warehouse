@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import BeerCard from "@/modules/UI/CardsUI/BeerCard/BeerCard";
 import { Avatar, Button, Chip } from "@nextui-org/react";
-import { useBeerStore } from "@/store/zustand";
 import { BeerType, BeerTypeExtended } from "@/util/types";
 
 import styles from "./beerGrid.module.css";
@@ -22,13 +21,25 @@ import countryCodes from "@/util/countries.json";
 import AddBeer from "@/modules/UI/BeerCrud/AddBeer";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
+import { useBearContext } from "@/store/useBeerContext";
 
 const BeerGrid = () => {
     const { data: session } = useSession();
     const user = session?.user;
     const t = useTranslations("cards");
 
-    const { allBeers, filters, sort, groupBy, warehouseOwner } = useBeerStore();
+    const { allBeers, filters, sort, groupBy, warehouseOwner } = useBearContext(
+        (s) => {
+            return {
+                allBeers: s.allBeers,
+                filters: s.filters,
+                sort: s.sort,
+                groupBy: s.groupBy,
+                warehouseOwner: s.warehouseOwner,
+            };
+        }
+    );
+
     const hasSearchFilter = Boolean(filters.search);
 
     const [page, setPage] = useState<number>(1);
