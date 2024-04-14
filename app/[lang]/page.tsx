@@ -8,10 +8,9 @@ import { getServerSession } from "next-auth";
 
 const Page: NextPage = async () => {
     const session = await getServerSession();
-
     const xata = getXataClient();
 
-    let serverFetchedBeers: any = [];
+    let serverFetchedBeers = [];
     if (!session || !session.user || session?.user.name === "Kevin") {
         serverFetchedBeers = await xata.db.beers
             .select([
@@ -62,7 +61,6 @@ const Page: NextPage = async () => {
 
                 <UiComponent
                     serverFetchedBeers={JSON.stringify(serverFetchedBeers)}
-                    username={session?.user.name}
                 />
             </div>
         </>

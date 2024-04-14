@@ -11,38 +11,26 @@ import { useTheme } from "next-themes";
 
 interface UiComponentProps {
     serverFetchedBeers: string;
-    username?: string;
 }
 
-function UiComponent({ serverFetchedBeers, username }: UiComponentProps) {
-    const { theme, resolvedTheme } = useTheme();
-    console.log("🚀 ~ UiComponent ~ theme:", theme);
-    console.log("🚀 ~ UiComponent ~ resolvedTheme:", resolvedTheme);
+function UiComponent({ serverFetchedBeers }: UiComponentProps) {
+    const { resolvedTheme } = useTheme();
 
-    const {
-        mode,
-        allBeers,
-        setAllBeers,
-        loading,
-        setLoading,
-        setWarehouseOwner,
-    } = useBearContext((s) => {
-        return {
-            mode: s.mode,
-            allBeers: s.allBeers,
-            setAllBeers: s.setAllBeers,
-            loading: s.loading,
-            setMode: s.setMode,
-            setLoading: s.setLoading,
-            setWarehouseOwner: s.setWarehouseOwner,
-        };
-    });
+    const { mode, allBeers, setAllBeers, loading, setWarehouseOwner } =
+        useBearContext((s) => {
+            return {
+                mode: s.mode,
+                allBeers: s.allBeers,
+                setAllBeers: s.setAllBeers,
+                loading: s.loading,
+                setMode: s.setMode,
+                setWarehouseOwner: s.setWarehouseOwner,
+            };
+        });
 
     useEffect(() => {
         setAllBeers(JSON.parse(serverFetchedBeers));
-        setLoading(false);
-        setWarehouseOwner(username ?? "Kevin");
-    }, [serverFetchedBeers, setAllBeers, setLoading, setWarehouseOwner]);
+    }, [serverFetchedBeers, setAllBeers, setWarehouseOwner]);
 
     if (loading && allBeers.length === 0 && !mode) {
         return (

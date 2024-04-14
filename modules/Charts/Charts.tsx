@@ -5,16 +5,15 @@ import { BeerType, DARK_MODE } from "@/util/types";
 import PieChart from "@/modules/Charts/PieChart";
 import styles from "./charts.module.css";
 import BarChart from "@/modules/Charts/BarChart";
-import { useBearContext } from "@/store/useBeerContext";
 import { useTheme } from "next-themes";
 
-function Charts() {
-    const { theme, resolvedTheme } = useTheme();
-    const { allBeers } = useBearContext((s) => {
-        return {
-            allBeers: s.allBeers,
-        };
-    });
+interface ChartsProps {
+    serverFetchedBeers: string;
+}
+
+function Charts({ serverFetchedBeers }: ChartsProps) {
+    const allBeers = JSON.parse(serverFetchedBeers);
+    const { resolvedTheme } = useTheme();
 
     return (
         <div className="p-5 flex flex-col gap-5">

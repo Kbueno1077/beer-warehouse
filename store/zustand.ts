@@ -1,5 +1,5 @@
 import { createStore } from "zustand";
-import { BeerType, ModeType, ThemeType } from "@/util/types";
+import { BeerType, ModeType } from "@/util/types";
 import { getXataClient } from "@/xata/xata";
 
 type MlFilterType = {
@@ -27,9 +27,8 @@ export type SortType = {
 
 export type GroupByType = String;
 
-interface BeerProps {
+export interface BeerProps {
     //LOAD
-    warehouseOwner: String | null;
     loading: boolean;
     allBeers: Array<BeerType>;
     setAllBeers: Function;
@@ -42,7 +41,8 @@ interface BeerProps {
     resetSort: Function;
     resetGroupBy: Function;
 
-    //
+    //  OWNER
+    warehouseOwner: String | null;
     handleWarehouseChange: Function;
     setWarehouseOwner: Function;
 
@@ -66,24 +66,20 @@ export interface BeerState extends BeerProps {}
 export type BeerStore = ReturnType<typeof createBeerStore>;
 
 type DefaultProps = {
-    warehouseOwner: string;
+    loading: boolean;
+    filters: Filters;
+    groupBy: GroupByType;
+    sort: SortType;
 };
 
 type InitialProps = {
     mode: ModeType | null;
+    warehouseOwner: string;
 };
 
 export const createBeerStore = (initProps: InitialProps) => {
     const DEFAULT_PROPS: DefaultProps = {
-        warehouseOwner: "Kevin",
-    };
-
-    return createStore<BeerState>((set, get) => ({
-        //   STATES
-        ...DEFAULT_PROPS,
-        ...initProps,
-        loading: true,
-        allBeers: [],
+        loading: false,
         filters: {
             alcoholFilters: ["soft", "normal", "high", "extra", "hardcore"],
             mlFilters: {
@@ -94,8 +90,15 @@ export const createBeerStore = (initProps: InitialProps) => {
             impressionFilters: {},
             search: "",
         },
-        sort: { attribute: "", direction: "" },
         groupBy: "",
+        sort: { attribute: "", direction: "" },
+    };
+
+    return createStore<BeerState>((set, get) => ({
+        //   STATES
+        ...DEFAULT_PROPS,
+        ...initProps,
+        allBeers: [],
 
         //  ACTIONS
         setLoading: (loading: boolean) => {
@@ -143,7 +146,7 @@ export const createBeerStore = (initProps: InitialProps) => {
             set({ allBeers: updatedBeers });
         },
 
-        //
+        // CHANGE OWNER, CHANGE BEERS
         handleWarehouseChange: async (newWarehouseOwner: string) => {
             const xata = getXataClient();
             get().setLoading(true);
@@ -193,6 +196,7 @@ export const createBeerStore = (initProps: InitialProps) => {
             get().setLoading(false);
         },
 
+        // SET BEER OWNER
         setWarehouseOwner: (warehouseOwner: string) => {
             set({ warehouseOwner });
         },
@@ -200,29 +204,14 @@ export const createBeerStore = (initProps: InitialProps) => {
         //RESET
         resetFilters: () => {
             set({
-                filters: {
-                    alcoholFilters: [
-                        "soft",
-                        "normal",
-                        "high",
-                        "extra",
-                        "hardcore",
-                    ],
-                    mlFilters: {
-                        operand: "GET",
-                        mlValue: -1,
-                    },
-                    countryFilters: [],
-                    impressionFilters: {},
-                    search: "",
-                },
+                filters: DEFAULT_PROPS.filters,
             });
         },
         resetSort: () => {
-            set({ sort: { attribute: "", direction: "" } });
+            set({ sort: DEFAULT_PROPS.sort });
         },
         resetGroupBy: () => {
-            set({ groupBy: "" });
+            set({ groupBy: DEFAULT_PROPS.groupBy });
         },
     }));
 };

@@ -29,10 +29,8 @@ interface BeerCardProps {
 }
 
 const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
-    console.log("🚀 ~ BeerCard ~ isOwner:", isOwner);
     const { data: session } = useSession();
     const user = session?.user;
-    console.log("🚀 ~ BeerCard ~ user:", user);
 
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
     const [selectedKeys, setSelectedKeys] = useState<Iterable<any>>(
