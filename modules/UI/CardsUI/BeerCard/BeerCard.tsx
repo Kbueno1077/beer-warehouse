@@ -90,14 +90,14 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
                                     style={{
                                         color: "green",
                                         fontSize: 18,
-                                        translate: "0 6px",
+                                        translate: "0 4px",
                                     }}
                                 />
                                 <MdOutlineKeyboardDoubleArrowUp
                                     style={{
                                         color: "green",
                                         fontSize: 18,
-                                        translate: "0 -6px",
+                                        translate: "0 -5.5px",
                                     }}
                                 />
                             </div>
@@ -135,7 +135,7 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
                                     style={{
                                         color: "red",
                                         fontSize: 18,
-                                        translate: "0 5.5px",
+                                        translate: "0 4px",
                                     }}
                                 />
                                 <MdOutlineKeyboardDoubleArrowDown

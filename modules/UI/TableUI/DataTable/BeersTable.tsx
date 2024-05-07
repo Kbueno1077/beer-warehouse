@@ -227,14 +227,14 @@ export default function BeersTable() {
                                         style={{
                                             color: "green",
                                             fontSize: 18,
-                                            translate: "0 6px",
+                                            translate: "0 5.5px",
                                         }}
                                     />
                                     <MdOutlineKeyboardDoubleArrowUp
                                         style={{
                                             color: "green",
                                             fontSize: 18,
-                                            translate: "0 -6px",
+                                            translate: "0 -5.5px",
                                         }}
                                     />
                                 </div>
@@ -277,7 +277,7 @@ export default function BeersTable() {
                                         style={{
                                             color: "red",
                                             fontSize: 18,
-                                            translate: "0 -5.5px",
+                                            translate: "0 -5px",
                                         }}
                                     />
                                 </div>
