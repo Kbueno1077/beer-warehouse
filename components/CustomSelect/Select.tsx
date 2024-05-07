@@ -102,7 +102,7 @@ const customStyles: StylesConfig<OptionsType, true> = {
             : state.isFocused
             ? "white"
             : state.selectProps.theme === DARK_MODE
-            ? "#D4D4D8"
+            ? "white"
             : "initial",
         borderRadius: "10px",
     }),

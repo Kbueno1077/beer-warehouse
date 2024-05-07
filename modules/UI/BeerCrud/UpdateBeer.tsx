@@ -120,12 +120,15 @@ export default function UpdateBeer({ selectedBeer, isOwner }: UpdateBeerProps) {
 
         try {
             if (evidenceFiles.length > 0) {
+                console.log("UPLOADING PHOTO");
                 cloudinaryResponse = await uploadImage();
             }
 
             if (name) {
                 await editBeerXata(
-                    cloudinaryResponse?.data?.secure_url || currentEvidenceImage
+                    cloudinaryResponse?.data?.secure_url ||
+                        currentEvidenceImage,
+                    !!cloudinaryResponse?.data?.secure_url
                 );
             }
 
@@ -176,13 +179,16 @@ export default function UpdateBeer({ selectedBeer, isOwner }: UpdateBeerProps) {
         return await axios.post(url, formData);
     };
 
-    const editBeerXata = async (evidence_url: string) => {
+    const editBeerXata = async (
+        evidence_url: string,
+        changeOfPicture: boolean
+    ) => {
         const alcoholNumber = parseFloat(alcohol_percentage);
         const mlNumber = parseFloat(ml);
 
         let evidence_public_id = "";
 
-        if (evidence_url && selectedBeer.evidence_img) {
+        if (evidence_url && selectedBeer.evidence_img && changeOfPicture) {
             evidence_public_id = selectedBeer.evidence_img
                 .split("/")
                 .slice(-2)

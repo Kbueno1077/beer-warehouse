@@ -17,7 +17,14 @@ import styles from "./beerCard.module.css";
 import React, { useState } from "react";
 import DeleteBeer from "@/modules/UI/BeerCrud/DeleteBeer";
 import UpdateBeer from "@/modules/UI/BeerCrud/UpdateBeer";
-import { MdKeyboardArrowUp } from "react-icons/md";
+import {
+    MdKeyboardArrowUp,
+    MdOutlineKeyboardArrowDown,
+    MdOutlineKeyboardArrowRight,
+    MdOutlineKeyboardArrowUp,
+    MdOutlineKeyboardDoubleArrowDown,
+    MdOutlineKeyboardDoubleArrowUp,
+} from "react-icons/md";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
@@ -76,13 +83,83 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
 
             <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 flex-col">
                 <div className="w-full flex align-middle items-center justify-between">
-                    <div>
-                        <p className="text-black text-tiny">
-                            {beer.alcohol_percentage >= 0
-                                ? `${t("abv")}: ${beer.alcohol_percentage} %`
-                                : t("abv-na")}
-                        </p>
-                        <p className="text-black text-tiny">ML: {beer.ml} </p>
+                    <div className="w-full flex align-middle items-center gap-1">
+                        {beer.initial_impression === "Excellent" && (
+                            <div className="">
+                                <MdOutlineKeyboardArrowUp
+                                    style={{
+                                        color: "green",
+                                        fontSize: 18,
+                                        translate: "0 6px",
+                                    }}
+                                />
+                                <MdOutlineKeyboardDoubleArrowUp
+                                    style={{
+                                        color: "green",
+                                        fontSize: 18,
+                                        translate: "0 -6px",
+                                    }}
+                                />
+                            </div>
+                        )}
+                        {beer.initial_impression === "Amazing" && (
+                            <MdOutlineKeyboardDoubleArrowUp
+                                style={{ color: "green", fontSize: 18 }}
+                            />
+                        )}
+
+                        {beer.initial_impression === "Good" && (
+                            <MdOutlineKeyboardArrowUp
+                                style={{ color: "green", fontSize: 18 }}
+                            />
+                        )}
+
+                        {beer.initial_impression === "Average" && (
+                            <MdOutlineKeyboardArrowRight
+                                style={{ color: "gray", fontSize: 18 }}
+                            />
+                        )}
+                        {beer.initial_impression === "Bad" && (
+                            <MdOutlineKeyboardArrowDown
+                                style={{ color: "red", fontSize: 18 }}
+                            />
+                        )}
+                        {beer.initial_impression === "Awful" && (
+                            <MdOutlineKeyboardDoubleArrowDown
+                                style={{ color: "red", fontSize: 18 }}
+                            />
+                        )}
+                        {beer.initial_impression === "Horrible" && (
+                            <div>
+                                <MdOutlineKeyboardArrowDown
+                                    style={{
+                                        color: "red",
+                                        fontSize: 18,
+                                        translate: "0 5.5px",
+                                    }}
+                                />
+                                <MdOutlineKeyboardDoubleArrowDown
+                                    style={{
+                                        color: "red",
+                                        fontSize: 18,
+                                        translate: "0 -5.5px",
+                                    }}
+                                />
+                            </div>
+                        )}
+
+                        <div>
+                            <p className="text-black text-tiny">
+                                {beer.alcohol_percentage >= 0
+                                    ? `${t("abv")}: ${
+                                          beer.alcohol_percentage
+                                      } %`
+                                    : t("abv-na")}
+                            </p>
+                            <p className="text-black text-tiny">
+                                ML: {beer.ml}{" "}
+                            </p>
+                        </div>
                     </div>
 
                     {beer.country !== "TBD" && beer.country !== "" && (

@@ -1,5 +1,7 @@
 .chipName {
     width: 100%;
+    display: "flex";
+    gap: 2px;
     overflow: auto;
     word-break: break-all;
     background-color: rgba(0, 0, 0, 0.42);

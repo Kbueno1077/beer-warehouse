@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
     Button,
     Dropdown,
@@ -19,9 +18,10 @@ import {
     TableRow,
     User,
 } from "@nextui-org/react";
+import React from "react";
 
-import countryCodes from "../../../../util/countries.json";
 import { TbScanEye } from "react-icons/tb";
+import countryCodes from "../../../../util/countries.json";
 
 import { PiImagesSquare } from "react-icons/pi";
 import { ChevronDownIcon, SearchIcon } from "./TableIcons";
@@ -35,22 +35,31 @@ import {
     mapPercentToString,
 } from "./data";
 
-import { capitalize } from "@/util/javascript";
-import { ADMIN_ROLE, BeerType } from "@/util/types";
-import FiltersModal from "@/modules/UI/Filters/FiltersModal";
+import { CustomChip } from "@/components/CustomChip/CustomChip";
+import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import AddBeer from "@/modules/UI/BeerCrud/AddBeer";
-import UpdateBeer from "@/modules/UI/BeerCrud/UpdateBeer";
 import DeleteBeer from "@/modules/UI/BeerCrud/DeleteBeer";
+import UpdateBeer from "@/modules/UI/BeerCrud/UpdateBeer";
+import FiltersModal from "@/modules/UI/Filters/FiltersModal";
+import { useBearContext } from "@/store/useBeerContext";
+import { capitalize } from "@/util/javascript";
+import { BeerType } from "@/util/types";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
-import { CustomChip } from "@/components/CustomChip/CustomChip";
-import { useBearContext } from "@/store/useBeerContext";
+
+import {
+    MdOutlineKeyboardArrowDown,
+    MdOutlineKeyboardArrowRight,
+    MdOutlineKeyboardArrowUp,
+    MdOutlineKeyboardDoubleArrowDown,
+    MdOutlineKeyboardDoubleArrowUp,
+} from "react-icons/md";
 
 export default function BeersTable() {
     const { data: session } = useSession();
     const user = session?.user;
     const t = useTranslations("table");
+    const timpression = useTranslations("impression");
     const tcountries = useTranslations("countries");
 
     const { allBeers, filters, changeFilters, warehouseOwner } = useBearContext(
@@ -205,6 +214,78 @@ export default function BeersTable() {
                                 {cellValue}
                             </p>
                             {/*<p className="text-bold text-tiny capitalize text-default-500">{beer.ml}</p>*/}
+                        </div>
+                    );
+
+                case "initial_impression":
+                    console.log(cellValue);
+                    return (
+                        <div className="flex gap-2 items-center">
+                            {cellValue === "Excellent" && (
+                                <div className="">
+                                    <MdOutlineKeyboardArrowUp
+                                        style={{
+                                            color: "green",
+                                            fontSize: 18,
+                                            translate: "0 6px",
+                                        }}
+                                    />
+                                    <MdOutlineKeyboardDoubleArrowUp
+                                        style={{
+                                            color: "green",
+                                            fontSize: 18,
+                                            translate: "0 -6px",
+                                        }}
+                                    />
+                                </div>
+                            )}
+                            {cellValue === "Amazing" && (
+                                <MdOutlineKeyboardDoubleArrowUp
+                                    style={{ color: "green", fontSize: 18 }}
+                                />
+                            )}
+                            {cellValue === "Good" && (
+                                <MdOutlineKeyboardArrowUp
+                                    style={{ color: "green", fontSize: 18 }}
+                                />
+                            )}
+                            {cellValue === "Average" && (
+                                <MdOutlineKeyboardArrowRight
+                                    style={{ color: "gray", fontSize: 18 }}
+                                />
+                            )}
+                            {cellValue === "Bad" && (
+                                <MdOutlineKeyboardArrowDown
+                                    style={{ color: "red", fontSize: 18 }}
+                                />
+                            )}
+                            {cellValue === "Awful" && (
+                                <MdOutlineKeyboardDoubleArrowDown
+                                    style={{ color: "red", fontSize: 18 }}
+                                />
+                            )}
+                            {cellValue === "Horrible" && (
+                                <div>
+                                    <MdOutlineKeyboardArrowDown
+                                        style={{
+                                            color: "red",
+                                            fontSize: 18,
+                                            translate: "0 5.5px",
+                                        }}
+                                    />
+                                    <MdOutlineKeyboardDoubleArrowDown
+                                        style={{
+                                            color: "red",
+                                            fontSize: 18,
+                                            translate: "0 -5.5px",
+                                        }}
+                                    />
+                                </div>
+                            )}
+
+                            <p className="text-bold text-small capitalize">
+                                {timpression(cellValue)}
+                            </p>
                         </div>
                     );
 

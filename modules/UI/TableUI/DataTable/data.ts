@@ -1,11 +1,9 @@
-import { ChipProps } from "@nextui-org/react";
-
 const columns = [
     { name: "NAME", uid: "name", sortable: true },
     { name: "ML", uid: "ml", sortable: true },
     { name: "ALCOHOL %", uid: "alcohol_percentage", sortable: true },
     { name: "BOUGHT IN", uid: "bought_in", sortable: true },
-    // {name: "IMPRESSION", uid: "initial_impression", sortable: true},
+    { name: "IMPRESSION", uid: "initial_impression", sortable: true },
     { name: "COUNTRY", uid: "country", sortable: true },
     { name: "EVIDENCE", uid: "evidence_img" },
     { name: "ACTIONS", uid: "actions" },
@@ -34,17 +32,6 @@ const mapPercentToString = (percent: number) => {
     if (percent >= 8) return "hardcore";
 
     return "";
-};
-
-const mapImpressionToColor = (impression: string) => {
-    switch (impression) {
-        case "good":
-            return "success";
-        case "bad":
-            return "danger";
-        default:
-            return "default";
-    }
 };
 
 //Extend this well done
@@ -80,16 +67,17 @@ const INITIAL_VISIBLE_COLUMNS = [
     "alcohol_percentage",
     "country",
     "bought_in",
+    "initial_impression",
     "evidence_img",
     "actions",
 ];
 
 export {
-    columns,
-    alcoholOptions,
-    filterOptions,
-    alcoholColorMap,
     INITIAL_VISIBLE_COLUMNS,
-    mapPercentToString,
+    alcoholColorMap,
+    alcoholOptions,
+    columns,
+    filterOptions,
     mapOperands,
+    mapPercentToString,
 };
