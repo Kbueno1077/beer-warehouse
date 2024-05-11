@@ -120,6 +120,17 @@
         "abv-na": "Alcohol : N/D",
         "ml": "Ml"
     },
+    "beerDetails": {
+        "beer": "Cerveza",
+        "alcohol": "Alcohol",
+        "ml": "Ml",
+        "abv": "alc. %",
+        "impression": "Impresión",
+        "country": "Pais",
+        "bought": "Comprado en",
+        "comments": "Comentarios",
+        "image": "Imagen"
+    },
     "filters": {
         "modalBtn": "Filtros",
         "btn-aria": "Abrir Modal de Filtros",

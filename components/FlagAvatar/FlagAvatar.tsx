@@ -10,9 +10,14 @@ import { useTranslations } from "next-intl";
 type FlagAvatarProps = {
     value: string;
     withName?: boolean;
+    nameClassName?: string;
 };
 
-export default function FlagAvatar({ value, withName }: FlagAvatarProps) {
+export default function FlagAvatar({
+    value,
+    withName,
+    nameClassName,
+}: FlagAvatarProps) {
     const tcountries = useTranslations("countries");
 
     // @ts-ignore
@@ -25,9 +30,9 @@ export default function FlagAvatar({ value, withName }: FlagAvatarProps) {
     }
 
     return (
-        <div className="flex gap-2">
+        <div className="flex gap-2 items-center">
             <Avatar
-                alt={""}
+                alt={`flag ${flag}`}
                 className="w-6 h-6"
                 src={`https://flagcdn.com/${flag}.svg`}
                 classNames={{
@@ -37,7 +42,9 @@ export default function FlagAvatar({ value, withName }: FlagAvatarProps) {
                 }}
             />
 
-            {withName && <span>{countryName}</span>}
+            {withName && (
+                <span className={`${nameClassName}`}>{countryName}</span>
+            )}
         </div>
     );
 }

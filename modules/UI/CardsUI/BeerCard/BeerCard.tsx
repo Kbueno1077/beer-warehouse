@@ -2,6 +2,11 @@
 
 import NextImage from "next/image";
 
+import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
+import ImpressionIcons from "@/components/ImpressionIcons/ImpressionIcons";
+import DeleteBeer from "@/modules/UI/BeerCrud/DeleteBeer";
+import UpdateBeer from "@/modules/UI/BeerCrud/UpdateBeer";
+import { BeerType } from "@/util/types";
 import {
     Accordion,
     AccordionItem,
@@ -12,23 +17,13 @@ import {
     Chip,
     Skeleton,
 } from "@nextui-org/react";
-import { ADMIN_ROLE, BeerType } from "@/util/types";
-import styles from "./beerCard.module.css";
-import React, { useState } from "react";
-import DeleteBeer from "@/modules/UI/BeerCrud/DeleteBeer";
-import UpdateBeer from "@/modules/UI/BeerCrud/UpdateBeer";
-import {
-    MdKeyboardArrowUp,
-    MdOutlineKeyboardArrowDown,
-    MdOutlineKeyboardArrowRight,
-    MdOutlineKeyboardArrowUp,
-    MdOutlineKeyboardDoubleArrowDown,
-    MdOutlineKeyboardDoubleArrowUp,
-} from "react-icons/md";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
+import { useRouter } from "@/i18n/navigation";
+import { useState } from "react";
+import { MdKeyboardArrowUp } from "react-icons/md";
 import { TbScanEye } from "react-icons/tb";
+import styles from "./beerCard.module.css";
 
 interface BeerCardProps {
     beer: BeerType;
@@ -37,6 +32,8 @@ interface BeerCardProps {
 
 const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
     const { data: session } = useSession();
+    const router = useRouter();
+
     const user = session?.user;
 
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
@@ -50,8 +47,20 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
         : ["", ""];
     const lowRes = imageSplit[0] + "upload/q_30" + imageSplit[1];
 
+    const openDetailsIfNotUser = () => {
+        if (!user || !isOwner) {
+            //@ts-ignore
+            router.push({ pathname: `/${beer.id}` });
+        }
+    };
+
+    const openDetails = () => {
+        //@ts-ignore
+        router.push({ pathname: `/${beer.id}` });
+    };
+
     return (
-        <Card isFooterBlurred={true}>
+        <Card isFooterBlurred={true} onPress={openDetailsIfNotUser}>
             <CardHeader className="absolute z-10 top-1 flex justify-between items-start">
                 <Chip variant="light" radius="sm" className={styles.chipName}>
                     <p className="text-tiny text-white/75 uppercase font-bold">
@@ -84,68 +93,10 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
             <CardFooter className="absolute bg-white/30 bottom-0 border-t-1 border-zinc-100/50 z-10 flex-col">
                 <div className="w-full flex align-middle items-center justify-between">
                     <div className="w-full flex align-middle items-center gap-1">
-                        {beer.initial_impression === "Excellent" && (
-                            <div className="">
-                                <MdOutlineKeyboardArrowUp
-                                    style={{
-                                        color: "green",
-                                        fontSize: 18,
-                                        translate: "0 4px",
-                                    }}
-                                />
-                                <MdOutlineKeyboardDoubleArrowUp
-                                    style={{
-                                        color: "green",
-                                        fontSize: 18,
-                                        translate: "0 -5.5px",
-                                    }}
-                                />
-                            </div>
-                        )}
-                        {beer.initial_impression === "Amazing" && (
-                            <MdOutlineKeyboardDoubleArrowUp
-                                style={{ color: "green", fontSize: 18 }}
+                        {beer.initial_impression && (
+                            <ImpressionIcons
+                                initial_impression={beer.initial_impression}
                             />
-                        )}
-
-                        {beer.initial_impression === "Good" && (
-                            <MdOutlineKeyboardArrowUp
-                                style={{ color: "green", fontSize: 18 }}
-                            />
-                        )}
-
-                        {beer.initial_impression === "Average" && (
-                            <MdOutlineKeyboardArrowRight
-                                style={{ color: "gray", fontSize: 18 }}
-                            />
-                        )}
-                        {beer.initial_impression === "Bad" && (
-                            <MdOutlineKeyboardArrowDown
-                                style={{ color: "red", fontSize: 18 }}
-                            />
-                        )}
-                        {beer.initial_impression === "Awful" && (
-                            <MdOutlineKeyboardDoubleArrowDown
-                                style={{ color: "red", fontSize: 18 }}
-                            />
-                        )}
-                        {beer.initial_impression === "Horrible" && (
-                            <div>
-                                <MdOutlineKeyboardArrowDown
-                                    style={{
-                                        color: "red",
-                                        fontSize: 18,
-                                        translate: "0 4px",
-                                    }}
-                                />
-                                <MdOutlineKeyboardDoubleArrowDown
-                                    style={{
-                                        color: "red",
-                                        fontSize: 18,
-                                        translate: "0 -5.5px",
-                                    }}
-                                />
-                            </div>
                         )}
 
                         <div>
@@ -205,6 +156,7 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
                                     variant="faded"
                                     isIconOnly
                                     color="danger"
+                                    onPress={openDetails}
                                 >
                                     <TbScanEye className="h-[17px] w-[17px] text-gray-500" />
                                 </Button>

@@ -47,13 +47,8 @@ import { BeerType } from "@/util/types";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 
-import {
-    MdOutlineKeyboardArrowDown,
-    MdOutlineKeyboardArrowRight,
-    MdOutlineKeyboardArrowUp,
-    MdOutlineKeyboardDoubleArrowDown,
-    MdOutlineKeyboardDoubleArrowUp,
-} from "react-icons/md";
+import ImpressionIcons from "@/components/ImpressionIcons/ImpressionIcons";
+import { useRouter } from "@/i18n/navigation";
 
 export default function BeersTable() {
     const { data: session } = useSession();
@@ -61,6 +56,7 @@ export default function BeersTable() {
     const t = useTranslations("table");
     const timpression = useTranslations("impression");
     const tcountries = useTranslations("countries");
+    const router = useRouter();
 
     const { allBeers, filters, changeFilters, warehouseOwner } = useBearContext(
         (s) => {
@@ -84,6 +80,11 @@ export default function BeersTable() {
         column: "age",
         direction: "ascending",
     });
+
+    const openDetails = (id: string) => {
+        //@ts-ignore
+        router.push({ pathname: `/${id}` });
+    };
 
     const [page, setPage] = React.useState(1);
     const hasSearchFilter = Boolean(filters.search);
@@ -221,66 +222,10 @@ export default function BeersTable() {
                     console.log(cellValue);
                     return (
                         <div className="flex gap-2 items-center">
-                            {cellValue === "Excellent" && (
-                                <div className="">
-                                    <MdOutlineKeyboardArrowUp
-                                        style={{
-                                            color: "green",
-                                            fontSize: 18,
-                                            translate: "0 5.5px",
-                                        }}
-                                    />
-                                    <MdOutlineKeyboardDoubleArrowUp
-                                        style={{
-                                            color: "green",
-                                            fontSize: 18,
-                                            translate: "0 -5.5px",
-                                        }}
-                                    />
-                                </div>
-                            )}
-                            {cellValue === "Amazing" && (
-                                <MdOutlineKeyboardDoubleArrowUp
-                                    style={{ color: "green", fontSize: 18 }}
+                            {cellValue && typeof cellValue === "string" && (
+                                <ImpressionIcons
+                                    initial_impression={cellValue}
                                 />
-                            )}
-                            {cellValue === "Good" && (
-                                <MdOutlineKeyboardArrowUp
-                                    style={{ color: "green", fontSize: 18 }}
-                                />
-                            )}
-                            {cellValue === "Average" && (
-                                <MdOutlineKeyboardArrowRight
-                                    style={{ color: "gray", fontSize: 18 }}
-                                />
-                            )}
-                            {cellValue === "Bad" && (
-                                <MdOutlineKeyboardArrowDown
-                                    style={{ color: "red", fontSize: 18 }}
-                                />
-                            )}
-                            {cellValue === "Awful" && (
-                                <MdOutlineKeyboardDoubleArrowDown
-                                    style={{ color: "red", fontSize: 18 }}
-                                />
-                            )}
-                            {cellValue === "Horrible" && (
-                                <div>
-                                    <MdOutlineKeyboardArrowDown
-                                        style={{
-                                            color: "red",
-                                            fontSize: 18,
-                                            translate: "0 5.5px",
-                                        }}
-                                    />
-                                    <MdOutlineKeyboardDoubleArrowDown
-                                        style={{
-                                            color: "red",
-                                            fontSize: 18,
-                                            translate: "0 -5px",
-                                        }}
-                                    />
-                                </div>
                             )}
 
                             <p className="text-bold text-small capitalize">
@@ -393,7 +338,7 @@ export default function BeersTable() {
                     return (
                         <div className="relative flex justify-end items-center gap-2">
                             <Button
-                                disabled={true}
+                                onPress={() => openDetails(beer.id)}
                                 variant="faded"
                                 size={"sm"}
                                 isIconOnly
