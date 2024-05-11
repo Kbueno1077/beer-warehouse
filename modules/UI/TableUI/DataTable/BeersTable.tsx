@@ -219,7 +219,6 @@ export default function BeersTable() {
                     );
 
                 case "initial_impression":
-                    console.log(cellValue);
                     return (
                         <div className="flex gap-2 items-center">
                             {cellValue && typeof cellValue === "string" && (

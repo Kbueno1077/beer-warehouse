@@ -47,20 +47,17 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
         : ["", ""];
     const lowRes = imageSplit[0] + "upload/q_30" + imageSplit[1];
 
-    const openDetailsIfNotUser = () => {
-        if (!user || !isOwner) {
-            //@ts-ignore
-            router.push({ pathname: `/${beer.id}` });
-        }
-    };
-
     const openDetails = () => {
         //@ts-ignore
         router.push({ pathname: `/${beer.id}` });
     };
 
     return (
-        <Card isFooterBlurred={true} onPress={openDetailsIfNotUser}>
+        <Card
+            isFooterBlurred={true}
+            onPress={openDetails}
+            isPressable={!user || !isOwner}
+        >
             <CardHeader className="absolute z-10 top-1 flex justify-between items-start">
                 <Chip variant="light" radius="sm" className={styles.chipName}>
                     <p className="text-tiny text-white/75 uppercase font-bold">
