@@ -20,6 +20,10 @@ function BeerDetails({ beer }: BeerDetailsProps) {
         <div className="flex flex-col md:flex-row justify-evenly w-full">
             <div className="flex flex-col md:flex-row justify-between md:gap-15">
                 <div className="flex flex-col gap-2 p-5">
+                    <h1 className="text-5xl sm:hidden font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl mb-5">
+                        {beer.name}
+                    </h1>
+
                     <Image
                         className="cursor-pointer"
                         isZoomed={true}
@@ -33,7 +37,7 @@ function BeerDetails({ beer }: BeerDetailsProps) {
                 </div>
 
                 <div className="flex flex-col gap-2 p-5">
-                    <h1 className="text-5xl font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl mb-5">
+                    <h1 className="text-5xl hidden sm:block font-extrabold leading-none tracking-tight md:text-5xl lg:text-6xl mb-5">
                         {beer.name}
                     </h1>
 
@@ -81,7 +85,7 @@ function BeerDetails({ beer }: BeerDetailsProps) {
                             />
 
                             <span className={"font-normal text-xl"}>
-                                {timpression(beer.initial_impression)}:
+                                {timpression(beer.initial_impression)}
                             </span>
                         </div>
                     )}

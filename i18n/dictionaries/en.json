@@ -47,6 +47,9 @@
             "initial_impression": "Impression",
             "instances": "different instances",
             "abv": "ABV"
+        },
+        "bar": {
+            "name": "Bar Chart, Impression by countries"
         }
     },
     "navbar": {

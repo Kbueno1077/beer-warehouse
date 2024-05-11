@@ -36,6 +36,9 @@
             "initial_impression": "Impresión",
             "instances": "instancias diferentes",
             "abv": "alc. %"
+        },
+        "bar": {
+            "name": "Gráfico de barras, impresiones por pais"
         }
     },
     "navbar": {

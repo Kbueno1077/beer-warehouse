@@ -3,10 +3,11 @@
 "use client";
 
 import React, { useEffect } from "react";
-import { BeerType } from "@/util/types";
+import { BeerType, DARK_MODE } from "@/util/types";
 import ReactECharts from "echarts-for-react";
 import countryCodes from "@/util/countries.json";
 import { useTranslations } from "next-intl";
+import { useTheme } from "next-themes";
 
 interface PieChartsProps {
     serverFetchedBeers: Array<BeerType>;
@@ -14,7 +15,9 @@ interface PieChartsProps {
 
 function BarChart({ serverFetchedBeers }: PieChartsProps) {
     const [data, setData] = React.useState(null);
+    const t = useTranslations("charts.bar");
     const tcountries = useTranslations("countries");
+    const { theme, resolvedTheme } = useTheme();
 
     useEffect(() => {
         keyBarChart();
@@ -76,7 +79,11 @@ function BarChart({ serverFetchedBeers }: PieChartsProps) {
 
     const getOption = () => {
         return {
-            legend: {},
+            legend: {
+                textStyle: {
+                    color: resolvedTheme === DARK_MODE ? "white" : "#333333",
+                },
+            },
             tooltip: {
                 formatter: function (params: any) {
                     let data =

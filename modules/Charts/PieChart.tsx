@@ -53,6 +53,9 @@ function PieChart({ serverFetchedBeers }: PieChartsProps) {
                 text: `${t("name")}: ${t(attribute)}`,
                 left: "center",
                 top: "20px",
+                textStyle: {
+                    color: resolvedTheme === DARK_MODE ? "white" : "#333333",
+                },
             },
 
             tooltip: {
