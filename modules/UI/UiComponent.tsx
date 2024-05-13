@@ -16,17 +16,24 @@ interface UiComponentProps {
 function UiComponent({ serverFetchedBeers }: UiComponentProps) {
     const { resolvedTheme } = useTheme();
 
-    const { mode, allBeers, setAllBeers, loading, setWarehouseOwner } =
-        useBearContext((s) => {
-            return {
-                mode: s.mode,
-                allBeers: s.allBeers,
-                setAllBeers: s.setAllBeers,
-                loading: s.loading,
-                setMode: s.setMode,
-                setWarehouseOwner: s.setWarehouseOwner,
-            };
-        });
+    const {
+        mode,
+        allBeers,
+        setAllBeers,
+        loading,
+        setWarehouseOwner,
+        warehouseOwner,
+    } = useBearContext((s) => {
+        return {
+            mode: s.mode,
+            allBeers: s.allBeers,
+            setAllBeers: s.setAllBeers,
+            loading: s.loading,
+            setMode: s.setMode,
+            setWarehouseOwner: s.setWarehouseOwner,
+            warehouseOwner: s.warehouseOwner,
+        };
+    });
 
     useEffect(() => {
         setAllBeers(JSON.parse(serverFetchedBeers));

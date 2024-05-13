@@ -83,7 +83,7 @@ export default function BeersTable() {
 
     const openDetails = (id: string) => {
         //@ts-ignore
-        router.push({ pathname: `/${id}` });
+        router.push({ pathname: `/beerDetails/${id}` });
     };
 
     const [page, setPage] = React.useState(1);
@@ -563,8 +563,8 @@ export default function BeersTable() {
                     filters.alcoholFilters ||
                     filters.countryFilters ||
                     filters.mlFilters
-                        ? "No beers match applied filters"
-                        : "No beers found"
+                        ? t("no-beers-filter-message")
+                        : t("no-beers-message")
                 }
                 items={sortedItems}
             >

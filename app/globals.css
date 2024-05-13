@@ -100,7 +100,7 @@ body {
     background: #f0f0f0;
     box-shadow: 14px 14px 28px #d6d6d6, -14px -14px 28px #ffffff;
     position: relative;
-
+    min-height: 450px;
     padding: 20px;
     margin: -35vh 100px 60px;
     overflow: auto;

@@ -11,6 +11,8 @@
         "logout": "Cerrar Sesion",
         "logout-desc": "Cerrar Sesion",
         "dashboard": "Menú Principal",
+        "collections": "Colecciones",
+        "collections-desc": "Ir a colecciones",
         "dashboard-desc": "Ir a menú Principal",
         "charts": "Gráficas",
         "charts-desc": "Ir a Gráficas",
@@ -41,6 +43,7 @@
             "name": "Gráfico de barras, impresiones por pais"
         }
     },
+    "collections": { "joined": "Unido el" },
     "navbar": {
         "beer-warehouse": "ALMACEN DE CERVEZAS",
         "card-switch": "Cambie a la vista en tarjetas",
@@ -84,9 +87,12 @@
         "country": "Pais",
         "evidence": "Ver Evidencia",
         "initial_impression": "Impresión",
+        "impression": "Impresión",
         "actions": "Acciones",
         "pageRows": "Filas por página",
         "columnsBtn": "Columnas",
+        "no-beers-filter-message": "Ninguna cerveza coincide con los filtros aplicados.\n",
+        "no-beers-message": "No se encontraron cervezas",
         "search": {
             "placeholder": "Buscar cerveza por nombre..."
         }

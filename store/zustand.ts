@@ -1,6 +1,7 @@
 import { createStore } from "zustand";
 import { BeerType, ModeType } from "@/util/types";
 import { getXataClient } from "@/xata/xata";
+import createCookie from "@/app/actions";
 
 type MlFilterType = {
     operand: string;
@@ -191,6 +192,7 @@ export const createBeerStore = (initProps: InitialProps) => {
                     .getAll();
             }
 
+            await createCookie("warehouseOwner", newWarehouseOwner);
             get().setAllBeers(serverFetchedBeers);
             get().setWarehouseOwner(newWarehouseOwner);
             get().setLoading(false);

@@ -11,7 +11,9 @@
         "logout": "Log out",
         "logout-desc": "Quit the session",
         "dashboard": "Dashboard",
+        "collections": "Collections",
         "dashboard-desc": "Go to dashboard",
+        "collections-desc": "Go to collections",
         "charts": "Charts",
         "charts-desc": "Go to charts",
         "Session": "Session",
@@ -52,6 +54,7 @@
             "name": "Bar Chart, Impression by countries"
         }
     },
+    "collections": { "joined": "Joined at" },
     "navbar": {
         "beer-warehouse": "BEER WAREHOUSE",
         "card-switch": "Switch to Card view",
@@ -93,11 +96,14 @@
         "alcohol %": "Alcohol %",
         "bought in": "Bought In",
         "country": "Country",
+        "impression": "Impression",
         "evidence": "See Evidence",
         "initial_impression": "Impression",
         "actions": "Actions",
         "pageRows": "Rows per page",
         "columnsBtn": "Columns",
+        "no-beers-filter-message": "No beers match applied filters",
+        "no-beers-message": "No beers found",
         "search": {
             "placeholder": "Search by beer name..."
         }

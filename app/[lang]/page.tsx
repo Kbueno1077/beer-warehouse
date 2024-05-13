@@ -5,13 +5,23 @@ import { getXataClient } from "@/xata/xata";
 import UiComponent from "@/modules/UI/UiComponent";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
+import createCookie from "../actions";
 
 const Page: NextPage = async () => {
-    const session = await getServerSession();
     const xata = getXataClient();
+    const cookieStore = cookies();
+    const hasCookie = cookieStore.has("warehouseOwner");
+    const warehouseOwner = cookieStore?.get("warehouseOwner")?.value;
+
+    async function create(name: string, value: string) {
+        "use server";
+
+        cookies().set(name, value);
+    }
 
     let serverFetchedBeers = [];
-    if (!session || !session.user || session?.user.name === "Kevin") {
+    if (!hasCookie || warehouseOwner === "Kevin") {
         serverFetchedBeers = await xata.db.beers
             .select([
                 "id",
@@ -26,6 +36,8 @@ const Page: NextPage = async () => {
             ])
             .sort("name", "asc")
             .getAll();
+
+        create("warehouseOwner", "Kevin");
     } else {
         serverFetchedBeers = await xata.db.usersBeers
             .select([
@@ -40,7 +52,7 @@ const Page: NextPage = async () => {
                 "additional_comments",
                 "owner",
             ])
-            .filter({ owner: session.user.name })
+            .filter({ owner: warehouseOwner })
             .sort("name", "asc")
             .getAll();
     }

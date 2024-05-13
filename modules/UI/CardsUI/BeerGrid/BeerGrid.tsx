@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState } from "react";
-import BeerCard from "@/modules/UI/CardsUI/BeerCard/BeerCard";
+import BeerCard from "@/components/BeerCard/BeerCard";
 import { Avatar, Button, Chip } from "@nextui-org/react";
 import { BeerType, BeerTypeExtended } from "@/util/types";
 
@@ -129,7 +129,7 @@ const BeerGrid = () => {
             {/* @ts-ignore*/}
             {user && user.name === warehouseOwner ? (
                 <div className="flex justify-between align-middle items-center px-2 mb-[10px] w-full">
-                    <p className="text-gray-500">
+                    <p className="text-silver-500">
                         {" "}
                         {t("total", { count: processedItems.total })}
                     </p>
@@ -137,7 +137,7 @@ const BeerGrid = () => {
                 </div>
             ) : (
                 <div className="flex justify-end mb-[10px] w-full">
-                    <p className="text-gray-500">
+                    <p className="text-silver-500">
                         {" "}
                         {t("total", { count: processedItems.total })}
                     </p>
@@ -216,16 +216,18 @@ const BeerGrid = () => {
 
             <div className="w-full">
                 {processedItems.total === 0 && allBeers.length > 0 && (
-                    <div className="flex justify-center mt-[20px] mb-[20px] w-full">
-                        <p className="text-gray-500">
+                    <div className="flex justify-center mt-[50px] mb-[20px] w-full">
+                        <p className="text-silver-500 text-xl">
                             {t("no-beers-filter-message")}
                         </p>
                     </div>
                 )}
 
                 {allBeers.length === 0 && (
-                    <div className="flex justify-center mt-[20px] mb-[20px] w-full">
-                        <p className="text-gray-500">{t("no-beers-message")}</p>
+                    <div className="flex justify-center mt-[50px] mb-[20px] w-full">
+                        <p className="text-silver-500 text-xl">
+                            {t("no-beers-message")}
+                        </p>
                     </div>
                 )}
 

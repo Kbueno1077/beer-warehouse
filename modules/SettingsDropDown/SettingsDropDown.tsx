@@ -21,6 +21,8 @@ import styles from "./settings.module.css";
 import { IoIosLogOut } from "react-icons/io";
 import { GiBeerBottle } from "react-icons/gi";
 import { IoBarChartSharp } from "react-icons/io5";
+import { MdOutlineCollectionsBookmark } from "react-icons/md";
+
 import Spinner from "@/components/Loaders/Spinner";
 import { useBearContext } from "@/store/useBeerContext";
 
@@ -48,7 +50,11 @@ export default function SettingsDropDown() {
             router.replace("/", { locale: e.values().next().value });
         }
 
-        if (e.anchorKey === "/" || e.anchorKey === "charts") {
+        if (
+            e.anchorKey === "/" ||
+            e.anchorKey === "charts" ||
+            e.anchorKey === "collections"
+        ) {
             handleClose();
             router.push(`/${e.anchorKey}`);
         }
@@ -139,9 +145,22 @@ export default function SettingsDropDown() {
                         key="/"
                         // shortcut="⌘N"
                         description={t("dashboard-desc")}
-                        startContent={<GiBeerBottle className={iconClasses} />}
+                        startContent={
+                            <MdOutlineCollectionsBookmark
+                                className={iconClasses}
+                            />
+                        }
                     >
                         {t("dashboard")}
+                    </DropdownItem>
+
+                    <DropdownItem
+                        key="collections"
+                        // shortcut="⌘N"
+                        description={t("collections-desc")}
+                        startContent={<GiBeerBottle className={iconClasses} />}
+                    >
+                        {t("collections")}
                     </DropdownItem>
 
                     <DropdownItem

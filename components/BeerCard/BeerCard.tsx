@@ -49,7 +49,7 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
 
     const openDetails = () => {
         //@ts-ignore
-        router.push({ pathname: `/${beer.id}` });
+        router.push({ pathname: `/beerDetails/${beer.id}` });
     };
 
     return (
