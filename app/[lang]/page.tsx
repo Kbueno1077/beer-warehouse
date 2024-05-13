@@ -5,13 +5,17 @@ import { getXataClient } from "@/xata/xata";
 import UiComponent from "@/modules/UI/UiComponent";
 import Image from "next/image";
 import { getServerSession } from "next-auth";
+import { cookies } from "next/headers";
 
 const Page: NextPage = async () => {
     const session = await getServerSession();
     const xata = getXataClient();
+    const cookieStore = cookies();
+    const hasCookie = cookieStore.has("warehouseOwner");
+    const warehouseOwner = cookieStore?.get("warehouseOwner")?.value;
 
     let serverFetchedBeers = [];
-    if (!session || !session.user || session?.user.name === "Kevin") {
+    if (!hasCookie || warehouseOwner === "Kevin") {
         serverFetchedBeers = await xata.db.beers
             .select([
                 "id",
