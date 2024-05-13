@@ -1,10 +1,10 @@
-import {ADMIN_ROLE} from "@/util/types";
-import {NextFetchEvent, NextRequest, NextResponse} from "next/server";
-import {NextRequestWithAuth, withAuth} from "next-auth/middleware";
+import { ADMIN_ROLE } from "@/util/types";
+import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
+import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import authMiddleware from "@/middlewares/authMiddleware";
-import createMiddleware from 'next-intl/middleware';
-import {locales, pathnames} from './i18n/navigation';
-
+import createMiddleware from "next-intl/middleware";
+import { locales, pathnames } from "./i18n/navigation";
+import cookieMiddleWare from "./middlewares/cookieMiddleware";
 
 export const config = {
     matcher: [
@@ -15,38 +15,43 @@ export const config = {
          * - _next/image (image optimization files)
          * - favicon.ico (favicon file)
          */
-        '/((?!_next/static|_next/image|favicon.ico).*)',
-        '/(es|en)/:path*'
+        "/((?!_next/static|_next/image|favicon.ico).*)",
+        "/(es|en)/:path*",
     ],
-}
+};
 
 export default async function middleware(req: any, res: any) {
     const handleI18nRouting = createMiddleware({
-        defaultLocale: 'en',
+        defaultLocale: "en",
         locales,
-        pathnames
-    })
+        pathnames,
+    });
 
+    const cookiesMIddleware = await cookieMiddleWare(req, res);
 
-    if (req.nextUrl.pathname.startsWith('/api/beer') || req.nextUrl.pathname.startsWith('/api/cloudinary')) {
+    if (
+        req.nextUrl.pathname.startsWith("/api/beer") ||
+        req.nextUrl.pathname.startsWith("/api/cloudinary")
+    ) {
         const authResponse = await withAuth(authMiddleware, {
             callbacks: {
                 // authorized: ({token}) => token?.role === ADMIN_ROLE
-            }
-        })(req, res)
+            },
+        })(req, res);
 
         if (authResponse && authResponse.status !== 200) {
-            return authResponse
+            return authResponse;
         } else {
             return NextResponse.next();
         }
     } else {
-
-        if (req.nextUrl.pathname === '/' || req.nextUrl.pathname.startsWith('/es') || req.nextUrl.pathname.startsWith('/en'))
+        if (
+            req.nextUrl.pathname === "/" ||
+            req.nextUrl.pathname.startsWith("/es") ||
+            req.nextUrl.pathname.startsWith("/en")
+        )
             return handleI18nRouting(req);
     }
 
     return NextResponse.next();
 }
-
-
