@@ -246,7 +246,7 @@ export default function UpdateBeer({ selectedBeer, isOwner }: UpdateBeerProps) {
                 isOpen={isOpen}
                 onOpenChange={onOpenChange}
             >
-                <ModalContent className="pt-10 pb-2">
+                <ModalContent className="pt-10">
                     {(onClose) => (
                         <>
                             <ModalHeader className="flex flex-col gap-1">

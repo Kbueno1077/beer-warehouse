@@ -56,8 +56,9 @@ function DropZone({
             key={file.name}
             as={NextImage}
             isZoomed
-            width={300}
-            height={300}
+            width={262}
+            height={262}
+            objectFit="cover"
             alt="preview"
             src={file.preview}
         />
@@ -67,10 +68,11 @@ function DropZone({
         <Image
             key={"Current Image"}
             as={NextImage}
+            objectFit="cover"
             isZoomed
-            width={300}
-            height={300}
-            alt=""
+            width={262}
+            height={262}
+            alt="preview"
             src={currentImg}
         />
     );
@@ -78,23 +80,25 @@ function DropZone({
     return (
         <div
             {...getRootProps()}
-            className="relative h-[400px] sm:w-[300px] bg-[#CBDCE3] text-[#6E8A8E] border border-dotted border-sky-500 rounded-large flex flex-col justify-center align-middle items-center"
+            className="relative h-[350px] w-full sm:h-[400px] sm:w-[300px] bg-[#CBDCE3] text-[#6E8A8E] border border-dotted border-sky-500 rounded-large flex flex-col justify-center align-middle items-center"
         >
             <input {...getInputProps()} />
 
             {!seeImage && (
                 <>
-                    <MdOutlineSaveAlt className="w-8 h-8 mb-2" />
-                    <p>
+                    <MdOutlineSaveAlt className="w-8 h-8 mb-2 text-center" />
+                    <p className="px-2">
                         <strong>{t("choose file")}</strong> {t("drag file")}
                     </p>
-                    <p>
+                    <p className="px-2 text-center">
                         {zone === "evidence_img"
                             ? t("evidence-img")
                             : t("preview-img")}
                     </p>
                     {files.length > 0 && (
-                        <p className="mt-2">{t("save image")}</p>
+                        <p className="mt-2 px-2 text-center">
+                            {t("save image")}
+                        </p>
                     )}
                 </>
             )}
@@ -102,7 +106,7 @@ function DropZone({
             {files.length > 0 || currentImg ? (
                 <>
                     {seeImage && (
-                        <div className="relative w-full mx-auto">
+                        <div className="relative h-[350px] w-full sm:h-[400px] sm:w-[300px] mx-auto overflow-hidden">
                             {files.length > 0
                                 ? images
                                 : currentImg
