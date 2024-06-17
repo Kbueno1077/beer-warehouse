@@ -184,6 +184,7 @@
         "confirm remove-body": "Esta seguro que quiere borrar esta cerveza y todos sus datos?",
         "yes": "Hazlo",
         "no": "No Hacer",
+        "add-beer-name-exists": "Este nombre de cerveza ya existe",
         "add-good-message": "Se ha añadido la cerveza correctamente",
         "remove-good-message": "Se ha eliminado la cerveza correctamente",
         "edited-good-message": "Se ha editado la cerveza correctamente"

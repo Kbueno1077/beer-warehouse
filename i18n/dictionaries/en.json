@@ -185,6 +185,7 @@
         "yes": "Do it",
         "no": "Don't",
         "add-good-message": "Beer added successfully",
+        "add-beer-name-exists": "This beer name already exists",
         "remove-good-message": "Beer removed successfully",
         "edited-good-message": "Beer edited successfully"
     },

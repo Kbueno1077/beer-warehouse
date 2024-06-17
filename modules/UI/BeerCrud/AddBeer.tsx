@@ -41,9 +41,10 @@ export default function AddBeer() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const { theme, resolvedTheme } = useTheme();
-    const { addBeerUI, mode } = useBearContext((s) => {
+    const { addBeerUI, mode, allBeers } = useBearContext((s) => {
         return {
             addBeerUI: s.addBeerUI,
+            allBeers: s.allBeers,
             mode: s.mode,
         };
     });
@@ -100,6 +101,13 @@ export default function AddBeer() {
 
     const InsertBeer = async () => {
         setIsLoading(true);
+
+        if (allBeers.find((beer) => beer.name === name)) {
+            enqueueSnackbar(t("add-beer-name-exists"), { variant: "error" });
+            setIsLoading(false);
+            return;
+        }
+
         let cloudinaryResponse: any = { data: { secure_url: "" } };
 
         try {
