@@ -21,13 +21,10 @@ Friends can check the information in different views according to the device the
 - Users, ability to add new users, they can see my collection or their own
 
 ## Roadmap
-
-- Users can see other's collections besides mine 
 - Date (at least a month) of buy for each beer
 - More types of charts
 - A section to show new beers that friends have shared and mark which ones have been supplied by them
 - Comments from friends for each beer
-
 
 
 ## Tech Stack
