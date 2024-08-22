@@ -174,6 +174,7 @@ const BeerGrid = () => {
                         <div key={key}>
                             {displayGroup &&
                                 items.length > 0 &&
+                                // @ts-ignore
                                 items[0].order <= page * pageSize && (
                                     <div className="w-full pt-4 pb-3">
                                         {groupBy === "name" && (
@@ -214,14 +215,17 @@ const BeerGrid = () => {
                             <div className={styles.mosaicView}>
                                 {items
                                     .filter(
+                                        // @ts-ignore
                                         (b: BeerTypeExtended) =>
                                             b.order <= page * pageSize
                                     )
+                                    // @ts-ignore
                                     .map((beer: BeerType) => (
                                         <BeerCard
                                             key={beer.id}
                                             beer={beer}
                                             isOwner={
+                                                //@ts-ignore
                                                 user?.name === warehouseOwner
                                             }
                                         />
