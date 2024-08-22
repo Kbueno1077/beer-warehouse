@@ -1,14 +1,11 @@
 "use client";
 
-import { NextUIProvider } from "@nextui-org/react";
-import { SessionProvider, getSession, useSession } from "next-auth/react";
-import { SnackbarProvider } from "notistack";
-import React from "react";
-import { BeerStore, createBeerStore } from "@/store/zustand";
-import { CARD_MODE, DARK_MODE, LIGHT_MODE, TABLE_MODE } from "@/util/types";
-import { createContext } from "react";
-import { useRef } from "react";
 import { StoreProvider } from "@/store/StoreProvider";
+import { BeerStore } from "@/store/zustand";
+import { NextUIProvider } from "@nextui-org/react";
+import { SessionProvider } from "next-auth/react";
+import { SnackbarProvider } from "notistack";
+import React, { createContext } from "react";
 
 export const BeerContext = createContext<BeerStore | null>(null);
 

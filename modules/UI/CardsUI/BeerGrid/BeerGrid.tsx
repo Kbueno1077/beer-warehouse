@@ -127,20 +127,38 @@ const BeerGrid = () => {
     return (
         <>
             {/* @ts-ignore*/}
-            {user && user.name === warehouseOwner ? (
+            {user && user.name === warehouseOwner.name ? (
                 <div className="flex justify-between align-middle items-center px-2 mb-[10px] w-full">
-                    <p className="text-silver-500">
-                        {" "}
-                        {t("total", { count: processedItems.total })}
-                    </p>
-                    <AddBeer />
+                    <Avatar
+                        size={"md"}
+                        isBordered
+                        as="button"
+                        className="transition-transform"
+                        src={warehouseOwner?.image || "/noUser.png"}
+                    />
+
+                    <div className="flex items-center gap-2">
+                        <p className="text-silver-500">
+                            {" "}
+                            {t("total", { count: processedItems.total })}
+                        </p>
+                        <AddBeer />
+                    </div>
                 </div>
             ) : (
-                <div className="flex justify-end mb-[10px] w-full">
+                <div className="flex justify-end items-center pr-1 gap-3 mb-[10px] w-full">
                     <p className="text-silver-500">
                         {" "}
                         {t("total", { count: processedItems.total })}
                     </p>
+
+                    <Avatar
+                        size={"sm"}
+                        isBordered
+                        as="button"
+                        className="transition-transform"
+                        src={warehouseOwner?.image || "/noUser.png"}
+                    />
                 </div>
             )}
 

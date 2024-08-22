@@ -1,18 +1,13 @@
 "use client";
 
-import { NextauthUser } from "@next-auth/xata-adapter/dist/xata";
-import { parse, format } from "@formkit/tempo";
+import { format } from "@formkit/tempo";
 
-import { Card, CardBody, Image } from "@nextui-org/react";
-import { IoCodeSlash } from "react-icons/io5";
-import { useLocale, useTranslations } from "next-intl";
 import { useBearContext } from "@/store/useBeerContext";
+import { NextAuthUserExtended } from "@/store/zustand";
+import { Card, CardBody, Image } from "@nextui-org/react";
 import { useSession } from "next-auth/react";
-
-interface NextAuthUserExtended extends NextauthUser {
-    id: string;
-    xata: { createdAt: Date; updatedAt: Date };
-}
+import { useLocale, useTranslations } from "next-intl";
+import { IoCodeSlash } from "react-icons/io5";
 
 interface CollectionsProps {
     users: NextAuthUserExtended[];
@@ -32,8 +27,8 @@ function Collections({ users }: CollectionsProps) {
         };
     });
 
-    const handleWarehouse = async (username: string) => {
-        const newWarehouse = await handleWarehouseChange(username);
+    const handleWarehouse = async (user: NextAuthUserExtended) => {
+        const newWarehouse = await handleWarehouseChange(user);
     };
 
     return (
@@ -42,7 +37,7 @@ function Collections({ users }: CollectionsProps) {
                 <div className="p-2 pb-4 flex gap-4 flex-col items-center sm:items-stretch md:flex-row flex-wrap justify-center w-full max-w-[3000px]">
                     <h1 className="text-4xl font-bold">
                         You are looking the {'"'}
-                        {warehouseOwner}
+                        {warehouseOwner?.name}
                         {'"'} collection
                     </h1>
                     <div></div>
@@ -59,10 +54,15 @@ function Collections({ users }: CollectionsProps) {
                             shadow="sm"
                             isPressable={true}
                             onPress={() => {
-                                handleWarehouse(user.name ?? "");
+                                handleWarehouse(user);
                             }}
                         >
-                            <CardBody className="sm:flex sm:justify-center sm:item-center">
+                            <CardBody
+                                className={`sm:flex sm:justify-center sm:item-center ${
+                                    user.name === warehouseOwner?.name &&
+                                    "bg-primary/20 "
+                                }`}
+                            >
                                 <div className="grid grid-cols-6 md:grid-cols-12 gap-6 md:gap-4 items-center justify-center">
                                     <div className="relative col-span-6 md:col-span-4">
                                         <Image

@@ -8,12 +8,17 @@ import { Skeleton } from "@nextui-org/react";
 import BeersTable from "@/modules/UI/TableUI/DataTable/BeersTable";
 import { useBearContext } from "@/store/useBeerContext";
 import { useTheme } from "next-themes";
+import { NextauthUser } from "@next-auth/xata-adapter/dist/xata";
 
 interface UiComponentProps {
     serverFetchedBeers: string;
+    serverFetchedWarehouseOwner: string;
 }
 
-function UiComponent({ serverFetchedBeers }: UiComponentProps) {
+function UiComponent({
+    serverFetchedBeers,
+    serverFetchedWarehouseOwner,
+}: UiComponentProps) {
     const { resolvedTheme } = useTheme();
 
     const {
@@ -37,7 +42,17 @@ function UiComponent({ serverFetchedBeers }: UiComponentProps) {
 
     useEffect(() => {
         setAllBeers(JSON.parse(serverFetchedBeers));
-    }, [serverFetchedBeers, setAllBeers, setWarehouseOwner]);
+        console.log(
+            "🚀 ~ useEffect ~ JSON.parse(serverFetchedWarehouseOwner):",
+            JSON.parse(serverFetchedWarehouseOwner)
+        );
+        setWarehouseOwner(JSON.parse(serverFetchedWarehouseOwner)[0]);
+    }, [
+        serverFetchedBeers,
+        serverFetchedWarehouseOwner,
+        setAllBeers,
+        setWarehouseOwner,
+    ]);
 
     if (loading && allBeers.length === 0 && !mode) {
         return (

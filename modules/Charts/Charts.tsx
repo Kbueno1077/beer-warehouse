@@ -1,11 +1,10 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { BeerType, DARK_MODE } from "@/util/types";
-import PieChart from "@/modules/Charts/PieChart";
-import styles from "./charts.module.css";
 import BarChart from "@/modules/Charts/BarChart";
+import PieChart from "@/modules/Charts/PieChart";
+import { DARK_MODE } from "@/util/types";
 import { useTheme } from "next-themes";
+import styles from "./charts.module.css";
 
 interface ChartsProps {
     serverFetchedBeers: string;

@@ -1,6 +1,7 @@
 "use client";
 
 import {
+    Avatar,
     Button,
     Dropdown,
     DropdownItem,
@@ -349,11 +350,11 @@ export default function BeersTable() {
 
                             <UpdateBeer
                                 selectedBeer={beer}
-                                isOwner={user?.name === warehouseOwner}
+                                isOwner={user?.name === warehouseOwner?.name}
                             />
                             <DeleteBeer
                                 selectedBeer={beer}
-                                isOwner={user?.name === warehouseOwner}
+                                isOwner={user?.name === warehouseOwner?.name}
                             />
                         </div>
                     );
@@ -381,27 +382,38 @@ export default function BeersTable() {
         }
     }, []);
 
+    console.log("🚀 ~ topContent ~ warehouseOwner:", warehouseOwner);
     const topContent = React.useMemo(() => {
         return (
             <div className="flex flex-col gap-4">
                 <div className="flex flex-col justify-between gap-3 sm:flex-row">
-                    <Input
-                        isClearable
-                        classNames={{
-                            base: "w-full sm:max-w-[44%] ",
-                            inputWrapper: "border-1 h-[40px]",
-                        }}
-                        placeholder={t("search.placeholder")}
-                        startContent={
-                            <SearchIcon className="text-default-300" />
-                        }
-                        value={filters.search}
-                        variant="bordered"
-                        onClear={() =>
-                            changeFilters({ ...filters, search: "" })
-                        }
-                        onValueChange={onSearchChange}
-                    />
+                    <div className="flex items-center gap-3 w-full">
+                        <Avatar
+                            size={"sm"}
+                            isBordered
+                            as="button"
+                            className="transition-transform"
+                            src={warehouseOwner?.image || "/noUser.png"}
+                        />
+
+                        <Input
+                            isClearable
+                            classNames={{
+                                base: "w-full sm:max-w-[44%] ",
+                                inputWrapper: "border-1 h-[40px]",
+                            }}
+                            placeholder={t("search.placeholder")}
+                            startContent={
+                                <SearchIcon className="text-default-300" />
+                            }
+                            value={filters.search}
+                            variant="bordered"
+                            onClear={() =>
+                                changeFilters({ ...filters, search: "" })
+                            }
+                            onValueChange={onSearchChange}
+                        />
+                    </div>
 
                     <div className="flex gap-3 justify-end">
                         <FiltersModal />
@@ -440,7 +452,9 @@ export default function BeersTable() {
                             </DropdownMenu>
                         </Dropdown>
 
-                        {user && user.name === warehouseOwner && <AddBeer />}
+                        {user && user.name === warehouseOwner?.name && (
+                            <AddBeer />
+                        )}
                     </div>
                 </div>
                 <div className="flex justify-between items-center">

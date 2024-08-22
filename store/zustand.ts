@@ -2,6 +2,12 @@ import { createStore } from "zustand";
 import { BeerType, ModeType } from "@/util/types";
 import { getXataClient } from "@/xata/xata";
 import createCookie from "@/app/actions";
+import { NextauthUser } from "@next-auth/xata-adapter/dist/xata";
+
+export interface NextAuthUserExtended extends NextauthUser {
+    id: string;
+    xata: { createdAt: Date; updatedAt: Date };
+}
 
 type MlFilterType = {
     operand: string;
@@ -43,7 +49,7 @@ export interface BeerProps {
     resetGroupBy: Function;
 
     //  OWNER
-    warehouseOwner: String | null;
+    warehouseOwner: NextAuthUserExtended | null;
     handleWarehouseChange: Function;
     setWarehouseOwner: Function;
 
@@ -75,7 +81,7 @@ type DefaultProps = {
 
 type InitialProps = {
     mode: ModeType | null;
-    warehouseOwner: string;
+    warehouseOwner: NextAuthUserExtended | null;
 };
 
 export const createBeerStore = (initProps: InitialProps) => {
@@ -148,7 +154,9 @@ export const createBeerStore = (initProps: InitialProps) => {
         },
 
         // CHANGE OWNER, CHANGE BEERS
-        handleWarehouseChange: async (newWarehouseOwner: string) => {
+        handleWarehouseChange: async (
+            newWarehouseOwner: NextAuthUserExtended
+        ) => {
             const xata = getXataClient();
             get().setLoading(true);
 
@@ -158,7 +166,7 @@ export const createBeerStore = (initProps: InitialProps) => {
 
             let serverFetchedBeers: any = [];
 
-            if (newWarehouseOwner !== "Kevin") {
+            if (newWarehouseOwner.name !== "Kevin") {
                 serverFetchedBeers = await xata.db.usersBeers
                     .select([
                         "id",
@@ -172,7 +180,7 @@ export const createBeerStore = (initProps: InitialProps) => {
                         "additional_comments",
                         "owner",
                     ])
-                    .filter({ owner: newWarehouseOwner })
+                    .filter({ owner: newWarehouseOwner.name ?? "" })
                     .sort("name", "asc")
                     .getAll();
             } else {
@@ -192,14 +200,14 @@ export const createBeerStore = (initProps: InitialProps) => {
                     .getAll();
             }
 
-            await createCookie("warehouseOwner", newWarehouseOwner);
+            await createCookie("cookieWarehouseOwner", newWarehouseOwner.name);
             get().setAllBeers(serverFetchedBeers);
             get().setWarehouseOwner(newWarehouseOwner);
             get().setLoading(false);
         },
 
         // SET BEER OWNER
-        setWarehouseOwner: (warehouseOwner: string) => {
+        setWarehouseOwner: (warehouseOwner: NextAuthUserExtended) => {
             set({ warehouseOwner });
         },
 
