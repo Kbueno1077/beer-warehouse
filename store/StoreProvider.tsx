@@ -13,7 +13,8 @@ export function StoreProvider({ children, ...props }: any) {
     if (!storeRef.current) {
         storeRef.current = createBeerStore({
             mode: window.innerWidth < 1024 ? CARD_MODE : TABLE_MODE,
-            warehouseOwner: user?.name ?? "Kevin",
+            //@ts-ignore
+            warehouseOwner: user ?? { name: "Kevin" },
         });
     }
 
