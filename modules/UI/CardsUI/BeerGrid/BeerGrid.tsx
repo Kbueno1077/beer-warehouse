@@ -141,14 +141,6 @@ const BeerGrid = () => {
 
                 {user && user.name === warehouseOwner?.name ? (
                     <div className="flex gap-2 items-center">
-                        <Avatar
-                            size={"md"}
-                            isBordered
-                            as="button"
-                            className="transition-transform"
-                            src={warehouseOwner?.image || "/noUser.png"}
-                        />
-
                         <div className="flex items-center gap-3">
                             <p className="text-silver-500">
                                 {" "}
