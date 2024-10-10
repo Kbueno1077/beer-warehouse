@@ -70,7 +70,9 @@ body {
 .bgWallpaper {
     margin-top: -150px;
     display: flex;
+    flex-direction: column;
     justify-content: center;
+    width: 100%;
 }
 
 .dataTableWrapper {

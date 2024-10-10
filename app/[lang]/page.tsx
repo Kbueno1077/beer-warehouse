@@ -57,18 +57,22 @@ const Page: NextPage = async () => {
     return (
         <>
             <div>
-                <div className="bgWallpaper flex flex-col relative">
-                    <Image
-                        src="/beerglasses.png"
-                        alt={"beerImages"}
-                        priority={true}
-                        quality={100}
-                        width={1150}
-                        height={500}
-                    />
+                <div className="bgWallpaper">
+                    <div className="flex w-full justify-center">
+                        <Image
+                            src="/beerglasses.png"
+                            alt={"beerImages"}
+                            priority={false}
+                            quality={100}
+                            width={1150}
+                            height={500}
+                        />
+                    </div>
 
-                    <div className="absolute w-full px-[10px]">
-                        <SeachControl />
+                    <div className="absolute w-full px-[10px] flex justify-center xl:top-[120px] ">
+                        <div className="max-w-[1366px] w-full">
+                            <SeachControl />
+                        </div>
                     </div>
                 </div>
 

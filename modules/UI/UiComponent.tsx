@@ -19,24 +19,17 @@ function UiComponent({
 }: UiComponentProps) {
     const { resolvedTheme } = useTheme();
 
-    const {
-        mode,
-        allBeers,
-        setAllBeers,
-        loading,
-        setWarehouseOwner,
-        warehouseOwner,
-    } = useBearContext((s) => {
-        return {
-            mode: s.mode,
-            allBeers: s.allBeers,
-            setAllBeers: s.setAllBeers,
-            loading: s.loading,
-            setMode: s.setMode,
-            setWarehouseOwner: s.setWarehouseOwner,
-            warehouseOwner: s.warehouseOwner,
-        };
-    });
+    const { mode, allBeers, setAllBeers, loading, setWarehouseOwner } =
+        useBearContext((s) => {
+            return {
+                mode: s.mode,
+                allBeers: s.allBeers,
+                setAllBeers: s.setAllBeers,
+                loading: s.loading,
+                setMode: s.setMode,
+                setWarehouseOwner: s.setWarehouseOwner,
+            };
+        });
 
     useEffect(() => {
         setAllBeers(JSON.parse(serverFetchedBeers));

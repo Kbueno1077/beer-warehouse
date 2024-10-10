@@ -1,30 +1,30 @@
 "use client";
 
-import React, { useState } from "react";
 import BeerCard from "@/components/BeerCard/BeerCard";
-import { Avatar, Button, ButtonGroup, Chip } from "@nextui-org/react";
 import { BeerType, BeerTypeExtended } from "@/util/types";
+import { Avatar, Button, ButtonGroup, Chip } from "@nextui-org/react";
+import React, { useState } from "react";
 
-import styles from "./beerGrid.module.css";
+import AddBeer from "@/modules/UI/BeerCrud/AddBeer";
 import {
     alcoholOptions,
     mapOperands,
     mapPercentToString,
 } from "@/modules/UI/TableUI/DataTable/data";
+import { useBearContext } from "@/store/useBeerContext";
+import countryCodes from "@/util/countries.json";
 import {
     countryFlagsToTheLeft,
     groupByMethod,
     sortBy,
 } from "@/util/javascript";
 import { isArray } from "@nextui-org/shared-utils";
-import countryCodes from "@/util/countries.json";
-import AddBeer from "@/modules/UI/BeerCrud/AddBeer";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useBearContext } from "@/store/useBeerContext";
+import FiltersModal from "../../Filters/FiltersModal";
 import GroupByModal from "../GroupBy/GroupByModal";
 import SortModal from "../Sort/SortModal";
-import FiltersModal from "../../Filters/FiltersModal";
+import styles from "./beerGrid.module.css";
 
 const BeerGrid = () => {
     const { data: session } = useSession();
@@ -42,6 +42,9 @@ const BeerGrid = () => {
             };
         }
     );
+
+    console.log(warehouseOwner);
+    console.log(user);
 
     const hasSearchFilter = Boolean(filters.search);
 
@@ -223,7 +226,8 @@ const BeerGrid = () => {
                                             beer={beer}
                                             isOwner={
                                                 //@ts-ignore
-                                                user?.name === warehouseOwner
+                                                user?.name ===
+                                                warehouseOwner?.name
                                             }
                                         />
                                     ))}

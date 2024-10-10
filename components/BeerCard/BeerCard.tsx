@@ -31,6 +31,7 @@ interface BeerCardProps {
 }
 
 const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
+    console.log(isOwner);
     const { data: session } = useSession();
     const router = useRouter();
 
@@ -53,11 +54,7 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
     };
 
     return (
-        <Card
-            isFooterBlurred={true}
-            onPress={openDetails}
-            isPressable={!user || !isOwner}
-        >
+        <Card isFooterBlurred={true} onPress={openDetails} isPressable={true}>
             <CardHeader className="absolute z-10 top-1 flex justify-between items-start">
                 <Chip variant="light" radius="sm" className={styles.chipName}>
                     <p className="text-tiny text-white/75 uppercase font-bold">
@@ -114,61 +111,6 @@ const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
                         <FlagAvatar value={beer.country} />
                     )}
                 </div>
-
-                {user && isOwner && (
-                    <Accordion
-                        className="w-full px-0 mt-2 mb-[-8px]"
-                        selectedKeys={selectedKeys}
-                        onSelectionChange={setSelectedKeys}
-                        itemClasses={{
-                            trigger: styles.accordionWrapper,
-                        }}
-                    >
-                        <AccordionItem
-                            indicator={({ isOpen }) =>
-                                isOpen ? <div></div> : <div></div>
-                            }
-                            key="1"
-                            classNames={{ trigger: styles.wrapper }}
-                            aria-label="Beer Actions"
-                            startContent={
-                                <div
-                                    style={{
-                                        transform: (selectedKeys as Set<any>)
-                                            .size
-                                            ? "rotate(180deg)"
-                                            : "",
-                                    }}
-                                    className={styles.startContent}
-                                >
-                                    <MdKeyboardArrowUp
-                                        className={styles.arrowOpenSearch}
-                                    />
-                                </div>
-                            }
-                        >
-                            <div className="flex gap-1 ">
-                                <Button
-                                    size={"sm"}
-                                    variant="faded"
-                                    isIconOnly
-                                    color="danger"
-                                    onPress={openDetails}
-                                >
-                                    <TbScanEye className="h-[17px] w-[17px] text-gray-500" />
-                                </Button>
-                                <UpdateBeer
-                                    selectedBeer={beer}
-                                    isOwner={isOwner}
-                                />
-                                <DeleteBeer
-                                    selectedBeer={beer}
-                                    isOwner={isOwner}
-                                />
-                            </div>
-                        </AccordionItem>
-                    </Accordion>
-                )}
             </CardFooter>
         </Card>
     );
