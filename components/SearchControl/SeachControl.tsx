@@ -51,6 +51,7 @@ function SeachControl() {
             onValueChange={onSearchChange}
             classNames={{
                 label: styles.labelColor,
+                inputWrapper: "bg-opacity-90",
             }}
         />
     );
