@@ -1,6 +1,10 @@
 "use client";
 
-import React from "react";
+import AlcoholFilter from "@/modules/UI/Filters/AlcoholFilter";
+import CountryFilter from "@/modules/UI/Filters/CountryFilter";
+import MlFilter from "@/modules/UI/Filters/MlFilter";
+import { useBearContext } from "@/store/useBeerContext";
+import { TABLE_MODE } from "@/util/types";
 import {
     Button,
     Modal,
@@ -10,13 +14,9 @@ import {
     ModalHeader,
     useDisclosure,
 } from "@nextui-org/react";
-import AlcoholFilter from "@/modules/UI/Filters/AlcoholFilter";
-import MlFilter from "@/modules/UI/Filters/MlFilter";
-import CountryFilter from "@/modules/UI/Filters/CountryFilter";
 import { useTranslations } from "next-intl";
-import { PiSortAscendingBold } from "react-icons/pi";
-import { TABLE_MODE } from "@/util/types";
-import { useBearContext } from "@/store/useBeerContext";
+import React from "react";
+import { FaFilter } from "react-icons/fa6";
 
 export default function FiltersModal() {
     const { isOpen, onOpen, onOpenChange } = useDisclosure();
@@ -53,9 +53,10 @@ export default function FiltersModal() {
                 size={mode === TABLE_MODE ? "sm" : "md"}
                 variant={mode === TABLE_MODE ? "flat" : "faded"}
                 onPress={onOpen}
+                isIconOnly
                 aria-label={t("btn-aria")}
             >
-                {t("modalBtn")}
+                <FaFilter />
                 {filters.alcoholFilters.length !== 5 ||
                 filters.mlFilters.mlValue > 0 ||
                 filters.countryFilters.length

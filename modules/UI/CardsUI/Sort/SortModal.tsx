@@ -53,9 +53,10 @@ export default function SortModal() {
                 color="primary"
                 onPress={onOpen}
                 variant="faded"
+                isIconOnly
                 aria-label="Open Sort Modal"
             >
-                <PiSortAscendingBold className="w-4 h-4" /> {t("title")}{" "}
+                <PiSortAscendingBold className="w-4 h-4" />
                 {sort.attribute !== "" ? " *" : ""}
             </Button>
 

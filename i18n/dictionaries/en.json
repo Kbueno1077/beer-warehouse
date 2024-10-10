@@ -7,6 +7,7 @@
         "en": "English",
         "es": "Spanish",
         "languages": "Languages",
+        "ui-settings": "Settings",
         "navigation": "Navegation",
         "logout": "Log out",
         "logout-desc": "Quit the session",

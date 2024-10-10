@@ -1,6 +1,5 @@
 "use client";
 
-import React from "react";
 import {
     Button,
     Modal,
@@ -10,12 +9,13 @@ import {
     ModalHeader,
     useDisclosure,
 } from "@nextui-org/react";
+import React from "react";
+import { VscGroupByRefType } from "react-icons/vsc";
 
-import { PiSortAscendingBold } from "react-icons/pi";
-import { GroupByType } from "@/store/zustand";
 import GroupByComponent from "@/modules/UI/CardsUI/GroupBy/GroupByComponent";
-import { useTranslations } from "next-intl";
 import { useBearContext } from "@/store/useBeerContext";
+import { GroupByType } from "@/store/zustand";
+import { useTranslations } from "next-intl";
 
 export default function GroupByModal() {
     const { isOpen, onOpen, onOpenChange, onClose } = useDisclosure();
@@ -53,9 +53,10 @@ export default function GroupByModal() {
                 color="primary"
                 onPress={onOpen}
                 variant="faded"
+                isIconOnly
                 aria-label={t("btn-aria")}
             >
-                <PiSortAscendingBold className="w-4 h-4" /> {t("title")}{" "}
+                <VscGroupByRefType className="w-4 h-4" />{" "}
                 {groupBy !== "" ? " *" : ""}
             </Button>
 

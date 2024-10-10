@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import BeerCard from "@/components/BeerCard/BeerCard";
-import { Avatar, Button, Chip } from "@nextui-org/react";
+import { Avatar, Button, ButtonGroup, Chip } from "@nextui-org/react";
 import { BeerType, BeerTypeExtended } from "@/util/types";
 
 import styles from "./beerGrid.module.css";
@@ -22,6 +22,9 @@ import AddBeer from "@/modules/UI/BeerCrud/AddBeer";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
 import { useBearContext } from "@/store/useBeerContext";
+import GroupByModal from "../GroupBy/GroupByModal";
+import SortModal from "../Sort/SortModal";
+import FiltersModal from "../../Filters/FiltersModal";
 
 const BeerGrid = () => {
     const { data: session } = useSession();
@@ -127,40 +130,42 @@ const BeerGrid = () => {
     return (
         <>
             {/* @ts-ignore*/}
-            {user && user.name === warehouseOwner.name ? (
-                <div className="flex justify-between align-middle items-center px-2 mb-[10px] w-full">
-                    <Avatar
-                        size={"md"}
-                        isBordered
-                        as="button"
-                        className="transition-transform"
-                        src={warehouseOwner?.image || "/noUser.png"}
-                    />
+            <div className="flex items-center mb-[10px] justify-between w-full px-2">
+                <div className="flex items-center gap-2">
+                    <ButtonGroup>
+                        <GroupByModal />
+                        <SortModal />
+                        <FiltersModal />
+                    </ButtonGroup>
+                </div>
 
-                    <div className="flex items-center gap-2">
+                {user && user.name === warehouseOwner?.name ? (
+                    <div className="flex gap-2 items-center">
+                        <Avatar
+                            size={"md"}
+                            isBordered
+                            as="button"
+                            className="transition-transform"
+                            src={warehouseOwner?.image || "/noUser.png"}
+                        />
+
+                        <div className="flex items-center gap-3">
+                            <p className="text-silver-500">
+                                {" "}
+                                {t("total", { count: processedItems.total })}
+                            </p>
+                            <AddBeer />
+                        </div>
+                    </div>
+                ) : (
+                    <div className="flex justify-end items-center pr-1 gap-3">
                         <p className="text-silver-500">
                             {" "}
                             {t("total", { count: processedItems.total })}
                         </p>
-                        <AddBeer />
                     </div>
-                </div>
-            ) : (
-                <div className="flex justify-end items-center pr-1 gap-3 mb-[10px] w-full">
-                    <p className="text-silver-500">
-                        {" "}
-                        {t("total", { count: processedItems.total })}
-                    </p>
-
-                    <Avatar
-                        size={"sm"}
-                        isBordered
-                        as="button"
-                        className="transition-transform"
-                        src={warehouseOwner?.image || "/noUser.png"}
-                    />
-                </div>
-            )}
+                )}
+            </div>
 
             <div>
                 {Object.keys(processedItems).map((key: any) => {

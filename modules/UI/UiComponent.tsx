@@ -1,14 +1,12 @@
 "use client";
 
-import React, { useEffect } from "react";
-import { CARD_MODE, DARK_MODE, TABLE_MODE } from "@/util/types";
-import MobileSearchControls from "./CardsUI/SearchControls/MobileSearchControls";
 import BeerGrid from "@/modules/UI/CardsUI/BeerGrid/BeerGrid";
-import { Skeleton } from "@nextui-org/react";
 import BeersTable from "@/modules/UI/TableUI/DataTable/BeersTable";
 import { useBearContext } from "@/store/useBeerContext";
+import { CARD_MODE, DARK_MODE, TABLE_MODE } from "@/util/types";
+import { Skeleton } from "@nextui-org/react";
 import { useTheme } from "next-themes";
-import { NextauthUser } from "@next-auth/xata-adapter/dist/xata";
+import { useEffect } from "react";
 
 interface UiComponentProps {
     serverFetchedBeers: string;
@@ -42,10 +40,6 @@ function UiComponent({
 
     useEffect(() => {
         setAllBeers(JSON.parse(serverFetchedBeers));
-        console.log(
-            "🚀 ~ useEffect ~ JSON.parse(serverFetchedWarehouseOwner):",
-            JSON.parse(serverFetchedWarehouseOwner)
-        );
         setWarehouseOwner(JSON.parse(serverFetchedWarehouseOwner)[0]);
     }, [
         serverFetchedBeers,
@@ -82,7 +76,7 @@ function UiComponent({
                         <BeerGrid />
                     </div>
 
-                    <MobileSearchControls />
+                    {/* <MobileSearchControls /> */}
                 </>
             )}
 

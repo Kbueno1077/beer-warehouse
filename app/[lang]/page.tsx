@@ -1,11 +1,11 @@
-import React from "react";
 import { NextPage } from "next";
 
-import { getXataClient } from "@/xata/xata";
+import SeachControl from "@/components/SearchControl/SeachControl";
 import UiComponent from "@/modules/UI/UiComponent";
-import Image from "next/image";
+import { getXataClient } from "@/xata/xata";
 import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
+import Image from "next/image";
 
 const Page: NextPage = async () => {
     const session = await getServerSession();
@@ -57,7 +57,7 @@ const Page: NextPage = async () => {
     return (
         <>
             <div>
-                <div className="bgWallpaper">
+                <div className="bgWallpaper flex flex-col relative">
                     <Image
                         src="/beerglasses.png"
                         alt={"beerImages"}
@@ -66,6 +66,10 @@ const Page: NextPage = async () => {
                         width={1150}
                         height={500}
                     />
+
+                    <div className="absolute w-full px-[10px]">
+                        <SeachControl />
+                    </div>
                 </div>
 
                 <UiComponent

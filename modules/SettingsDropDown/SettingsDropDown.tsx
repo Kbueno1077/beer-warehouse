@@ -1,9 +1,12 @@
 //@ts-nocheck
 
-import React from "react";
+import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
+import { locales, useRouter } from "@/i18n/navigation";
+import AuthModal from "@/modules/Auth/AuthModal/AuthModal";
 import {
     Avatar,
     Button,
+    ButtonGroup,
     cn,
     Dropdown,
     DropdownItem,
@@ -11,20 +14,26 @@ import {
     DropdownSection,
     DropdownTrigger,
 } from "@nextui-org/react";
-import { locales, useRouter } from "@/i18n/navigation";
-import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
-import { useLocale, useTranslations } from "next-intl";
 import { signOut, useSession } from "next-auth/react";
-import AuthModal from "@/modules/Auth/AuthModal/AuthModal";
+import { useLocale, useTranslations } from "next-intl";
+import React from "react";
 import styles from "./settings.module.css";
 
-import { IoIosLogOut } from "react-icons/io";
 import { GiBeerBottle } from "react-icons/gi";
+import { IoIosLogOut } from "react-icons/io";
 import { IoBarChartSharp } from "react-icons/io5";
 import { MdOutlineCollectionsBookmark } from "react-icons/md";
 
 import Spinner from "@/components/Loaders/Spinner";
+import { MoonIcon, SunIcon } from "@/components/SwitchTheme/SwitchTheme";
+import { usePathname } from "@/i18n/navigation";
 import { useBearContext } from "@/store/useBeerContext";
+import { CARD_MODE, DARK_MODE, LIGHT_MODE, TABLE_MODE } from "@/util/types";
+import { track } from "@vercel/analytics";
+import { useTheme } from "next-themes";
+import { TbCards } from "react-icons/tb";
+import { VscTable } from "react-icons/vsc";
+import FiltersModal from "../UI/Filters/FiltersModal";
 
 export default function SettingsDropDown() {
     const iconClasses =
@@ -33,15 +42,27 @@ export default function SettingsDropDown() {
     const locale = useLocale();
     const t = useTranslations("settingsDropdown");
     const [isOpen, setOpen] = React.useState(false);
+    const pathname = usePathname();
 
     const { data: session, status } = useSession();
 
-    const { handleWarehouseChange } = useBearContext((s) => {
-        return {
-            handleWarehouseChange: s.handleWarehouseChange,
-        };
-    });
+    const { handleWarehouseChange, mode, setMode, resetFilters } =
+        useBearContext((s) => {
+            return {
+                handleWarehouseChange: s.handleWarehouseChange,
+                mode: s.mode,
+                setMode: s.setMode,
+                resetFilters: s.resetFilters,
+            };
+        });
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([locale]));
+
+    const { theme, setTheme } = useTheme();
+
+    const handleThemeChange = (value: boolean) => {
+        setTheme(value ? LIGHT_MODE : DARK_MODE);
+        track("Theme", { mode: value ? LIGHT_MODE : DARK_MODE });
+    };
 
     const handleSelection = async (e) => {
         if (e.anchorKey === "en" || e.anchorKey === "es") {
@@ -172,6 +193,90 @@ export default function SettingsDropDown() {
                         }
                     >
                         {t("charts")}
+                    </DropdownItem>
+                </DropdownSection>
+
+                <DropdownSection title={t("ui-settings")}>
+                    <DropdownItem>
+                        {pathname === "/" && (
+                            <ButtonGroup className="mr-2">
+                                <Button
+                                    onPress={() => {
+                                        resetFilters();
+                                        setMode(CARD_MODE);
+                                        track("View", { mode: "Cards" });
+                                    }}
+                                    variant="faded"
+                                    color={"primary"}
+                                    className={`${
+                                        mode === TABLE_MODE
+                                            ? "primary"
+                                            : "bg-default-300"
+                                    }`}
+                                    size={"md"}
+                                    isIconOnly
+                                    aria-label={t("table-switch")}
+                                >
+                                    <TbCards className="h-[17px] w-[17px]" />
+                                </Button>
+                                <Button
+                                    onPress={() => {
+                                        resetFilters();
+                                        setMode(TABLE_MODE);
+                                        track("View", { mode: "Table" });
+                                    }}
+                                    variant="faded"
+                                    color={"primary"}
+                                    className={`${
+                                        mode === CARD_MODE
+                                            ? "primary"
+                                            : "bg-default-300"
+                                    }`}
+                                    size={"md"}
+                                    isIconOnly
+                                    aria-label={t("table-switch")}
+                                >
+                                    <VscTable className="h-[17px] w-[17px]" />
+                                </Button>
+                            </ButtonGroup>
+                        )}
+
+                        <ButtonGroup>
+                            <Button
+                                onPress={() => {
+                                    handleThemeChange(true);
+                                }}
+                                variant="faded"
+                                color={"primary"}
+                                size={"md"}
+                                isIconOnly
+                                aria-label={t("table-switch")}
+                                className={`${
+                                    theme === DARK_MODE
+                                        ? "primary"
+                                        : "bg-default-300"
+                                }`}
+                            >
+                                <SunIcon className="h-[17px] w-[17px]" />
+                            </Button>
+                            <Button
+                                onPress={() => {
+                                    handleThemeChange(false);
+                                }}
+                                variant="faded"
+                                color={"primary"}
+                                size={"md"}
+                                isIconOnly
+                                aria-label={t("table-switch")}
+                                className={`${
+                                    theme === LIGHT_MODE
+                                        ? "primary"
+                                        : "bg-default-300"
+                                }`}
+                            >
+                                <MoonIcon className="h-[17px] w-[17px]" />
+                            </Button>
+                        </ButtonGroup>
                     </DropdownItem>
                 </DropdownSection>
 

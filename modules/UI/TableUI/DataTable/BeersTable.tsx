@@ -143,11 +143,12 @@ export default function BeersTable() {
         return filteredBeers;
     }, [
         allBeers,
-        filters.countryFilters.length,
-        filters.search,
-        filters.mlFilters.operand,
-        filters.mlFilters.mlValue,
+        hasSearchFilter,
         filters.alcoholFilters,
+        filters.mlFilters.mlValue,
+        filters.mlFilters.operand,
+        filters.countryFilters,
+        filters.search,
     ]);
 
     const pages = Math.ceil(filteredItems.length / rowsPerPage);
@@ -362,7 +363,7 @@ export default function BeersTable() {
                     return cellValue;
             }
         },
-        [user]
+        [user, user?.name]
     );
 
     const onRowsPerPageChange = React.useCallback(
@@ -382,7 +383,6 @@ export default function BeersTable() {
         }
     }, []);
 
-    console.log("🚀 ~ topContent ~ warehouseOwner:", warehouseOwner);
     const topContent = React.useMemo(() => {
         return (
             <div className="flex flex-col gap-4">

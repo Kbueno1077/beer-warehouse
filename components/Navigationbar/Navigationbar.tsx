@@ -77,10 +77,6 @@ export default function Navigationbar() {
             </NavbarContent>
 
             <NavbarContent justify="end">
-                <SwitchTheme />
-
-                {pathname === "/" && <SwitchMode />}
-
                 <div className="ml-[5px]">
                     <SettingsDropDown />
                 </div>
