@@ -1,11 +1,8 @@
-"use client";
-
-import React from "react";
-import { Avatar } from "@nextui-org/react";
-import { countryFlagsToTheLeft } from "@/util/javascript";
-import styles from "./flag.module.css";
 import countryCodes from "@/util/countries.json";
+import { countryFlagsToTheLeft } from "@/util/javascript";
+import { Avatar } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
+import styles from "./flag.module.css";
 
 type FlagAvatarProps = {
     value: string;

@@ -1,6 +1,4 @@
-"use client";
-
-import React from "react";
+import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import { locales, useRouter } from "@/i18n/navigation";
 import {
     Button,
@@ -9,8 +7,8 @@ import {
     DropdownMenu,
     DropdownTrigger,
 } from "@nextui-org/react";
-import { useTranslations, useLocale } from "next-intl";
-import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
+import { useLocale, useTranslations } from "next-intl";
+import React from "react";
 import { IoLanguage } from "react-icons/io5";
 
 export default function SwitchLang() {

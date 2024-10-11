@@ -1,4 +1,3 @@
-import React, { useState } from "react";
 import {
     Avatar,
     Button,
@@ -14,24 +13,25 @@ import {
     Textarea,
     useDisclosure,
 } from "@nextui-org/react";
+import React, { useState } from "react";
 
-import { Input } from "@nextui-org/input";
-import DropZone from "./DropZone";
 import { CustomSelect, StateOption } from "@/components/CustomSelect/Select";
-import countriesJson from "@/util/countries.json";
 import boughtCountries from "@/util/boughtCountries.json";
-import { OnChangeValue } from "react-select";
+import countriesJson from "@/util/countries.json";
+import { BeerType } from "@/util/types";
+import { Input } from "@nextui-org/input";
 import { MdEdit } from "react-icons/md";
-import { ADMIN_ROLE, BeerType } from "@/util/types";
+import { OnChangeValue } from "react-select";
+import DropZone from "./DropZone";
 
-import axios from "axios";
-import { enqueueSnackbar } from "notistack";
 import Spinner from "@/components/Loaders/Spinner";
+import { useBearContext } from "@/store/useBeerContext";
+import impressionJson from "@/util/impression.json";
+import axios from "axios";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import impressionJson from "@/util/impression.json";
-import { useBearContext } from "@/store/useBeerContext";
 import { useTheme } from "next-themes";
+import { enqueueSnackbar } from "notistack";
 
 interface UpdateBeerProps {
     selectedBeer: BeerType;

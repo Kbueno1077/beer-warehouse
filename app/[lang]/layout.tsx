@@ -1,15 +1,15 @@
-import type { Metadata, Viewport } from "next";
 import { Analytics } from "@vercel/analytics/react";
+import type { Metadata, Viewport } from "next";
 
-import { notFound } from "next/navigation";
-import { NextIntlClientProvider } from "next-intl";
 import { Providers } from "@/app/providers";
+import { NextIntlClientProvider } from "next-intl";
 import { Inter } from "next/font/google";
+import { notFound } from "next/navigation";
 
-import "../globals.css";
 import Navigationbar from "@/components/Navigationbar/Navigationbar";
-import React from "react";
 import { ThemeProvider } from "next-themes";
+import React from "react";
+import "../globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
 

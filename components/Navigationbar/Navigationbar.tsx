@@ -1,6 +1,8 @@
 "use client";
 
-import React from "react";
+import { Link } from "@/i18n/navigation";
+import AuthModal from "@/modules/Auth/AuthModal/AuthModal";
+import SettingsDropDown from "@/modules/SettingsDropDown/SettingsDropDown";
 import {
     Navbar,
     NavbarBrand,
@@ -8,19 +10,14 @@ import {
     NavbarMenu,
     NavbarMenuItem,
 } from "@nextui-org/react";
-import { CiBeerMugFull } from "react-icons/ci";
-import AuthModal from "@/modules/Auth/AuthModal/AuthModal";
 import { useTranslations } from "next-intl";
-import SwitchMode from "@/components/SwitchMode/SwitchMode";
+import React from "react";
+import { CiBeerMugFull } from "react-icons/ci";
 import styles from "./navigationBar.module.css";
-import SwitchTheme from "@/components/SwitchTheme/SwitchTheme";
-import { Link, usePathname } from "@/i18n/navigation";
-import SettingsDropDown from "@/modules/SettingsDropDown/SettingsDropDown";
 
 export default function Navigationbar() {
     const [isMenuOpen, setIsMenuOpen] = React.useState(false);
 
-    const pathname = usePathname();
     const t = useTranslations("navbar");
 
     const playSound = () => {
@@ -60,11 +57,6 @@ export default function Navigationbar() {
             </audio>
 
             <NavbarContent>
-                {/*<NavbarMenuToggle*/}
-                {/*    aria-label={isMenuOpen ? "Close menu" : "Open menu"}*/}
-                {/*    className="sm:hidden"*/}
-                {/*/>*/}
-
                 <NavbarBrand>
                     <CiBeerMugFull
                         onClick={playSound}
@@ -84,7 +76,6 @@ export default function Navigationbar() {
 
             <NavbarMenu>
                 <AuthModal mode="mobile-login" />
-                {/*<AuthModal mode="mobile-register"/>*/}
 
                 <NavbarMenuItem>
                     <Link
@@ -95,12 +86,6 @@ export default function Navigationbar() {
                         {t("dashboard")}
                     </Link>
                 </NavbarMenuItem>
-
-                {/*<NavbarMenuItem>*/}
-                {/*    <Link onClick={() => handleOpen(false)} className="w-full" href="/friends">*/}
-                {/*        {t('friendsLink')}*/}
-                {/*    </Link>*/}
-                {/*</NavbarMenuItem>*/}
 
                 <NavbarMenuItem>
                     <Link

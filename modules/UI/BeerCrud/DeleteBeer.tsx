@@ -1,5 +1,8 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
+import Spinner from "@/components/Loaders/Spinner";
+import { useBearContext } from "@/store/useBeerContext";
+import { BeerType } from "@/util/types";
 import {
     Button,
     Modal,
@@ -9,14 +12,11 @@ import {
     ModalHeader,
     useDisclosure,
 } from "@nextui-org/react";
-import { MdDeleteOutline } from "react-icons/md";
-import { BeerType } from "@/util/types";
 import axios from "axios";
-import { enqueueSnackbar } from "notistack";
-import Spinner from "@/components/Loaders/Spinner";
 import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useBearContext } from "@/store/useBeerContext";
+import { enqueueSnackbar } from "notistack";
+import { MdDeleteOutline } from "react-icons/md";
 
 interface DeleteBeerProps {
     selectedBeer: BeerType;

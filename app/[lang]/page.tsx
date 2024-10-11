@@ -3,12 +3,10 @@ import { NextPage } from "next";
 import SeachControl from "@/components/SearchControl/SeachControl";
 import UiComponent from "@/modules/UI/UiComponent";
 import { getXataClient } from "@/xata/xata";
-import { getServerSession } from "next-auth";
 import { cookies } from "next/headers";
 import Image from "next/image";
 
 const Page: NextPage = async () => {
-    const session = await getServerSession();
     const xata = getXataClient();
     const cookieStore = cookies();
     const hasCookie = cookieStore.has("cookieWarehouseOwner");

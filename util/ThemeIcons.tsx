@@ -1,33 +1,3 @@
-import React from "react";
-import { Switch } from "@nextui-org/react";
-import { DARK_MODE, LIGHT_MODE } from "@/util/types";
-import { track } from "@vercel/analytics";
-import { useTheme } from "next-themes";
-
-export default function SwitchTheme() {
-    const { theme, setTheme } = useTheme();
-
-    const handleThemeChange = (value: boolean) => {
-        setTheme(value ? LIGHT_MODE : DARK_MODE);
-        track("Theme", { mode: value ? LIGHT_MODE : DARK_MODE });
-    };
-
-    return (
-        <>
-            <Switch
-                defaultSelected
-                isSelected={theme !== DARK_MODE}
-                onValueChange={handleThemeChange}
-                size="lg"
-                color="primary"
-                aria-label={"theme switch"}
-                startContent={<SunIcon />}
-                endContent={<MoonIcon />}
-            ></Switch>
-        </>
-    );
-}
-
 export const MoonIcon = (props: any) => (
     <svg
         aria-hidden="true"

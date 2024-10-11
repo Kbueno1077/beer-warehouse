@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import UserCard from "@/modules/Settings/AllUsers/UserCard";
 import { ScrollShadow } from "@nextui-org/react";

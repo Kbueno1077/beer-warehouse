@@ -27,8 +27,8 @@ function Collections({ users }: CollectionsProps) {
         };
     });
 
-    const handleWarehouse = async (user: NextAuthUserExtended) => {
-        const newWarehouse = await handleWarehouseChange(user);
+    const handleWarehouse = async (us3er: NextAuthUserExtended) => {
+        const newWarehouse = await handleWarehouseChange(us3er);
     };
 
     return (
@@ -46,20 +46,20 @@ function Collections({ users }: CollectionsProps) {
 
             <div className="w-full flex justify-center sm:mt-5">
                 <div className="p-2 pb-4 flex gap-4 flex-col items-center sm:items-stretch md:flex-row flex-wrap justify-center w-full max-w-[3000px]">
-                    {users.map((user, index) => (
+                    {users.map((us3er, index) => (
                         <Card
-                            key={user.id}
+                            key={us3er.id}
                             isBlurred
                             className="border-none cursor-pointer bg-background/60 dark:bg-default-100/50 max-w-[610px]"
                             shadow="sm"
                             isPressable={true}
                             onPress={() => {
-                                handleWarehouse(user);
+                                handleWarehouse(us3er);
                             }}
                         >
                             <CardBody
                                 className={`sm:flex sm:justify-center sm:item-center ${
-                                    user.name === warehouseOwner?.name &&
+                                    us3er.name === warehouseOwner?.name &&
                                     "bg-primary/20 "
                                 }`}
                             >
@@ -70,7 +70,7 @@ function Collections({ users }: CollectionsProps) {
                                             className="object-cover"
                                             height={200}
                                             shadow="md"
-                                            src={user.image ?? ""}
+                                            src={us3er.image ?? ""}
                                             width="100%"
                                         />
                                     </div>
@@ -79,15 +79,15 @@ function Collections({ users }: CollectionsProps) {
                                         <div className="flex justify-between items-start h-[100%] ">
                                             <div className="flex flex-col gap-0 h-[100%] justify-between">
                                                 <h2 className="font-bold text-foreground/90 text-4xl flex gap-1 items-center justify-between">
-                                                    {user.name}{" "}
-                                                    {user.name === "Kevin" && (
+                                                    {us3er.name}{" "}
+                                                    {us3er.name === "Kevin" && (
                                                         <IoCodeSlash className="text-primary" />
                                                     )}
                                                 </h2>
 
                                                 <div className="align-bottom mt-2 sm:mt-0">
                                                     <p className="text-foreground/80 text-2xl">
-                                                        {user.email}
+                                                        {us3er.email}
                                                     </p>
 
                                                     <p className="text-foreground/80 text-2xl">
@@ -95,7 +95,7 @@ function Collections({ users }: CollectionsProps) {
                                                             {t("joined")}:{" "}
                                                         </span>
                                                         {format({
-                                                            date: user?.xata
+                                                            date: us3er?.xata
                                                                 ?.createdAt,
                                                             format: "full",
                                                             locale: locale,

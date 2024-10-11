@@ -1,5 +1,3 @@
-"use client";
-
 import { BeerType } from "@/util/types";
 
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
@@ -7,10 +5,7 @@ import ImpressionIcons from "@/components/ImpressionIcons/ImpressionIcons";
 import { Image } from "@nextui-org/react";
 import { useTranslations } from "next-intl";
 import NextImage from "next/image";
-import { useBearContext } from "@/store/useBeerContext";
-import { useSession } from "next-auth/react";
-import UpdateBeer from "../UI/BeerCrud/UpdateBeer";
-import DeleteBeer from "../UI/BeerCrud/DeleteBeer";
+import BeerActions from "./BeerActions";
 
 interface BeerDetailsProps {
     beer: BeerType;
@@ -19,17 +14,6 @@ interface BeerDetailsProps {
 function BeerDetails({ beer }: BeerDetailsProps) {
     const t = useTranslations("beerDetails");
     const timpression = useTranslations("impression");
-
-    const { warehouseOwner } = useBearContext((s) => {
-        return {
-            warehouseOwner: s.warehouseOwner,
-        };
-    });
-
-    const { data: session } = useSession();
-    const user = session?.user;
-
-    const isOwner = user?.name === warehouseOwner?.name;
 
     return (
         <div className="flex flex-col md:flex-row justify-evenly w-full">
@@ -127,12 +111,7 @@ function BeerDetails({ beer }: BeerDetailsProps) {
                         </div>
                     )}
 
-                    {isOwner && (
-                        <div className="flex gap-2 mt-2">
-                            <UpdateBeer selectedBeer={beer} isOwner={isOwner} />
-                            <DeleteBeer selectedBeer={beer} isOwner={isOwner} />
-                        </div>
-                    )}
+                    <BeerActions beer={beer} />
                 </div>
             </div>
         </div>

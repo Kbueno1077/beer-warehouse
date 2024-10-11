@@ -11,9 +11,6 @@
         --color-info: 51 181 229;
         --color-warn: 255 187 51;
         --color-error: 230 57 70;
-
-        /*--color-text: 33 33 33;*/
-        /*--color-default: 33 33 33;*/
     }
 
     [data-theme="dark"] {
@@ -24,9 +21,6 @@
         --color-info: 51 181 229;
         --color-warn: 255 187 51;
         --color-error: 254 78 78;
-
-        /*--color-text: 33 33 33;*/
-        /*--color-default: 33 33 33*/
     }
 
     :root[class~="dark"] {
@@ -37,34 +31,7 @@
         --color-info: 51 181 229;
         --color-warn: 255 187 51;
         --color-error: 254 78 78;
-
-        /*--color-text: 33 33 33;*/
-        /*--color-default: 33 33 33*/
     }
-}
-
-/*:root {*/
-/*  --foreground-rgb: 0, 0, 0;*/
-/*  --background-start-rgb: 214, 219, 220;*/
-/*  --background-end-rgb: 255, 255, 255;*/
-/*}*/
-
-/*@media (prefers-color-scheme: dark) {*/
-/*  :root {*/
-/*    --foreground-rgb: 255, 255, 255;*/
-/*    --background-start-rgb: 0, 0, 0;*/
-/*    --background-end-rgb: 0, 0, 0;*/
-/*  }*/
-/*}*/
-
-body {
-    /*color: rgb(var(--foreground-rgb));*/
-    /*background: linear-gradient(*/
-    /*    to bottom,*/
-    /*    transparent,*/
-    /*    rgb(var(--background-end-rgb))*/
-    /*  )*/
-    /*  rgb(var(--background-start-rgb));*/
 }
 
 .bgWallpaper {
@@ -80,12 +47,6 @@ body {
     background: #f0f0f0;
     box-shadow: 14px 14px 28px #d6d6d6, -14px -14px 28px #ffffff;
     position: relative;
-
-    /*border-radius: 18px;*/
-    /*background: linear-gradient(145deg, #e6e6e6, #ffffff);*/
-    /*box-shadow:  14px 14px 43px #ededed,*/
-    /*-14px -14px 43px #ffffff;*/
-    /*border: 1px solid silver;*/
 
     padding: 20px;
     margin: -35vh 100px 40px;

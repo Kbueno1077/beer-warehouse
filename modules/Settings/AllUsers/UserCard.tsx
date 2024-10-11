@@ -1,5 +1,3 @@
-"use client";
-
 import React from "react";
 import {
     Avatar,
@@ -21,8 +19,6 @@ export default function UserCard({
     selectedId,
     handleSelectUser,
 }: UserCardProps) {
-    const [isFollowed, setIsFollowed] = React.useState(false);
-
     return (
         <Card
             className={`min-w-[250px] ${selectedId === user.id && ""}`}

@@ -2,12 +2,12 @@
 
 "use client";
 
-import React, { useEffect } from "react";
+import countryCodes from "@/util/countries.json";
 import { BeerType, DARK_MODE } from "@/util/types";
 import ReactECharts from "echarts-for-react";
-import countryCodes from "@/util/countries.json";
 import { useTranslations } from "next-intl";
 import { useTheme } from "next-themes";
+import React, { useEffect } from "react";
 
 interface PieChartsProps {
     serverFetchedBeers: Array<BeerType>;

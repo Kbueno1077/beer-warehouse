@@ -3,9 +3,9 @@
 import { useBearContext } from "@/store/useBeerContext";
 import { CARD_MODE } from "@/util/types";
 import { Avatar, Input } from "@nextui-org/react";
+import { useTranslations } from "next-intl";
 import React from "react";
 import styles from "../../modules/UI/CardsUI/SearchControls/searchControls.module.css";
-import { useTranslations } from "next-intl";
 
 function SeachControl() {
     const t = useTranslations("table");

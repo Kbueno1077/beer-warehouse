@@ -4,25 +4,17 @@ import NextImage from "next/image";
 
 import FlagAvatar from "@/components/FlagAvatar/FlagAvatar";
 import ImpressionIcons from "@/components/ImpressionIcons/ImpressionIcons";
-import DeleteBeer from "@/modules/UI/BeerCrud/DeleteBeer";
-import UpdateBeer from "@/modules/UI/BeerCrud/UpdateBeer";
+import { useRouter } from "@/i18n/navigation";
 import { BeerType } from "@/util/types";
 import {
-    Accordion,
-    AccordionItem,
-    Button,
     Card,
     CardFooter,
     CardHeader,
     Chip,
     Skeleton,
 } from "@nextui-org/react";
-import { useSession } from "next-auth/react";
 import { useTranslations } from "next-intl";
-import { useRouter } from "@/i18n/navigation";
 import { useState } from "react";
-import { MdKeyboardArrowUp } from "react-icons/md";
-import { TbScanEye } from "react-icons/tb";
 import styles from "./beerCard.module.css";
 
 interface BeerCardProps {
@@ -31,16 +23,10 @@ interface BeerCardProps {
 }
 
 const BeerCard = ({ beer, isOwner }: BeerCardProps) => {
-    console.log(isOwner);
-    const { data: session } = useSession();
     const router = useRouter();
 
-    const user = session?.user;
-
     const [imageLoaded, setImageLoaded] = useState<boolean>(false);
-    const [selectedKeys, setSelectedKeys] = useState<Iterable<any>>(
-        new Set([])
-    );
+
     const t = useTranslations("card");
 
     const imageSplit = beer.evidence_img

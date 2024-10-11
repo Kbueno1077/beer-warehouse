@@ -25,15 +25,14 @@ import { IoBarChartSharp } from "react-icons/io5";
 import { MdOutlineCollectionsBookmark } from "react-icons/md";
 
 import Spinner from "@/components/Loaders/Spinner";
-import { MoonIcon, SunIcon } from "@/components/SwitchTheme/SwitchTheme";
 import { usePathname } from "@/i18n/navigation";
 import { useBearContext } from "@/store/useBeerContext";
+import { MoonIcon, SunIcon } from "@/util/ThemeIcons";
 import { CARD_MODE, DARK_MODE, LIGHT_MODE, TABLE_MODE } from "@/util/types";
 import { track } from "@vercel/analytics";
 import { useTheme } from "next-themes";
 import { TbCards } from "react-icons/tb";
 import { VscTable } from "react-icons/vsc";
-import FiltersModal from "../UI/Filters/FiltersModal";
 
 export default function SettingsDropDown() {
     const iconClasses =
@@ -83,7 +82,7 @@ export default function SettingsDropDown() {
         if (e.anchorKey === "logout") {
             handleClose();
             await signOut({ redirect: false });
-            handleWarehouseChange("Kevin");
+            handleWarehouseChange({ name: "Kevin" });
         }
     };
 

@@ -19,12 +19,12 @@ import {
 } from "@nextui-org/react";
 
 import Spinner from "@/components/Loaders/Spinner";
+import { useBearContext } from "@/store/useBeerContext";
+import axios from "axios";
+import bcrypt from "bcryptjs";
 import { useTranslations } from "next-intl";
 import { enqueueSnackbar } from "notistack";
 import z from "zod";
-import bcrypt from "bcryptjs";
-import axios from "axios";
-import { useBearContext } from "@/store/useBeerContext";
 
 type AuthModalProps = {
     mode: string;

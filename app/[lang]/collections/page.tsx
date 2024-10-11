@@ -1,7 +1,6 @@
-import React from "react";
-import { Metadata, NextPage } from "next";
-import { getXataClient } from "@/xata/xata";
 import Collections from "@/modules/Collections/Collections";
+import { getXataClient } from "@/xata/xata";
+import { Metadata, NextPage } from "next";
 
 export const metadata: Metadata = {
     icons: { icon: "../favicon.ico" },
