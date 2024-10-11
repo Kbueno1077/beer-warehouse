@@ -44,7 +44,7 @@ export default function AlcoholFilter({ handleFilters }: any) {
     };
 
     return (
-        <div className="flex flex-col gap-1 w-full">
+        <div className="flex flex-col gap-1 w-full mt-4">
             <div className="flex justify-between">
                 <h4 className="text-gray-500">{t("alcohol")}</h4>
                 <Button

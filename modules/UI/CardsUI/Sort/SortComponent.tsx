@@ -1,55 +1,18 @@
-"use client";
-
-import React from "react";
 import { Button } from "@nextui-org/react";
-import { TbFlagDown, TbFlagUp } from "react-icons/tb";
+import { useTranslations } from "next-intl";
 import {
     BiSolidDownArrowAlt,
     BiSolidUpArrowAlt,
     BiSortAZ,
     BiSortZA,
 } from "react-icons/bi";
-import { useTranslations } from "next-intl";
+import { TbFlagDown, TbFlagUp } from "react-icons/tb";
 
 export default function SortComponent({ handleSort, selectedSort }: any) {
     const t = useTranslations("cards.sort");
 
     return (
         <>
-            <Button
-                onPress={() => {
-                    handleSort({ attribute: "country", direction: "up" });
-                }}
-                color="primary"
-                variant={
-                    selectedSort.attribute === "country" &&
-                    selectedSort.direction === "up"
-                        ? "bordered"
-                        : "faded"
-                }
-                isIconOnly
-                aria-label="Country Up"
-            >
-                <TbFlagUp />
-            </Button>
-
-            <Button
-                onPress={() => {
-                    handleSort({ attribute: "country", direction: "down" });
-                }}
-                color="primary"
-                variant={
-                    selectedSort.attribute === "country" &&
-                    selectedSort.direction === "down"
-                        ? "bordered"
-                        : "faded"
-                }
-                isIconOnly
-                aria-label="Country Down"
-            >
-                <TbFlagDown />
-            </Button>
-
             <Button
                 onPress={() => {
                     handleSort({ attribute: "name", direction: "up" });
@@ -156,51 +119,41 @@ export default function SortComponent({ handleSort, selectedSort }: any) {
 
             <Button
                 onPress={() => {
-                    handleSort({ attribute: "bought_in", direction: "up" });
+                    handleSort({
+                        attribute: "initial_impression",
+                        direction: "up",
+                    });
                 }}
                 color="primary"
                 variant={
-                    selectedSort.attribute === "bought_in" &&
+                    selectedSort.attribute === "initial_impression" &&
                     selectedSort.direction === "up"
                         ? "bordered"
                         : "faded"
                 }
-                aria-label="Bought in Up"
+                aria-label="Impression Up"
             >
-                <BiSolidUpArrowAlt /> {t("bought in")}
+                <BiSolidUpArrowAlt /> Impression
             </Button>
 
             <Button
                 onPress={() => {
-                    handleSort({ attribute: "bought_in", direction: "down" });
+                    handleSort({
+                        attribute: "initial_impression",
+                        direction: "down",
+                    });
                 }}
                 color="primary"
                 variant={
-                    selectedSort.attribute === "bought_in" &&
+                    selectedSort.attribute === "initial_impression" &&
                     selectedSort.direction === "down"
                         ? "bordered"
                         : "faded"
                 }
-                aria-label="BoughtDown"
+                aria-label="Impression Down"
             >
-                <BiSolidDownArrowAlt /> {t("bought in")}
+                <BiSolidDownArrowAlt /> Impression
             </Button>
-
-            {/*<Button onPress={() => {*/}
-            {/*    handleSort({attribute: 'initial_impression', direction: 'up'})*/}
-            {/*}} color='primary'*/}
-            {/*        variant={selectedSort.attribute === 'initial_impression' && selectedSort.direction === 'up' ? 'bordered' : 'faded'}*/}
-            {/*        aria-label="Impression Up">*/}
-            {/*    <BiSolidUpArrowAlt/> Impression*/}
-            {/*</Button>*/}
-
-            {/*<Button onPress={() => {*/}
-            {/*    handleSort({attribute: 'initial_impression', direction: 'down'})*/}
-            {/*}} color='primary'*/}
-            {/*        variant={selectedSort.attribute === 'initial_impression' && selectedSort.direction === 'down' ? 'bordered' : 'faded'}*/}
-            {/*        aria-label="Impression Down">*/}
-            {/*    <BiSolidDownArrowAlt/> Impression*/}
-            {/*</Button>*/}
 
             <Button
                 onPress={() => {

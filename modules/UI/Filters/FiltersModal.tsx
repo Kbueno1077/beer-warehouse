@@ -64,7 +64,14 @@ export default function FiltersModal() {
                     : ""}
             </Button>
 
-            <Modal size="4xl" isOpen={isOpen} onOpenChange={onOpenChange}>
+            <Modal
+                size="4xl"
+                isOpen={isOpen}
+                onOpenChange={onOpenChange}
+                classNames={{
+                    backdrop: "bg-black bg-opacity-80",
+                }}
+            >
                 <ModalContent>
                     {(onClose) => (
                         <>
@@ -73,9 +80,9 @@ export default function FiltersModal() {
                                 {t("modalBtn")}
                             </ModalHeader>
                             <ModalBody>
-                                <AlcoholFilter handleFilters={handleFilters} />
-                                <MlFilter handleFilters={handleFilters} />
                                 <CountryFilter handleFilters={handleFilters} />
+                                <MlFilter handleFilters={handleFilters} />
+                                <AlcoholFilter handleFilters={handleFilters} />
                             </ModalBody>
                             <ModalFooter>
                                 <Button

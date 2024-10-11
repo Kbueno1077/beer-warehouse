@@ -24,9 +24,7 @@ const Page: NextPage = async () => {
         .sort("name", "asc")
         .getAll();
 
-    const users = serverFetchedUsers.filter(
-        (user) => user.name !== "Bibi" && user.name !== "guest"
-    );
+    const users = serverFetchedUsers.filter((user) => user.name !== "guest");
 
     return (
         <>

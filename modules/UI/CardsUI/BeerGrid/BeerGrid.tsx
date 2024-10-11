@@ -43,9 +43,6 @@ const BeerGrid = () => {
         }
     );
 
-    console.log(warehouseOwner);
-    console.log(user);
-
     const hasSearchFilter = Boolean(filters.search);
 
     const [page, setPage] = useState<number>(1);

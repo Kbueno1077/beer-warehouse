@@ -62,26 +62,54 @@ export function groupByMethod(array: any, property: any = "") {
     return resultWithOrder;
 }
 
+const mapImpressionToValue = (impression: string) => {
+    const impressionValues = {
+        Excellent: 10,
+        Amazing: 8,
+        Good: 6,
+        Average: 5,
+        Bad: 4,
+        Awful: 2,
+        Horrible: 0,
+    };
+    return impressionValues[impression as keyof typeof impressionValues] || 0;
+};
+
 export const sortBy = (array: any, sortProp: string, direction: string) => {
+    console.log(sortProp);
     if (direction === "up") {
         return array.sort((a: any, b: any) => {
-            if (a[sortProp] < b[sortProp]) {
-                return -1;
+            if (sortProp === "initial_impression") {
+                return (
+                    mapImpressionToValue(a[sortProp]) -
+                    mapImpressionToValue(b[sortProp])
+                );
+            } else {
+                if (a[sortProp] < b[sortProp]) {
+                    return -1;
+                }
+                if (a[sortProp] > b[sortProp]) {
+                    return 1;
+                }
+                return 0;
             }
-            if (a[sortProp] > b[sortProp]) {
-                return 1;
-            }
-            return 0;
         });
     } else {
         return array.sort((a: any, b: any) => {
-            if (a[sortProp] < b[sortProp]) {
-                return 1;
+            if (sortProp === "initial_impression") {
+                return (
+                    mapImpressionToValue(b[sortProp]) -
+                    mapImpressionToValue(a[sortProp])
+                );
+            } else {
+                if (a[sortProp] < b[sortProp]) {
+                    return 1;
+                }
+                if (a[sortProp] > b[sortProp]) {
+                    return -1;
+                }
+                return 0;
             }
-            if (a[sortProp] > b[sortProp]) {
-                return -1;
-            }
-            return 0;
         });
     }
 };

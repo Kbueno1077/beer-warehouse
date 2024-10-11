@@ -65,6 +65,9 @@ export default function GroupByModal() {
                 isOpen={isOpen}
                 onClose={handleClose}
                 onOpenChange={onOpenChange}
+                classNames={{
+                    backdrop: "bg-black bg-opacity-80",
+                }}
             >
                 <ModalContent>
                     {() => (
