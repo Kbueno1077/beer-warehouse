@@ -17,9 +17,6 @@ function Collections({ users }: CollectionsProps) {
     const locale = useLocale();
     const t = useTranslations();
 
-    const { data: session } = useSession();
-    const user = session?.user;
-
     const { warehouseOwner, handleWarehouseChange } = useBearContext((s) => {
         return {
             warehouseOwner: s.warehouseOwner,
@@ -27,8 +24,8 @@ function Collections({ users }: CollectionsProps) {
         };
     });
 
-    const handleWarehouse = async (us3er: NextAuthUserExtended) => {
-        const newWarehouse = await handleWarehouseChange(us3er);
+    const handleWarehouse = async (user: NextAuthUserExtended) => {
+        const newWarehouse = await handleWarehouseChange(user);
     };
 
     return (
@@ -46,20 +43,20 @@ function Collections({ users }: CollectionsProps) {
 
             <div className="w-full flex justify-center sm:mt-5">
                 <div className="p-2 pb-4 flex gap-4 flex-col items-center sm:items-stretch md:flex-row flex-wrap justify-center w-full max-w-[3000px]">
-                    {users.map((us3er, index) => (
+                    {users.map((user, index) => (
                         <Card
-                            key={us3er.id}
+                            key={user.id}
                             isBlurred
                             className="border-none cursor-pointer bg-background/60 dark:bg-default-100/50 max-w-[610px]"
                             shadow="sm"
                             isPressable={true}
                             onPress={() => {
-                                handleWarehouse(us3er);
+                                handleWarehouse(user);
                             }}
                         >
                             <CardBody
                                 className={`sm:flex sm:justify-center sm:item-center ${
-                                    us3er.name === warehouseOwner?.name &&
+                                    user.name === warehouseOwner?.name &&
                                     "bg-primary/20 "
                                 }`}
                             >
@@ -70,7 +67,7 @@ function Collections({ users }: CollectionsProps) {
                                             className="object-cover"
                                             height={200}
                                             shadow="md"
-                                            src={us3er.image ?? ""}
+                                            src={user.image ?? ""}
                                             width="100%"
                                         />
                                     </div>
@@ -79,15 +76,15 @@ function Collections({ users }: CollectionsProps) {
                                         <div className="flex justify-between items-start h-[100%] ">
                                             <div className="flex flex-col gap-0 h-[100%] justify-between">
                                                 <h2 className="font-bold text-foreground/90 text-4xl flex gap-1 items-center justify-between">
-                                                    {us3er.name}{" "}
-                                                    {us3er.name === "Kevin" && (
+                                                    {user.name}{" "}
+                                                    {user.name === "Kevin" && (
                                                         <IoCodeSlash className="text-primary" />
                                                     )}
                                                 </h2>
 
                                                 <div className="align-bottom mt-2 sm:mt-0">
                                                     <p className="text-foreground/80 text-2xl">
-                                                        {us3er.email}
+                                                        {user.email}
                                                     </p>
 
                                                     <p className="text-foreground/80 text-2xl">
@@ -95,7 +92,7 @@ function Collections({ users }: CollectionsProps) {
                                                             {t("joined")}:{" "}
                                                         </span>
                                                         {format({
-                                                            date: us3er?.xata
+                                                            date: user?.xata
                                                                 ?.createdAt,
                                                             format: "full",
                                                             locale: locale,

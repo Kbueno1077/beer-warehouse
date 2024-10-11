@@ -175,7 +175,7 @@ export default function AuthModal({ mode = "login" }: AuthModalProps) {
             onOpenChange();
 
             const actualSession = await getSession();
-            handleWarehouseChange(actualSession?.user.name);
+            handleWarehouseChange(actualSession?.user);
         } else {
             setErrorMessage(t("bad-user"));
 

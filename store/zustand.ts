@@ -157,8 +157,10 @@ export const createBeerStore = (initProps: InitialProps) => {
         handleWarehouseChange: async (
             newWarehouseOwner: NextAuthUserExtended
         ) => {
-            const xata = getXataClient();
             get().setLoading(true);
+            get().setWarehouseOwner(newWarehouseOwner);
+
+            const xata = getXataClient();
 
             get().resetFilters();
             get().resetGroupBy();
@@ -202,7 +204,6 @@ export const createBeerStore = (initProps: InitialProps) => {
 
             await createCookie("cookieWarehouseOwner", newWarehouseOwner.name);
             get().setAllBeers(serverFetchedBeers);
-            get().setWarehouseOwner(newWarehouseOwner);
             get().setLoading(false);
         },
 
