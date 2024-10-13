@@ -83,10 +83,10 @@
 
     "search": {
         "search": {
-            "placeholder": "Buscar cerveza por nombre...",
-            "ai-result": "Resultados de busqueda",
-            "ai-disclaimer": "Nota: Los siguientes resultados son generados por una IA y pueden no ser completamente precisos."
-        }
+            "placeholder": "Buscar cerveza por nombre..."
+        },
+        "ai-result": "Resultados de busqueda",
+        "ai-disclaimer": "Nota: Los siguientes resultados son generados por una IA y pueden no ser completamente precisos."
     },
     "table": {
         "total": "Total: {count} cervezas",
