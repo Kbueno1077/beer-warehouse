@@ -80,6 +80,14 @@
         "already-exists": "Este username y/o email ya exiten",
         "user-created": "Nuevo usuario creado"
     },
+
+    "search": {
+        "search": {
+            "placeholder": "Buscar cerveza por nombre...",
+            "ai-result": "Resultados de busqueda",
+            "ai-disclaimer": "Nota: Los siguientes resultados son generados por una IA y pueden no ser completamente precisos."
+        }
+    },
     "table": {
         "total": "Total: {count} cervezas",
         "name": "Nombre",

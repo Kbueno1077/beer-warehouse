@@ -1,7 +1,6 @@
 # Beer Warehouse
 
-A personal web application where I store a collection of different beers that I have had the pleasure of enjoying.
-Friends can check the information in different views according to the device they access, Desktop or Mobile. Presence of graphs to make easy comparisons of the information presented
+A personal web application where I store a collection of different beers that I have had the pleasure of enjoying. Friends can check the information in different views according to the device they access, Desktop or Mobile. Presence of graphs to make easy comparisons of the information presented. Additionally, users can create their own accounts to access and manage their own beer collections.
 
 **Beer's Info**:
 
@@ -19,6 +18,8 @@ Friends can check the information in different views according to the device the
 -   Spanish and English language
 -   Charts using 'echarts-for-react' as a wrapper for Apache echarts
 -   Users: ability to add new users, they can see other's userss collections as well
+-   AI, Use Ai for looking for details of Beer that are not in the collection
+-   Collections, Can see collections from other users
 
 ## Roadmap
 
@@ -29,7 +30,7 @@ Friends can check the information in different views according to the device the
 
 ## Tech Stack
 
-**Client:** Next.js, React, Typescript, NextUI, TailwindCSS, Echarts, next-intl, Zustand
+**Client:** Next.js, React, Typescript, NextUI, TailwindCSS, Echarts, next-intl, Zustand, Gemini API
 
 **Auth:** Next-Auth
 

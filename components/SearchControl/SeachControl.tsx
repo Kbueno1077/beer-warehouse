@@ -24,7 +24,7 @@ import Spinner from "../Loaders/Spinner";
 
 function SeachControl({ isTable = false }) {
     const locale = useLocale();
-    const t = useTranslations("table");
+    const t = useTranslations("search");
     const [withAi, setWithAi] = useState(false);
     const [value, setValue] = useState("");
     const [isLoading, setIsLoading] = useState(false);
@@ -98,7 +98,7 @@ function SeachControl({ isTable = false }) {
                                 size={"sm"}
                                 isBordered
                                 as="button"
-                                className="transition-transform mr-3"
+                                className="transition-transform mr-3 w-[42px] md:w-[35px]"
                                 src={warehouseOwner?.image || "/noUser.png"}
                             />
                         )
@@ -180,9 +180,14 @@ function SeachControl({ isTable = false }) {
             >
                 <ModalContent>
                     <ModalHeader>
-                        <div className="flex items-center gap-1">
-                            <h2> Search Results </h2>
-                            <WiStars size={25} />
+                        <div className="flex flex-col gap-1">
+                            <div className="flex items-center gap-1">
+                                <h2>{t("ai-result")}</h2>
+
+                                <WiStars size={25} />
+                            </div>
+
+                            <p>{t("ai-disclaimer")}</p>
                         </div>
                     </ModalHeader>
                     <ModalBody>
