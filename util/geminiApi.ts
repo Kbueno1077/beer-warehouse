@@ -28,3 +28,18 @@ How to Find Information about a Specific Beer:
  Visit Brewery Websites: Many breweries have detailed information about their beers on their websites. 
  Consult a Beer Encyclopedia: There are many excellent beer books and online resources that offer comprehensive information about different beer styles and breweries.
 </div>`;
+
+export function getPrompt(beer: string, language: string, id: string): string {
+    const promptsDB = {
+        prompt1: `You are a beer knowledge entity, I want the whole information about ${beer} beer
+    and FACT check it more than one time to compare it but not show information multiple times,
+    including in bullet points ABV %, country of origin, ml in a bottle, type of beer (ale, lager, etc), style, 
+    description, Image, and an url for an image. With no "*" (for strong use HTML).
+    Deliver all code as Html5 (syntax) so it can be displayed directly in a page use H2's and ul-li, with no DOCTYPE, just a div wrapper, 
+    add some styling and remove unnecessary empty spaces, margin and paddings. ${
+        language && "The result has to be in Spanish"
+    }`,
+    };
+
+    return promptsDB[id as keyof typeof promptsDB];
+}

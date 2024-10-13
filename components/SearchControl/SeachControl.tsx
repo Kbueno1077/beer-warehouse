@@ -21,6 +21,7 @@ import { IoSend } from "react-icons/io5";
 import { WiStars } from "react-icons/wi";
 import styles from "../../modules/UI/CardsUI/SearchControls/searchControls.module.css";
 import Spinner from "../Loaders/Spinner";
+import { usePollinationsImage } from "@pollinations/react";
 
 function SeachControl({ isTable = false }) {
     const locale = useLocale();
@@ -194,6 +195,9 @@ function SeachControl({ isTable = false }) {
                             <div
                                 dangerouslySetInnerHTML={{ __html: aiResponse }}
                             ></div>
+                            <img
+                                src={`https://image.pollinations.ai/prompt/A_'${value}'_Beer._As_in_Real life,_take_inspiration_in_the_real_world,_only_display_the_beer_bottle_or_can}`}
+                            />
                         </div>
                     </ModalBody>
                     <ModalFooter>
