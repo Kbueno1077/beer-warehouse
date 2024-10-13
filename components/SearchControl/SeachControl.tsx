@@ -179,7 +179,7 @@ function SeachControl({ isTable = false }) {
                 onOpenChange={onOpenChange}
             >
                 <ModalContent>
-                    <ModalHeader>
+                    <ModalBody>
                         <div className="flex flex-col gap-1">
                             <div className="flex items-center gap-1">
                                 <h2>{t("ai-result")}</h2>
@@ -189,8 +189,7 @@ function SeachControl({ isTable = false }) {
 
                             <p>{t("ai-disclaimer")}</p>
                         </div>
-                    </ModalHeader>
-                    <ModalBody>
+
                         <div style={{ whiteSpace: "pre-line" }}>
                             <div
                                 dangerouslySetInnerHTML={{ __html: aiResponse }}
