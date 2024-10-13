@@ -76,7 +76,6 @@ const mapImpressionToValue = (impression: string) => {
 };
 
 export const sortBy = (array: any, sortProp: string, direction: string) => {
-    console.log(sortProp);
     if (direction === "up") {
         return array.sort((a: any, b: any) => {
             if (sortProp === "initial_impression") {

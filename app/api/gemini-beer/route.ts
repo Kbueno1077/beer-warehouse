@@ -5,9 +5,6 @@ export async function POST(request: Request) {
     try {
         const { prompt, locale } = await request.json();
 
-        console.log(prompt);
-        console.log(locale);
-
         let language = "";
 
         if (prompt === "") {

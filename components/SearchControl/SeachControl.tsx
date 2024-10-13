@@ -11,7 +11,7 @@ import {
     ModalBody,
     ModalContent,
     ModalFooter,
-    ModalHeader,
+    Skeleton,
     useDisclosure,
 } from "@nextui-org/react";
 import axios from "axios";
@@ -30,6 +30,7 @@ function SeachControl({ isTable = false }) {
     const [isLoading, setIsLoading] = useState(false);
     const [aiResponse, setAiResponse] = useState("");
     const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
+    const [isAimageLoading, setIsAiImageLoading] = useState(true);
 
     const { mode, filters, changeFilters, warehouseOwner } = useBearContext(
         (s) => {
@@ -73,9 +74,7 @@ function SeachControl({ isTable = false }) {
             locale,
         });
 
-        console.log(response.data);
         setAiResponse(response.data.content || "N/A");
-        console.log(response);
 
         onOpen();
         setIsLoading(false);
@@ -180,9 +179,9 @@ function SeachControl({ isTable = false }) {
             >
                 <ModalContent>
                     <ModalBody>
-                        <div className="flex flex-col gap-1">
+                        <div className="flex flex-col gap-1 pt-5">
                             <div className="flex items-center gap-1">
-                                <h2>{t("ai-result")}</h2>
+                                <h2 className="text-2xl">{t("ai-result")}</h2>
 
                                 <WiStars size={25} />
                             </div>
@@ -194,8 +193,22 @@ function SeachControl({ isTable = false }) {
                             <div
                                 dangerouslySetInnerHTML={{ __html: aiResponse }}
                             ></div>
+
+                            {isAimageLoading ? (
+                                <Skeleton className="rounded-lg">
+                                    <div className="w-full h-[180px] rounded-lg bg-default-300"></div>
+                                </Skeleton>
+                            ) : (
+                                <h2>{t("image-ai")}</h2>
+                            )}
+
                             <img
-                                src={`https://image.pollinations.ai/prompt/A_'${value}'_Beer._As_in_Real life,_take_inspiration_in_the_real_world,_only_display_the_beer_bottle_or_can}`}
+                                alt="Generate Image of Beer"
+                                src={`https://image.pollinations.ai/prompt/Real_${value}_Beer_bottle_or_can._Make_The_bottle_as_close_to_how_it_is_in_Real_life_do_not_make_stuff_up,_only_display_the_beer_bottle_or_can`}
+                                onLoad={() => {
+                                    setIsAiImageLoading(false);
+                                }}
+                                className="w-full object-cover"
                             />
                         </div>
                     </ModalBody>

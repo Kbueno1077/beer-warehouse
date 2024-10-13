@@ -85,6 +85,8 @@
         "search": {
             "placeholder": "Buscar cerveza por nombre..."
         },
+        "image-ai": "Esta es una imagen generada por IA, por lo que podría no ser exacta a la cerveza.",
+
         "ai-result": "Resultados de busqueda",
         "ai-disclaimer": "Nota: Los siguientes resultados son generados por una IA y pueden no ser completamente precisos."
     },
