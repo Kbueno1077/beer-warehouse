@@ -21,7 +21,6 @@ import { IoSend } from "react-icons/io5";
 import { WiStars } from "react-icons/wi";
 import styles from "../../modules/UI/CardsUI/SearchControls/searchControls.module.css";
 import Spinner from "../Loaders/Spinner";
-import { usePollinationsImage } from "@pollinations/react";
 
 function SeachControl({ isTable = false }) {
     const locale = useLocale();
