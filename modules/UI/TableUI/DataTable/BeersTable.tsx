@@ -50,6 +50,7 @@ import { useTranslations } from "next-intl";
 
 import ImpressionIcons from "@/components/ImpressionIcons/ImpressionIcons";
 import { useRouter } from "@/i18n/navigation";
+import SeachControl from "@/components/SearchControl/SeachControl";
 
 export default function BeersTable() {
     const { data: session } = useSession();
@@ -396,23 +397,7 @@ export default function BeersTable() {
                             src={warehouseOwner?.image || "/noUser.png"}
                         />
 
-                        <Input
-                            isClearable
-                            classNames={{
-                                base: "w-full sm:max-w-[44%] ",
-                                inputWrapper: "border-1 h-[40px]",
-                            }}
-                            placeholder={t("search.placeholder")}
-                            startContent={
-                                <SearchIcon className="text-default-300" />
-                            }
-                            value={filters.search}
-                            variant="bordered"
-                            onClear={() =>
-                                changeFilters({ ...filters, search: "" })
-                            }
-                            onValueChange={onSearchChange}
-                        />
+                        <SeachControl isTable={true} />
                     </div>
 
                     <div className="flex gap-3 justify-end">

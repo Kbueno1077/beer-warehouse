@@ -1,14 +1,35 @@
 "use client";
 
 import { useBearContext } from "@/store/useBeerContext";
+import { defaultPromtResponse } from "@/util/geminiApi";
 import { CARD_MODE } from "@/util/types";
-import { Avatar, Input } from "@nextui-org/react";
-import { useTranslations } from "next-intl";
-import React from "react";
+import {
+    Avatar,
+    Button,
+    Input,
+    Modal,
+    ModalBody,
+    ModalContent,
+    ModalFooter,
+    ModalHeader,
+    useDisclosure,
+} from "@nextui-org/react";
+import axios from "axios";
+import { useLocale, useTranslations } from "next-intl";
+import { useState } from "react";
+import { IoSend } from "react-icons/io5";
+import { WiStars } from "react-icons/wi";
 import styles from "../../modules/UI/CardsUI/SearchControls/searchControls.module.css";
+import Spinner from "../Loaders/Spinner";
 
-function SeachControl() {
+function SeachControl({ isTable = false }) {
+    const locale = useLocale();
     const t = useTranslations("table");
+    const [withAi, setWithAi] = useState(false);
+    const [value, setValue] = useState("");
+    const [isLoading, setIsLoading] = useState(false);
+    const [aiResponse, setAiResponse] = useState("");
+    const { isOpen, onOpen, onClose, onOpenChange } = useDisclosure();
 
     const { mode, filters, changeFilters, warehouseOwner } = useBearContext(
         (s) => {
@@ -21,39 +42,162 @@ function SeachControl() {
         }
     );
 
-    const onSearchChange = React.useCallback((value?: string) => {
-        if (value) {
-            changeFilters({ ...filters, search: value });
-        } else {
-            changeFilters({ ...filters, search: "" });
+    const onValueChange = (eValue: string) => {
+        setValue(eValue);
+        if (!withAi) {
+            changeFilters({ ...filters, search: eValue });
         }
-    }, []);
+    };
 
-    if (mode !== CARD_MODE) return null;
+    const onAiChange = () => {
+        if (withAi) {
+            changeFilters({ ...filters, search: value });
+        }
+
+        setWithAi(!withAi);
+    };
+
+    if (mode !== CARD_MODE && !isTable) return null;
+
+    const makeRequestToGemini = async () => {
+        setIsLoading(true);
+        if (value === "") {
+            setAiResponse(defaultPromtResponse);
+            onOpen();
+            setIsLoading(false);
+            return;
+        }
+
+        const response = await axios.post("/api/gemini-beer/", {
+            prompt: value,
+            locale,
+        });
+
+        console.log(response.data);
+        setAiResponse(response.data.content || "N/A");
+        console.log(response);
+
+        onOpen();
+        setIsLoading(false);
+    };
+
+    const handleOnClose = () => {
+        setAiResponse("");
+        onClose();
+    };
 
     return (
-        <Input
-            className="w-full"
-            startContent={
-                <Avatar
-                    size={"sm"}
-                    isBordered
-                    as="button"
-                    className="transition-transform mr-3"
-                    src={warehouseOwner?.image || "/noUser.png"}
+        <>
+            <div className="w-full flex items-center gap-2">
+                <Input
+                    className="w-full"
+                    disabled={isLoading}
+                    startContent={
+                        !isTable && (
+                            <Avatar
+                                size={"sm"}
+                                isBordered
+                                as="button"
+                                className="transition-transform mr-3"
+                                src={warehouseOwner?.image || "/noUser.png"}
+                            />
+                        )
+                    }
+                    endContent={
+                        !isTable && (
+                            <div className="flex gap-2 items-center">
+                                {withAi && !isLoading && (
+                                    <Button
+                                        isIconOnly
+                                        variant="ghost"
+                                        onClick={makeRequestToGemini}
+                                    >
+                                        <IoSend />
+                                    </Button>
+                                )}
+
+                                {isLoading && <Spinner />}
+
+                                <Button
+                                    isIconOnly
+                                    onClick={onAiChange}
+                                    variant={`faded`}
+                                    className={`${withAi ? "bg-primary" : ""}`}
+                                >
+                                    <WiStars size={25} />
+                                </Button>
+                            </div>
+                        )
+                    }
+                    color={"default"}
+                    placeholder={t("search.placeholder")}
+                    label={""}
+                    size={isTable ? "md" : "lg"}
+                    value={value}
+                    onValueChange={onValueChange}
+                    classNames={{
+                        label: styles.labelColor,
+                        inputWrapper: `bg-opacity-90 ${
+                            isTable && "border-1 h-[40px"
+                        }`,
+                        base: `${isTable && "w-full sm:max-w-[44%]"}`,
+                    }}
+                    isClearable={isTable}
                 />
-            }
-            color={"default"}
-            placeholder={t("search.placeholder")}
-            label={""}
-            size={"lg"}
-            value={filters.search}
-            onValueChange={onSearchChange}
-            classNames={{
-                label: styles.labelColor,
-                inputWrapper: "bg-opacity-90",
-            }}
-        />
+
+                {isTable && (
+                    <div className="flex gap-2 items-center">
+                        {withAi && !isLoading && (
+                            <Button
+                                isIconOnly
+                                variant="ghost"
+                                onClick={makeRequestToGemini}
+                            >
+                                <IoSend />
+                            </Button>
+                        )}
+
+                        {isLoading && <Spinner />}
+
+                        <Button
+                            isIconOnly
+                            onClick={onAiChange}
+                            variant={`faded`}
+                            className={`${withAi ? "bg-primary" : ""}`}
+                        >
+                            <WiStars size={25} />
+                        </Button>
+                    </div>
+                )}
+            </div>
+
+            <Modal
+                scrollBehavior="inside"
+                size="5xl"
+                isOpen={isOpen}
+                onClose={handleOnClose}
+                onOpenChange={onOpenChange}
+            >
+                <ModalContent>
+                    <ModalHeader>
+                        <div className="flex items-center gap-1">
+                            <h2> Search Results </h2>
+                            <WiStars size={25} />
+                        </div>
+                    </ModalHeader>
+                    <ModalBody>
+                        <div style={{ whiteSpace: "pre-line" }}>
+                            <div
+                                dangerouslySetInnerHTML={{ __html: aiResponse }}
+                            ></div>
+                        </div>
+                    </ModalBody>
+                    <ModalFooter>
+                        <Button onClick={handleOnClose}>Close</Button>
+                    </ModalFooter>
+                </ModalContent>
+            </Modal>
+        </>
     );
 }
 

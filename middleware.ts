@@ -1,8 +1,7 @@
-import { ADMIN_ROLE } from "@/util/types";
-import { NextFetchEvent, NextRequest, NextResponse } from "next/server";
-import { NextRequestWithAuth, withAuth } from "next-auth/middleware";
 import authMiddleware from "@/middlewares/authMiddleware";
+import { withAuth } from "next-auth/middleware";
 import createMiddleware from "next-intl/middleware";
+import { NextResponse } from "next/server";
 import { locales, pathnames } from "./i18n/navigation";
 import cookieMiddleWare from "./middlewares/cookieMiddleware";
 

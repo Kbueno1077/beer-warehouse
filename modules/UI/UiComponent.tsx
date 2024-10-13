@@ -5,6 +5,7 @@ import BeersTable from "@/modules/UI/TableUI/DataTable/BeersTable";
 import { useBearContext } from "@/store/useBeerContext";
 import { CARD_MODE, DARK_MODE, TABLE_MODE } from "@/util/types";
 import { Skeleton } from "@nextui-org/react";
+import axios from "axios";
 import { useTheme } from "next-themes";
 import { useEffect } from "react";
 
