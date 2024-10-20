@@ -107,6 +107,24 @@ export const createBeerStore = (initProps: InitialProps) => {
         ...initProps,
         allBeers: [],
 
+        //Export JSON
+
+        exportDataJSON: () => {
+            const inputs = get().allBeers;
+
+            const dataToExport = inputs; // Adjust this to the specific data you want to export
+            const json = JSON.stringify(dataToExport, null, 2);
+            const blob = new Blob([json], { type: "application/json" });
+            const url = URL.createObjectURL(blob);
+            const a = document.createElement("a");
+            a.href = url;
+            a.download = "beerData.json";
+            document.body.appendChild(a);
+            a.click();
+            document.body.removeChild(a);
+            URL.revokeObjectURL(url);
+        },
+
         //  ACTIONS
         setLoading: (loading: boolean) => {
             set({ loading });

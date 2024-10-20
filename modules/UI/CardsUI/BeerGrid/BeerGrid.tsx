@@ -129,7 +129,6 @@ const BeerGrid = () => {
 
     return (
         <>
-            {/* @ts-ignore*/}
             <div className="flex items-center mb-[10px] justify-between w-full px-2">
                 <div className="flex items-center gap-2">
                     <ButtonGroup>
@@ -161,7 +160,6 @@ const BeerGrid = () => {
 
             <div>
                 {Object.keys(processedItems).map((key: any) => {
-                    //@ts-ignore
                     const items = isArray(processedItems[key])
                         ? processedItems[key]
                         : [];

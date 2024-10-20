@@ -33,6 +33,7 @@ import { track } from "@vercel/analytics";
 import { useTheme } from "next-themes";
 import { TbCards } from "react-icons/tb";
 import { VscTable } from "react-icons/vsc";
+import { TbDatabaseExport } from "react-icons/tb";
 
 export default function SettingsDropDown() {
     const iconClasses =
@@ -44,16 +45,25 @@ export default function SettingsDropDown() {
     const pathname = usePathname();
 
     const { data: session, status } = useSession();
+    const user = session?.user;
 
-    const { handleWarehouseChange, mode, setMode, resetFilters } =
-        useBearContext((s) => {
-            return {
-                handleWarehouseChange: s.handleWarehouseChange,
-                mode: s.mode,
-                setMode: s.setMode,
-                resetFilters: s.resetFilters,
-            };
-        });
+    const {
+        handleWarehouseChange,
+        mode,
+        setMode,
+        resetFilters,
+        exportDataJSON,
+        warehouseOwner,
+    } = useBearContext((s) => {
+        return {
+            handleWarehouseChange: s.handleWarehouseChange,
+            warehouseOwner: s.warehouseOwner,
+            mode: s.mode,
+            setMode: s.setMode,
+            resetFilters: s.resetFilters,
+            exportDataJSON: s.exportDataJSON,
+        };
+    });
     const [selectedKeys, setSelectedKeys] = React.useState(new Set([locale]));
 
     const { theme, setTheme } = useTheme();
@@ -239,7 +249,6 @@ export default function SettingsDropDown() {
                                 </Button>
                             </ButtonGroup>
                         )}
-
                         <ButtonGroup>
                             <Button
                                 onPress={() => {
@@ -277,6 +286,26 @@ export default function SettingsDropDown() {
                             </Button>
                         </ButtonGroup>
                     </DropdownItem>
+
+                    {user && user.name === warehouseOwner?.name && (
+                        <DropdownItem>
+                            <Button
+                                onPress={exportDataJSON}
+                                variant="faded"
+                                color={"primary"}
+                                size={"md"}
+                                aria-label={t("export")}
+                                className={`w-full ${
+                                    theme === LIGHT_MODE
+                                        ? "primary"
+                                        : "bg-default-300"
+                                }`}
+                            >
+                                <TbDatabaseExport className="h-[17px] w-[17px]" />
+                                {t("export")}
+                            </Button>
+                        </DropdownItem>
+                    )}
                 </DropdownSection>
 
                 <DropdownSection title={t("languages")}>
