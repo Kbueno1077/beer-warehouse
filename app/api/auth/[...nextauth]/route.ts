@@ -1,4 +1,5 @@
-import NextAuth from "next-auth";
+// app/api/auth/[...nextauth]/route.ts
+import NextAuth, { AuthOptions } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { XataAdapter } from "@next-auth/xata-adapter";
 import { XataClient } from "@/xata/xata";
@@ -6,16 +7,11 @@ import bcrypt from "bcryptjs";
 
 const xata = new XataClient();
 
-export default NextAuth({
+export const authOptions = {
     adapter: XataAdapter(xata),
     providers: [
         CredentialsProvider({
-            // The name to display on the sign in form (e.g. 'Sign in with...')
             name: "credentials",
-            // The credentials is used to generate a suitable form on the sign in page.
-            // You can specify whatever fields you are expecting to be submitted.
-            // e.g. domain, username, password, 2FA token, etc.
-            // You can pass any HTML attribute to the <input> tag through the object.
             credentials: {
                 username: {
                     label: "Username",
@@ -24,9 +20,8 @@ export default NextAuth({
                 },
                 password: { label: "Password", type: "password" },
             },
-
-            async authorize(credentials: any, req: any) {
-                const user: any = await xata.db.nextauth_users
+            async authorize(credentials) {
+                const user = await xata.db.nextauth_users
                     .filter({
                         $any: [
                             { name: credentials?.username },
@@ -35,51 +30,57 @@ export default NextAuth({
                     })
                     .getFirst();
 
-                const isPasswordValid = await bcrypt.compare(
-                    credentials?.password,
-                    user?.password
-                );
+                if (!user || !credentials?.password) {
+                    return null;
+                }
+
+                const isPasswordValid = user.password
+                    ? bcrypt.compare(credentials.password, user.password)
+                    : false;
 
                 if (isPasswordValid) {
-                    return user;
+                    return {
+                        id: user.id,
+                        name: user.name,
+                        email: user.email,
+                        role: user.role,
+                    };
                 }
 
                 return null;
             },
         }),
     ],
-
     callbacks: {
-        async jwt({ token, user }: any) {
+        async jwt({ token, user }: { token: any; user: any }) {
             if (user) {
-                token._id = user.id;
+                token.id = user.id;
                 token.username = user.name;
                 token.email = user.email;
                 token.role = user.role;
             }
             return token;
         },
-
-        async session({ session, user, token }: any) {
-            if (token) {
-                // session.user.id = user.id;
-                // session.user.username = user.name;
-                // session.user.email = user.email;
+        async session({ session, token }: { session: any; token: any }) {
+            if (token && session.user) {
+                session.user.id = token.id;
+                session.user.name = token.username;
+                session.user.email = token.email;
                 session.user.role = token.role;
             }
-
             return session;
         },
     },
-
-    secret: process.env.NEXTAUTH_SECRET,
+    pages: {
+        signIn: "/auth/signin",
+        // Add other custom pages if needed
+    },
     session: {
         strategy: "jwt",
-        maxAge: 30 * 24 * 60 * 60, // 30 days,
+        maxAge: 30 * 24 * 60 * 60, // 30 days
         updateAge: 24 * 60 * 60, // 24 hours
     },
+};
 
-    jwt: {
-        secret: process.env.NEXTAUTH_SECRET,
-    },
-});
+const handler = NextAuth(authOptions as AuthOptions);
+export { handler as GET, handler as POST };
